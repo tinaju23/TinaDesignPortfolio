@@ -44,10 +44,16 @@
 
   /* ============ COLLAGE ============ */
   #collage{ padding-top:20px; padding-bottom:20px; }
+  .collage-layout{
+    display:grid;
+    grid-template-columns:2fr 1fr;
+    gap:56px;
+    align-items:start;
+  }
   .collage{
     display:grid;
     grid-template-columns:repeat(4, 1fr);
-    grid-template-rows:260px 260px;
+    grid-template-rows:200px 200px;
     grid-template-areas:
       "p1 p2 p3 p4"
       "p5 p6 p7 p7";
@@ -94,6 +100,24 @@
     50%{ transform:translateY(-6px) rotate(var(--tilt,0deg)); }
   }
 
+  /* ============ PASSIONS ============ */
+  .passions{ padding-top:40px; }
+  .passions h3{
+    font-family:var(--font-display); font-weight:600;
+    font-size:clamp(22px,2.2vw,27px); letter-spacing:-0.01em;
+    line-height:1.3; margin-bottom:8px;
+  }
+  .passions-list{ margin-top:24px; }
+  .passion-item{
+    display:flex; align-items:center; gap:16px;
+    padding:16px 0; border-top:1px solid var(--line);
+  }
+  .passion-item:last-child{ border-bottom:1px solid var(--line); }
+  .passion-icon{
+    width:24px; height:24px; color:var(--verified); flex-shrink:0;
+  }
+  .passion-label{ font-size:15.5px; color:var(--ink); line-height:1.4; }
+
   /* ============ FIELDS ============ */
   #fields{ padding-top:60px; }
   .fields{ display:flex; flex-direction:column; gap:36px; max-width:640px; }
@@ -121,6 +145,8 @@
     #intro{ padding:150px 0 60px; }
     .intro-grid{ grid-template-columns:1fr; gap:36px; }
     .intro-photo{ max-height:420px; margin-left:0; }
+    .collage-layout{ grid-template-columns:1fr; gap:0; }
+    .passions{ padding-top:48px; }
     .collage{
       grid-template-columns:repeat(2, 1fr);
       grid-template-rows:200px 200px 200px 170px;
@@ -171,7 +197,7 @@
 
   <!-- ============ COLLAGE ============ -->
   <section id="collage">
-    <div class="wrap">
+    <div class="wrap collage-layout">
       <div class="collage">
         <div class="collage-item p1"><img src="images/travel-1.jpg" alt="Gilded interior detail from a European chateau" loading="lazy"></div>
         <div class="collage-item p2"><img src="images/travel-6.jpg" alt="Tina laughing on a safari game drive" loading="lazy"></div>
@@ -181,6 +207,60 @@
         <div class="collage-item p6"><img src="images/travel-5.jpg" alt="Tina watching a sunrise on safari" loading="lazy"></div>
         <div class="collage-item p7"><img src="images/travel-7.jpg" alt="Tina celebrating with friends at night" loading="lazy" style="object-position:center 40%;"></div>
       </div>
+
+      <aside class="passions">
+        <div class="eyebrow">OUTSIDE THE 9–5</div>
+        <h3>What fills my 5–9.</h3>
+        <div class="passions-list">
+          <div class="passion-item">
+            <svg class="passion-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M12 20.5C12 20.5 3.5 15.5 3.5 9.5C3.5 6.5 5.8 4.5 8.5 4.5C10 4.5 11.3 5.3 12 6.5C12.7 5.3 14 4.5 15.5 4.5C18.2 4.5 20.5 6.5 20.5 9.5C20.5 15.5 12 20.5 12 20.5Z"/>
+            </svg>
+            <span class="passion-label">Family &amp; friends</span>
+          </div>
+          <div class="passion-item">
+            <svg class="passion-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+              <circle cx="17" cy="6" r="2"/>
+              <path d="M2 19L8 11L12 15.5L15 12L22 19H2Z"/>
+            </svg>
+            <span class="passion-label">Taking in a beautiful scene</span>
+          </div>
+          <div class="passion-item">
+            <svg class="passion-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M3 9L12 4L21 9"/>
+              <path d="M5 20V9"/>
+              <path d="M9 20V9"/>
+              <path d="M15 20V9"/>
+              <path d="M19 20V9"/>
+              <path d="M4 20H20"/>
+            </svg>
+            <span class="passion-label">Appreciating architecture</span>
+          </div>
+          <div class="passion-item">
+            <svg class="passion-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M4 11H20C20 15 16.5 18 12 18C7.5 18 4 15 4 11Z"/>
+              <path d="M9 8C9 6.5 8 6 8 4.5"/>
+              <path d="M12 8C12 6.5 11 6 11 4.5"/>
+              <path d="M15 8C15 6.5 14 6 14 4.5"/>
+            </svg>
+            <span class="passion-label">Carbs on carbs</span>
+          </div>
+          <div class="passion-item">
+            <svg class="passion-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M4 8H8L9.5 5.5H14.5L16 8H20V19H4V8Z"/>
+              <circle cx="12" cy="13.5" r="3.5"/>
+            </svg>
+            <span class="passion-label">Capturing beauty through photography</span>
+          </div>
+          <div class="passion-item">
+            <svg class="passion-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M21 3L3 10.5L10.5 13.5L13.5 21L21 3Z"/>
+              <path d="M10.5 13.5L21 3"/>
+            </svg>
+            <span class="passion-label">Traveling</span>
+          </div>
+        </div>
+      </aside>
     </div>
   </section>
 
