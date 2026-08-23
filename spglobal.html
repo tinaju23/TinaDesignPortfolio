@@ -1,0 +1,363 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>S&amp;P Global's New Enterprise Analytics Platform — Tina Ju</title>
+<meta name="description" content="Case study: leading UX strategy and design to consolidate 20+ legacy applications into one centralized analytical platform for S&P Global Ratings.">
+<link rel="canonical" href="https://www.tina-ju.com/spglobal.html">
+<meta property="og:title" content="S&amp;P Global's New Enterprise Analytics Platform — Tina Ju">
+<meta property="og:description" content="Leading UX strategy and design to consolidate 20+ legacy applications into one centralized analytical platform for S&P Global Ratings.">
+<meta property="og:url" content="https://www.tina-ju.com/spglobal.html">
+<meta property="og:type" content="article">
+<link rel="icon" href="data:,">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="styles.css">
+<style>
+  /* ============ CS HERO ============ */
+  #cs-hero{ padding:150px 0 60px; border-top:none; }
+  .cs-back{
+    font-family:var(--font-mono); font-size:12px; letter-spacing:0.05em;
+    text-transform:uppercase; color:var(--slate); display:inline-flex;
+    align-items:center; gap:8px; margin-bottom:32px;
+    border-bottom:1px solid transparent; transition:color .15s ease, border-color .15s ease;
+  }
+  .cs-back:hover{ color:var(--ink); border-color:var(--verified); }
+  .eyebrow{
+    font-family:var(--font-mono); font-size:12px; letter-spacing:0.12em;
+    text-transform:uppercase; color:var(--verified);
+    display:flex; align-items:center; gap:10px; margin-bottom:22px;
+  }
+  .eyebrow::before{ content:''; width:16px; height:1px; background:var(--verified); }
+  #cs-hero h1{
+    font-family:var(--font-display); font-weight:600;
+    font-size:clamp(34px, 4.6vw, 56px); line-height:1.06; letter-spacing:-0.02em;
+    max-width:20ch;
+  }
+  .cs-intro{
+    font-size:18px; color:var(--slate); max-width:70ch; margin-top:24px; line-height:1.65;
+  }
+
+  /* ============ META GRID ============ */
+  #cs-meta{ padding-top:0; padding-bottom:60px; }
+  .meta-grid{
+    display:grid; grid-template-columns:repeat(3, 1fr); gap:28px 32px;
+    border-top:1px solid var(--line); padding-top:36px;
+  }
+  .meta-item .field-label{
+    font-family:var(--font-mono); font-size:11px; letter-spacing:0.1em;
+    color:var(--verified); margin-bottom:6px;
+  }
+  .meta-item .field-value{ font-size:15.5px; color:var(--ink); line-height:1.55; }
+
+  /* ============ HERO IMAGE ============ */
+  #cs-hero-img{ padding-top:0; padding-bottom:80px; border-bottom:none; }
+  .cs-figure{
+    border-radius:3px; overflow:hidden; border:1px solid var(--line);
+    box-shadow:0 1px 2px rgba(20,23,27,0.06), 0 16px 40px rgba(20,23,27,0.10);
+  }
+  .cs-figure img{ width:100%; height:auto; display:block; }
+  .cs-caption{
+    font-family:var(--font-mono); font-size:12.5px; color:var(--slate);
+    margin-top:16px; line-height:1.55; max-width:70ch;
+  }
+
+  /* ============ CS SECTION ============ */
+  .cs-section h2{
+    font-family:var(--font-display); font-weight:600; font-size:clamp(22px,2.6vw,28px);
+    letter-spacing:-0.01em; margin-bottom:24px;
+  }
+  .cs-section h3{
+    font-family:var(--font-display); font-weight:600; font-size:15px;
+    letter-spacing:0.01em; margin-bottom:4px; color:var(--ink);
+  }
+  .cs-section p{ font-size:16.5px; color:var(--ink); line-height:1.7; max-width:72ch; }
+  .cs-section p + p{ margin-top:18px; }
+  .cs-section p.lede{ font-size:17.5px; }
+  .cs-list{ display:flex; flex-direction:column; gap:14px; max-width:72ch; margin-top:20px; }
+  .cs-list li{
+    font-size:16.5px; line-height:1.65; color:var(--ink);
+    padding-left:24px; position:relative;
+  }
+  .cs-list li::before{
+    content:''; position:absolute; left:0; top:10px; width:8px; height:1px;
+    background:var(--verified);
+  }
+  .cs-list.nested{ margin-top:10px; margin-bottom:0; }
+  .cs-block-sub{
+    font-family:var(--font-mono); font-size:11px; letter-spacing:0.1em;
+    text-transform:uppercase; color:var(--flag); margin-bottom:14px;
+  }
+  .cs-metric{
+    font-family:var(--font-mono); font-size:12px; color:var(--slate);
+    border:1px solid var(--line); border-radius:3px; padding:3px 8px; margin-right:8px;
+    display:inline-block; margin-bottom:6px;
+  }
+
+  /* ============ CTA ============ */
+  #cs-cta{ border-bottom:none; padding-bottom:80px; }
+  .cs-cta-grid{
+    display:flex; justify-content:space-between; align-items:flex-end;
+    flex-wrap:wrap; gap:32px;
+  }
+  #cs-cta h2{
+    font-family:var(--font-display); font-weight:600;
+    font-size:clamp(28px,3.6vw,40px); letter-spacing:-0.01em; max-width:14ch;
+  }
+  .cs-cta-actions{ display:flex; gap:28px; align-items:center; flex-wrap:wrap; }
+
+  /* ============ RESPONSIVE ============ */
+  @media (max-width: 860px){
+    #cs-hero{ padding:130px 0 50px; }
+    .meta-grid{ grid-template-columns:repeat(2, 1fr); }
+    .cs-cta-grid{ flex-direction:column; align-items:flex-start; }
+  }
+  @media (max-width: 520px){
+    .meta-grid{ grid-template-columns:1fr; }
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <nav>
+    <a href="index.html" class="nav-name">TINA JU</a>
+    <div class="nav-links">
+      <a href="index.html#work">Work</a>
+      <a href="about.html">About</a>
+      <a href="index.html#contact">Contact</a>
+    </div>
+  </nav>
+  <div class="cal-track" id="calTrack">
+    <div class="cal-fill" id="calFill"></div>
+  </div>
+</header>
+
+<main>
+
+  <!-- ============ HERO ============ -->
+  <section id="cs-hero">
+    <div class="wrap">
+      <a href="index.html#work" class="cs-back">← Back to work</a>
+      <div class="eyebrow">CASE STUDY · ENTERPRISE SOFTWARE · S&amp;P GLOBAL RATINGS</div>
+      <h1>S&amp;P Global's New Enterprise Analytics Platform</h1>
+      <p class="cs-intro">
+        In 2020, S&amp;P Global Ratings set out to retire and consolidate 20+ legacy applications into
+        a single web-based platform. I led the UX strategy and design of that platform — the Ratings
+        Analytical Platform (RAP) — overseeing 20+ UX projects and a dedicated team of designers.
+      </p>
+    </div>
+  </section>
+
+  <!-- ============ META ============ -->
+  <section id="cs-meta">
+    <div class="wrap">
+      <div class="meta-grid">
+        <div class="meta-item">
+          <div class="field-label">PROJECT</div>
+          <div class="field-value">A centralized analytical platform consolidating 20+ legacy applications into one configurable experience for ratings analysts across 10+ practices</div>
+        </div>
+        <div class="meta-item">
+          <div class="field-label">ROLE</div>
+          <div class="field-value">UX Strategy &amp; Design Leadership, Design Systems, Cross-Team Design Management</div>
+        </div>
+        <div class="meta-item">
+          <div class="field-label">TEAM</div>
+          <div class="field-value">20+ scrum teams, Information Architects, Product Managers, Business Analysts, Engineers, QA Leads</div>
+        </div>
+        <div class="meta-item">
+          <div class="field-label">DURATION</div>
+          <div class="field-value">Multi-year initiative, beginning 2020</div>
+        </div>
+        <div class="meta-item">
+          <div class="field-label">TOOLS</div>
+          <div class="field-value">Figma, FigJam, UI component libraries &amp; style guides</div>
+        </div>
+        <div class="meta-item">
+          <div class="field-label">GOAL</div>
+          <div class="field-value">Reduce time-to-market and operating cost while giving analysts one consistent, configurable platform to replace 20+ disconnected tools</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ HERO IMAGE ============ -->
+  <section id="cs-hero-img">
+    <div class="wrap">
+      <figure class="cs-figure">
+        <img src="images/spglobal/hero-spg.png" alt="RAP Ratings Analytical Platform overview" loading="lazy">
+      </figure>
+    </div>
+  </section>
+
+  <!-- ============ THE CHALLENGE ============ -->
+  <section class="cs-section">
+    <div class="wrap">
+      <h2>The Challenge</h2>
+      <p class="lede">
+        RAP was introduced with a core vision: a centralized analytical platform made up of "models"
+        and non-model features, integrated as services, that would drive user satisfaction, reduce
+        time to market, operating, and infrastructure cost, and give the business configurability and
+        agility it didn't have before. The goal was to let users move efficiently through heavy sets
+        of data and models — from pre-analysis to analysis to an informed rating decision.
+      </p>
+      <p style="margin-top:20px; font-style:italic;">
+        How do we give analysts across 10+ practices — each with their own restrictions, complexities,
+        and workflows — one centralized platform, without breaking UX consistency or introducing
+        unpredictable flows?
+      </p>
+
+      <h2 style="margin-top:56px;">Our goals</h2>
+      <ul class="cs-list">
+        <li>Centralize 10+ practices' distinct workflows into one configurable platform without breaking UX or UI consistency</li>
+        <li>Reduce time-to-market, infrastructure, and operating cost across the ratings business</li>
+        <li>Serve both internal analysts and external customers on the same design foundation, via Ratings360</li>
+        <li>Establish a shared UI standard that 20+ scrum teams and QA leads could build against</li>
+      </ul>
+
+      <h2 style="margin-top:56px;">Key metrics</h2>
+      <ul class="cs-list">
+        <li>Reduced task completion time by 27 minutes, demonstrated live in a showcase to the entire technology department, stakeholders, and executives</li>
+        <li>Delivered a UI component library and style guide adopted as the source of reference for 20+ scrum teams and dev leads</li>
+        <li>Unified the RAP admin dashboard and the external Ratings360 customer platform under one design system</li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- ============ DISCOVERY ============ -->
+  <section class="cs-section">
+    <div class="wrap">
+      <div class="cs-block-sub">Discovery</div>
+      <h2>Understanding a fragmented user base</h2>
+      <p>
+        Analysts at S&amp;P Global Ratings are split across 10+ practices, or verticals. Although every
+        analyst shares the same end goal — developing and applying ratings while keeping up with the
+        latest data trends — each practice carries its own restrictions, complexities, and unique user
+        flows to get there. Before RAP, analysts relied on a patchwork of outdated, clunky applications
+        with little integration between them, which meant a poor flow of data from one step to the next.
+      </p>
+      <p style="margin-top:18px;">
+        I worked closely with a group of analysts from every practice, each of whom allotted 50% of
+        their time to help build and prioritize RAP's functionality. Because the underlying applications
+        and workflows carried so many complex, granular details, I included these analysts in nearly
+        every phase of each sprint — from collecting business requirements, to initial design planning
+        sessions, to design presentations.
+      </p>
+
+      <figure class="cs-figure" style="margin-top:36px;">
+        <img src="images/spglobal/01-persona.png" alt="Ratings analyst persona: Sally Fields, SF EMEA Analyst" loading="lazy">
+      </figure>
+      <p class="cs-caption">One of the analyst personas I built with input from practice leads, to keep 20+ scrum teams aligned on who we were designing for and what was actually slowing them down.</p>
+    </div>
+  </section>
+
+  <!-- ============ FUSING MULTIPLE APPLICATIONS ============ -->
+  <section class="cs-section">
+    <div class="wrap">
+      <div class="cs-block-sub">Consolidation</div>
+      <h2>Fusing 20+ applications into one platform</h2>
+      <p>
+        The biggest challenge was understanding the complexities and specific business requirements
+        buried inside each legacy application. I needed to make sure the proposed design solutions
+        could accommodate complex, differing data sets from multiple applications — without breaking
+        UX or UI consistency, or frustrating users with unpredictable flows.
+      </p>
+
+      <figure class="cs-figure" style="margin-top:36px;">
+        <img src="images/spglobal/02-group24.png" alt="Smart Arrows legacy application compared with the RAP Admin Portal" loading="lazy">
+      </figure>
+      <p class="cs-caption">Smart Arrows (left), one of the legacy applications analysts used to build and manage test data sets, next to the RAP Admin Portal (right) — the consolidated experience I designed to replace it.</p>
+    </div>
+  </section>
+
+  <!-- ============ ROLE & CONTRIBUTIONS ============ -->
+  <section class="cs-section">
+    <div class="wrap">
+      <div class="cs-block-sub">Role &amp; contributions</div>
+      <h2>Building a foundation 20+ teams could build on</h2>
+      <p>
+        I worked closely with information architect SMEs, product managers, business analysts, and
+        engineers to make sure we were building RAP's foundation in a way that allowed consistency
+        across 10+ practices — each with its own nuances, requirements, and technical limitations. A
+        large part of that was contributing to the creation of UI standards and style guides, so that
+        the same look and feel held up across the entire platform.
+      </p>
+
+      <figure class="cs-figure" style="margin-top:36px;">
+        <img src="images/spglobal/03-group31.png" alt="RAP UI component library and style guide" loading="lazy">
+      </figure>
+      <p class="cs-caption">The UI component library and style guide I built, which streamlined design and implementation across 20+ scrum teams and served as the source of reference for dev teams and QA leads.</p>
+    </div>
+  </section>
+
+  <!-- ============ FINAL DESIGN ============ -->
+  <section class="cs-section" style="border-bottom:none;">
+    <div class="wrap">
+      <div class="cs-block-sub">Final design</div>
+      <h2>A centralized platform, built to scale</h2>
+      <p class="lede">
+        A centralized analytics dashboard with embedded tools, APIs, and services — built so analysts
+        could conduct analysis and deliver client workflows without switching between applications,
+        cutting the time it took to complete tasks.
+      </p>
+      <p style="margin-top:18px;">
+        Coming from an early-stage startup background where I'd successfully shipped new products
+        quickly, I leaned on that same instinct here — designing scalable, MVP-first interfaces for a
+        platform with genuinely complex business requirements.
+      </p>
+      <p style="margin-top:18px;">
+        During a showcase presented to the entire technology department, alongside stakeholders and
+        executives, we found that the new experience had reduced task time by
+        <span class="cs-metric">−27 min per task</span>.
+      </p>
+
+      <figure class="cs-figure" style="margin-top:36px;">
+        <img src="images/spglobal/04-group21.png" alt="RAP main landing dashboard and analytical workflow view" loading="lazy">
+      </figure>
+      <p class="cs-caption">The main landing dashboard — the gateway into all of RAP's features and tools (left) — next to an analytical workflow view, where analysts review data trends, historical audits, and confidential client data to apply informed ratings (right).</p>
+
+      <figure class="cs-figure" style="margin-top:36px;">
+        <img src="images/spglobal/05-model-adjustments.png" alt="RAP model analysis and scenario comparison views" loading="lazy">
+      </figure>
+      <p class="cs-caption">Model analysis and scenario comparison views, where analysts adjust assumptions side by side to see how each change affects a credit rating in real time.</p>
+    </div>
+  </section>
+
+  <!-- ============ CTA ============ -->
+  <section id="cs-cta">
+    <div class="wrap cs-cta-grid">
+      <h2>More work</h2>
+      <div class="cs-cta-actions">
+        <a href="index.html#work" class="btn">Back to work</a>
+        <a href="index.html#contact" class="btn-ghost">Get in touch</a>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<footer class="wrap">
+  <span>© 2026 Tina Ju</span>
+  <span>Senior Product Designer</span>
+</footer>
+
+<script>
+  const track = document.getElementById('calTrack');
+  const fill = document.getElementById('calFill');
+
+  function updateFill(){
+    const docHeight = document.documentElement.scrollHeight - window.innerHeight;
+    const pct = docHeight > 0 ? (window.scrollY / docHeight) * 100 : 0;
+    fill.style.width = Math.min(pct, 100) + '%';
+  }
+
+  window.addEventListener('scroll', updateFill, { passive:true });
+  window.addEventListener('resize', updateFill);
+  window.addEventListener('load', updateFill);
+</script>
+<script src="case-study.js"></script>
+
+</body>
+</html>

@@ -1,0 +1,477 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>An Empowering Dashboard for Partners — Tina Ju</title>
+<meta name="description" content="Case study: designing an internal partner dashboard that centralizes onboarding, user management, and underwriting decisions for SMB financial products.">
+<link rel="canonical" href="https://www.tina-ju.com/jaris-dashboard.html">
+<meta property="og:title" content="An Empowering Dashboard for Partners — Tina Ju">
+<meta property="og:description" content="Designing an internal partner dashboard that centralizes onboarding, user management, and underwriting decisions for SMB financial products.">
+<meta property="og:url" content="https://www.tina-ju.com/jaris-dashboard.html">
+<meta property="og:type" content="article">
+<link rel="icon" href="data:,">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="styles.css">
+<style>
+  /* ============ CS HERO ============ */
+  #cs-hero{ padding:150px 0 60px; border-top:none; }
+  .cs-back{
+    font-family:var(--font-mono); font-size:12px; letter-spacing:0.05em;
+    text-transform:uppercase; color:var(--slate); display:inline-flex;
+    align-items:center; gap:8px; margin-bottom:32px;
+    border-bottom:1px solid transparent; transition:color .15s ease, border-color .15s ease;
+  }
+  .cs-back:hover{ color:var(--ink); border-color:var(--verified); }
+  .eyebrow{
+    font-family:var(--font-mono); font-size:12px; letter-spacing:0.12em;
+    text-transform:uppercase; color:var(--verified);
+    display:flex; align-items:center; gap:10px; margin-bottom:22px;
+  }
+  .eyebrow::before{ content:''; width:16px; height:1px; background:var(--verified); }
+  #cs-hero h1{
+    font-family:var(--font-display); font-weight:600;
+    font-size:clamp(34px, 4.6vw, 56px); line-height:1.06; letter-spacing:-0.02em;
+    max-width:20ch;
+  }
+  .cs-intro{
+    font-size:18px; color:var(--slate); max-width:70ch; margin-top:24px; line-height:1.65;
+  }
+
+  /* ============ META GRID ============ */
+  #cs-meta{ padding-top:0; padding-bottom:60px; }
+  .meta-grid{
+    display:grid; grid-template-columns:repeat(3, 1fr); gap:28px 32px;
+    border-top:1px solid var(--line); padding-top:36px;
+  }
+  .meta-item .field-label{
+    font-family:var(--font-mono); font-size:11px; letter-spacing:0.1em;
+    color:var(--verified); margin-bottom:6px;
+  }
+  .meta-item .field-value{ font-size:15.5px; color:var(--ink); line-height:1.55; }
+
+  /* ============ HERO IMAGE ============ */
+  #cs-hero-img{ padding-top:0; padding-bottom:80px; border-bottom:none; }
+  .cs-figure{
+    border-radius:3px; overflow:hidden; border:1px solid var(--line);
+    box-shadow:0 1px 2px rgba(20,23,27,0.06), 0 16px 40px rgba(20,23,27,0.10);
+  }
+  .cs-figure img{ width:100%; height:auto; display:block; }
+  .cs-caption{
+    font-family:var(--font-mono); font-size:12.5px; color:var(--slate);
+    margin-top:16px; line-height:1.55; max-width:70ch;
+  }
+
+  /* ============ CS SECTION ============ */
+  .cs-section h2{
+    font-family:var(--font-display); font-weight:600; font-size:clamp(22px,2.6vw,28px);
+    letter-spacing:-0.01em; margin-bottom:24px;
+  }
+  .cs-section h3{
+    font-family:var(--font-display); font-weight:600; font-size:15px;
+    letter-spacing:0.01em; margin-bottom:4px; color:var(--ink);
+  }
+  .cs-section p{ font-size:16.5px; color:var(--ink); line-height:1.7; max-width:72ch; }
+  .cs-section p + p{ margin-top:18px; }
+  .cs-section p.lede{ font-size:17.5px; }
+  .cs-list{ display:flex; flex-direction:column; gap:14px; max-width:72ch; margin-top:20px; }
+  .cs-list li{
+    font-size:16.5px; line-height:1.65; color:var(--ink);
+    padding-left:24px; position:relative;
+  }
+  .cs-list li::before{
+    content:''; position:absolute; left:0; top:10px; width:8px; height:1px;
+    background:var(--verified);
+  }
+  .cs-list.nested{ margin-top:10px; margin-bottom:0; }
+  .cs-block-sub{
+    font-family:var(--font-mono); font-size:11px; letter-spacing:0.1em;
+    text-transform:uppercase; color:var(--flag); margin-bottom:14px;
+  }
+  .cs-metric{
+    font-family:var(--font-mono); font-size:12px; color:var(--slate);
+    border:1px solid var(--line); border-radius:3px; padding:3px 8px; margin-right:8px;
+    display:inline-block; margin-bottom:6px;
+  }
+
+  /* ============ CTA ============ */
+  #cs-cta{ border-bottom:none; padding-bottom:80px; }
+  .cs-cta-grid{
+    display:flex; justify-content:space-between; align-items:flex-end;
+    flex-wrap:wrap; gap:32px;
+  }
+  #cs-cta h2{
+    font-family:var(--font-display); font-weight:600;
+    font-size:clamp(28px,3.6vw,40px); letter-spacing:-0.01em; max-width:14ch;
+  }
+  .cs-cta-actions{ display:flex; gap:28px; align-items:center; flex-wrap:wrap; }
+
+  /* ============ RESPONSIVE ============ */
+  @media (max-width: 860px){
+    #cs-hero{ padding:130px 0 50px; }
+    .meta-grid{ grid-template-columns:repeat(2, 1fr); }
+    .cs-cta-grid{ flex-direction:column; align-items:flex-start; }
+  }
+  @media (max-width: 520px){
+    .meta-grid{ grid-template-columns:1fr; }
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <nav>
+    <a href="index.html" class="nav-name">TINA JU</a>
+    <div class="nav-links">
+      <a href="index.html#work">Work</a>
+      <a href="about.html">About</a>
+      <a href="index.html#contact">Contact</a>
+    </div>
+  </nav>
+  <div class="cal-track" id="calTrack">
+    <div class="cal-fill" id="calFill"></div>
+  </div>
+</header>
+
+<main>
+
+  <!-- ============ HERO ============ -->
+  <section id="cs-hero">
+    <div class="wrap">
+      <a href="index.html#work" class="cs-back">← Back to work</a>
+      <div class="eyebrow">CASE STUDY · PARTNER TOOLS · DASHBOARD</div>
+      <h1>An Empowering Dashboard for Partners</h1>
+      <p class="cs-intro">
+        This case study highlights my independent design process for the Partner Dashboard — an
+        internal tool built to empower business partners with essential features to manage financial
+        products for their SMB customers.
+      </p>
+    </div>
+  </section>
+
+  <!-- ============ META ============ -->
+  <section id="cs-meta">
+    <div class="wrap">
+      <div class="meta-grid">
+        <div class="meta-item">
+          <div class="field-label">PROJECT</div>
+          <div class="field-value">A powerful internal platform to simplify and centralize workflows for partners managing financial products for SMB customers</div>
+        </div>
+        <div class="meta-item">
+          <div class="field-label">ROLE</div>
+          <div class="field-value">UX Strategy, Research &amp; Discovery, UI &amp; Visual Design, Prototyping, User Testing</div>
+        </div>
+        <div class="meta-item">
+          <div class="field-label">TEAM</div>
+          <div class="field-value">Lead PM, FE &amp; BE engineers, Legal / Compliance, Ops, C-Suite Execs, QA analysts</div>
+        </div>
+        <div class="meta-item">
+          <div class="field-label">DURATION</div>
+          <div class="field-value">3 months for MVP, with continued iterations</div>
+        </div>
+        <div class="meta-item">
+          <div class="field-label">TOOLS</div>
+          <div class="field-value">Figma, Zoom (testing), Pulse (competitive research), AI tools for efficiency</div>
+        </div>
+        <div class="meta-item">
+          <div class="field-label">GOAL</div>
+          <div class="field-value">Provide partners with a single, user-friendly application to simplify and centralize their workflows — from onboarding through managing applications</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ HERO IMAGE ============ -->
+  <section id="cs-hero-img">
+    <div class="wrap">
+      <figure class="cs-figure">
+        <img src="images/dashboard/hero-dashboard.png" alt="Partner Dashboard overview" loading="lazy">
+      </figure>
+    </div>
+  </section>
+
+  <!-- ============ THE CHALLENGE ============ -->
+  <section class="cs-section">
+    <div class="wrap">
+      <h2>The Challenge</h2>
+      <p class="lede">
+        Our partners needed a single, user-friendly application to manage complex operational
+        tasks — like underwriting loan applications, tracking performance metrics, and integrating
+        with developer tools. Early on, we scoped out only MVP-level functionality, which quickly
+        scaled to include complex functionalities and workflows.
+      </p>
+      <p style="margin-top:20px; font-style:italic;">
+        How can we provide our partners with a single, user-friendly application to simplify and
+        centralize their workflows — from onboarding with Jaris to managing applications?
+      </p>
+
+      <figure class="cs-figure" style="margin-top:36px;">
+        <img src="images/dashboard/01-challenge-overview.png" alt="Partner Dashboard tablet mockup" loading="lazy">
+      </figure>
+
+      <h2 style="margin-top:56px;">Our goals</h2>
+      <ul class="cs-list">
+        <li>Workflows involved high-stakes decision-making (e.g. loan approvals)</li>
+        <li>Streamline core partner workflows with a single, cohesive interface</li>
+        <li>Deliver a seamless, configurable experience tailored to user roles</li>
+        <li>Design an intuitive, data-informed underwriting flow that supports fast, accurate loan decisions</li>
+        <li>Ensure scalability and flexibility as new features were added post-MVP</li>
+      </ul>
+
+      <h2 style="margin-top:56px;">Key metrics</h2>
+      <ul class="cs-list">
+        <li>Enabled faster onboarding and reduced manual intervention for new partner users with clearer role-based flows</li>
+        <li>Created a scalable dashboard framework that could support future product features without full redesign</li>
+        <li>Saw an uptick in scheduled demos with partners with the introduction of underwriting decision-making workflows for financial product applications</li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- ============ DISCOVERY / USER JOURNEY ============ -->
+  <section class="cs-section">
+    <div class="wrap">
+      <div class="cs-block-sub">Discovery</div>
+      <h2>User journey</h2>
+      <p>
+        For the Partner Dashboard experience, there are two funnels within the entire user journey.
+        Before this initiative, our internal operations team managed onboarding manually — relying
+        heavily on phone calls, scattered emails, and ad hoc communication. There was no centralized
+        system to manage or track this workflow. To address this, I conducted deep discovery sessions
+        with every team involved in onboarding — including Marketing, Operations, Engineering, and
+        QA — to uncover pain points, understand their goals, and align on success criteria.
+      </p>
+      <p style="margin-top:18px;">
+        Solving this first funnel gave us the foundation to address the second: how do we enable our
+        partners to issue their first loan as quickly as possible?
+      </p>
+      <p style="margin-top:18px;">
+        Our primary partner demographic was small to mid-sized payment processing platforms —
+        typically those without the engineering resources to build and manage their own software to
+        offer financial products to their customers.
+      </p>
+      <p style="margin-top:18px;">
+        However, by 2024, our partner conversations shifted. Larger partners wanted more control and
+        autonomy over the underwriting process. In response, we designed and delivered a
+        partner-facing underwriting feature that enabled them to review, approve, or reject incoming
+        applications directly — giving them full visibility and ownership.
+      </p>
+
+      <figure class="cs-figure" style="margin-top:36px;">
+        <img src="images/dashboard/02-user-journey-figjam.png" alt="Partner onboarding user journey map in FigJam" loading="lazy">
+      </figure>
+      <p class="cs-caption">The user journey I created with FigJam to go over all of the different aspects of the partner's onboarding journey.</p>
+    </div>
+  </section>
+
+  <!-- ============ FEATURE DEEP DIVES ============ -->
+  <section class="cs-section">
+    <div class="wrap">
+      <h2>Feature deep dives</h2>
+      <figure class="cs-figure">
+        <img src="images/dashboard/03-feature-deep-dives.png" alt="Feature deep dives overview" loading="lazy">
+      </figure>
+    </div>
+  </section>
+
+  <!-- ============ ROLE-BASED USER MANAGEMENT ============ -->
+  <section class="cs-section">
+    <div class="wrap">
+      <div class="cs-block-sub">Role-based user management</div>
+      <h2>One size does not fit all.</h2>
+      <p>
+        Early in the process, Product proposed that each new partner account should include a
+        standard set of roles: Developer, Executive, and Marketing. But as I dug deeper into
+        validation — through cross-functional research and stakeholder interviews — it became clear
+        that a one-size-fits-all model wouldn't be sufficient.
+      </p>
+      <p style="margin-top:18px;">
+        For example, in my conversations with internal developers, I uncovered a critical risk:
+        giving all users within the "Developer" role full access to Dev Tools could expose the
+        system to security and configuration issues. To mitigate this, I worked closely with
+        Engineering and Product to design a more flexible role structure. This included defining two
+        distinct types of Developer roles in both the UI and backend — one with full edit access,
+        and another with limited, read-only visibility.
+      </p>
+      <p style="margin-top:18px;">
+        This change not only improved security and usability, but also laid the groundwork for a
+        more scalable and configurable role-based permissions system as we onboarded more complex
+        partners.
+      </p>
+
+      <figure class="cs-figure" style="margin-top:36px;">
+        <img src="images/dashboard/04-role-based-management.png" alt="Role-based user management screens" loading="lazy">
+      </figure>
+    </div>
+  </section>
+
+  <!-- ============ MERCHANT UNDERWRITING DECISION GATEWAY ============ -->
+  <section class="cs-section">
+    <div class="wrap">
+      <div class="cs-block-sub">Merchant underwriting decision gateway</div>
+      <h2>Offering control and centralization</h2>
+      <p>
+        At launch, our initial MVP laid the foundational groundwork for onboarding new partners.
+        Phase I focused on getting partners up and running with core functionality: user management
+        tools, a performance dashboard with data visualizations, and other core — but intentionally
+        lightweight — tools to support onboarding and basic engagement.
+      </p>
+      <p style="margin-top:18px;">
+        As we transitioned into Phase II, the UX challenge grew significantly more complex. The
+        product needed to evolve into a fully operational platform — one that could support complex
+        workflows and real-time decisions. The underwriting process became the core of this new
+        workflow. Partners were responsible for evaluating a range of data tied to each application
+        and making informed, high-stakes decisions: to approve, reject, or return the application
+        for further action. This meant the experience needed to surface critical information, such
+        as identity verification and ownership breakdown.
+      </p>
+      <p style="margin-top:18px;">
+        By architecting this central access point, I helped transform the platform from a set of
+        standalone tools into a cohesive, decision-support system — one that empowered partners to
+        operate with speed, clarity, and confidence at every stage of the financial product
+        lifecycle.
+      </p>
+
+      <figure class="cs-figure" style="margin-top:36px;">
+        <img src="images/dashboard/05-underwriting-gateway.png" alt="Merchant underwriting decision gateway screens" loading="lazy">
+      </figure>
+    </div>
+  </section>
+
+  <!-- ============ CHALLENGES ============ -->
+  <section class="cs-section">
+    <div class="wrap">
+      <div class="cs-block-sub">Challenges</div>
+      <h2>Designing for scale in a rapidly evolving environment</h2>
+      <p>
+        One of the core challenges on this project was responding to fast-changing business
+        priorities. New features were constantly needed — and fast. As the lead UX designer, I
+        wasn't just solving for current functionality; I was expected to anticipate the next move.
+      </p>
+      <p style="margin-top:18px;">
+        A clear example of this was our onboarding application table. The MVP version was limited to
+        one product type, but I knew we'd soon be expanding to include additional financial products
+        and other relevant data points. I pushed to include flexible filters early on — even when
+        engineering resisted to save time — because I knew retrofitting them later would be far more
+        of a lift then.
+      </p>
+      <p style="margin-top:18px;">
+        Another challenge was stakeholder pressure to show everything on screen. For example, I
+        pushed to default the table view to only show Submitted and Re-Submitted applications,
+        because these were the only statuses that required some kind of user action. This may seem
+        small now, but the same thinking was applied when designing the rest of the user flow.
+      </p>
+
+      <figure class="cs-figure" style="margin-top:36px;">
+        <img src="images/dashboard/06-challenges-scale.png" alt="Application table with flexible filters and status views" loading="lazy">
+      </figure>
+    </div>
+  </section>
+
+  <!-- ============ UNDERWRITING WORKFLOW: PRIORITIZING KEY INFORMATION ============ -->
+  <section class="cs-section">
+    <div class="wrap">
+      <div class="cs-block-sub">Underwriting workflow</div>
+      <h2>Prioritizing key information</h2>
+      <p>
+        I continued to champion the importance of clear information hierarchy throughout the design
+        process when tackling the rest of the underwriting workflow. In this key part of the user
+        flow, we needed to show partners all of the variables they would need to make a decision.
+        These included application fields, uploaded documents that may have been required to further
+        verify specific information, notes written by their teammate or our internal Jaris staff to
+        highlight additional details on the merchant, as well as outcome tags driven by Alloy, a
+        third-party service that conducted identity verification, fraud prevention, and compliance
+        (KYB/KYC) automation. These outcome tags allowed our operations team to understand any
+        potential warnings, as well as show what passed or failed — helping drive error handling,
+        approving or rejecting applications.
+      </p>
+      <p style="margin-top:18px;">
+        To validate this decision, I conducted usability testing sessions with our internal
+        operations team. The results confirmed my hypothesis: by streamlining the UI and focusing
+        attention on what matters most, we significantly reduced decision-making time and improved
+        partner confidence.
+      </p>
+      <p style="margin-top:18px;">
+        Design isn't just about what's visible on screen — it's about building smart, scalable
+        systems that guide users toward clarity, action, and outcomes. This feature is a perfect
+        example of that philosophy in action.
+      </p>
+
+      <figure class="cs-figure" style="margin-top:36px;">
+        <img src="images/dashboard/07-prioritizing-info.png" alt="Underwriting workflow showing application fields, documents, and outcome tags" loading="lazy">
+      </figure>
+    </div>
+  </section>
+
+  <!-- ============ UNDERWRITING WORKFLOW: ERROR HANDLING ============ -->
+  <section class="cs-section" style="border-bottom:none;">
+    <div class="wrap">
+      <div class="cs-block-sub">Underwriting workflow</div>
+      <h2>Error handling and resubmitted applications</h2>
+      <p class="lede">Balancing speed, accuracy, and flexibility.</p>
+      <p style="margin-top:18px;">
+        Since 97% of applications required additional review, error handling became a critical UX
+        focus. Issues like mismatched addresses or phone numbers were common, and we needed a
+        streamlined way for partners to communicate these corrections back to applicants.
+      </p>
+      <p style="margin-top:18px;">
+        I collaborated closely with our operations team to identify frequent errors and co-develop a
+        library of pre-written error messages. These templates were aimed at reducing friction and
+        speeding up resolution without sacrificing clarity. Knowing that pre-written messages covered
+        most cases but not all, I also recommended a "custom error message" option — giving partners
+        flexibility to address edge cases based on their unique underwriting standards.
+      </p>
+      <p style="margin-top:18px;">
+        During low-fidelity wireframing, I proposed separating the application field with the error
+        from its associated message. This improved scannability and helped partners avoid sending
+        incorrect or unclear instructions.
+      </p>
+      <p style="margin-top:18px;">
+        This design struck the right balance: efficient for common cases, flexible for exceptions,
+        and always focused on reducing decision time while maintaining trust and control.
+      </p>
+
+      <figure class="cs-figure" style="margin-top:36px;">
+        <img src="images/dashboard/08-error-handling.png" alt="Error handling screens with pre-written and custom error messages" loading="lazy">
+      </figure>
+      <p class="cs-caption">A prototype was created to walk the team through the general layout and introduce error handling.</p>
+    </div>
+  </section>
+
+  <!-- ============ CTA ============ -->
+  <section id="cs-cta">
+    <div class="wrap cs-cta-grid">
+      <h2>More work</h2>
+      <div class="cs-cta-actions">
+        <a href="index.html#work" class="btn">Back to work</a>
+        <a href="index.html#contact" class="btn-ghost">Get in touch</a>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<footer class="wrap">
+  <span>© 2026 Tina Ju</span>
+  <span>Senior Product Designer</span>
+</footer>
+
+<script>
+  const track = document.getElementById('calTrack');
+  const fill = document.getElementById('calFill');
+
+  function updateFill(){
+    const docHeight = document.documentElement.scrollHeight - window.innerHeight;
+    const pct = docHeight > 0 ? (window.scrollY / docHeight) * 100 : 0;
+    fill.style.width = Math.min(pct, 100) + '%';
+  }
+
+  window.addEventListener('scroll', updateFill, { passive:true });
+  window.addEventListener('resize', updateFill);
+  window.addEventListener('load', updateFill);
+</script>
+<script src="case-study.js"></script>
+
+</body>
+</html>

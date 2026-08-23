@@ -6,7 +6,7 @@
 <title>About — Tina Ju</title>
 <meta name="description" content="About Tina Ju, Senior Product Designer — scope, focus, and method behind 7+ years of turning ambiguity into shipped outcomes.">
 <link rel="canonical" href="https://www.tina-ju.com/about.html">
-<link rel="icon" href="data:,">
+<link rel="icon" type="image/svg+xml" href="favicon.svg">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
@@ -148,9 +148,25 @@
 </head>
 <body>
 
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <defs>
+    <linearGradient id="brandGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#5FCBEC"/>
+      <stop offset="50%" stop-color="#0F6FA8"/>
+      <stop offset="100%" stop-color="#0A4E85"/>
+    </linearGradient>
+  </defs>
+</svg>
+
 <header>
   <nav>
-    <a href="index.html" class="nav-name">TINA JU</a>
+    <a href="index.html" class="nav-name">
+      <span class="word">
+        <span class="nav-scan"></span>
+        <span class="nl" style="--i:0">T</span><span class="nl" style="--i:1">I</span><span class="nl" style="--i:2">N</span><span class="nl" style="--i:3">A</span>&nbsp;<span class="nl" style="--i:4">J</span><span class="nl" style="--i:5">U</span>
+      </span>
+      <span class="bolt-mark"><svg viewBox="0 0 24 24"><path d="M13 2 3 14h7l-1 8 10-12h-7l1-8z"/></svg></span>
+    </a>
     <div class="nav-links">
       <a href="index.html#work">Work</a>
       <a href="about.html" class="active">About</a>
@@ -351,6 +367,19 @@
     const activeItem = passionItems.find(el => el.classList.contains('active'));
     setActivePhoto(activeItem ? Number(activeItem.dataset.index) : 0);
   });
+</script>
+
+<script>
+  // ---- Logo calibration animation: auto-plays once on load, replays on click ----
+  (function(){
+    const mark = document.querySelector('.nav-name');
+    if(!mark) return;
+    function play(){ mark.classList.remove('recalibrating'); void mark.offsetWidth; mark.classList.add('recalibrating'); }
+    mark.addEventListener('click', play);
+    if(!window.matchMedia('(prefers-reduced-motion: reduce)').matches){
+      setTimeout(play, 350);
+    }
+  })();
 </script>
 
 </body>

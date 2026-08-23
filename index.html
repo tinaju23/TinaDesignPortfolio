@@ -10,7 +10,7 @@
 <meta property="og:description" content="Designing transparency, trust, and human control into AI-assisted experiences, plus the design systems that turn ambiguity into shipped outcomes.">
 <meta property="og:url" content="https://www.tina-ju.com/">
 <meta property="og:type" content="website">
-<link rel="icon" href="data:,">
+<link rel="icon" type="image/svg+xml" href="favicon.svg">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
@@ -90,6 +90,20 @@
     transition:border-color .15s ease;
   }
   .project:hover .project-link{ border-color:var(--verified); }
+  .project-link.is-soon{
+    display:inline-flex; align-items:center; gap:8px;
+    color:var(--flag); border-color:transparent;
+    text-transform:uppercase; letter-spacing:0.05em;
+  }
+  .project:hover .project-link.is-soon{ border-color:transparent; }
+  .soon-dot{
+    width:6px; height:6px; border-radius:50%; background:var(--flag);
+    animation:pulse-dot 1.8s ease-in-out infinite;
+  }
+  @keyframes pulse-dot{
+    0%, 100%{ opacity:1; transform:scale(1); }
+    50%{ opacity:0.4; transform:scale(0.7); }
+  }
 
   /* ============ CONTACT ============ */
   #contact{ border-bottom:none; padding-bottom:80px; }
@@ -131,9 +145,25 @@
 </head>
 <body>
 
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <defs>
+    <linearGradient id="brandGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#5FCBEC"/>
+      <stop offset="50%" stop-color="#0F6FA8"/>
+      <stop offset="100%" stop-color="#0A4E85"/>
+    </linearGradient>
+  </defs>
+</svg>
+
 <header>
   <nav>
-    <a href="#hero" class="nav-name">TINA JU</a>
+    <a href="#hero" class="nav-name">
+      <span class="word">
+        <span class="nav-scan"></span>
+        <span class="nl" style="--i:0">T</span><span class="nl" style="--i:1">I</span><span class="nl" style="--i:2">N</span><span class="nl" style="--i:3">A</span>&nbsp;<span class="nl" style="--i:4">J</span><span class="nl" style="--i:5">U</span>
+      </span>
+      <span class="bolt-mark"><svg viewBox="0 0 24 24"><path d="M13 2 3 14h7l-1 8 10-12h-7l1-8z"/></svg></span>
+    </a>
     <div class="nav-links">
       <a href="#work" data-nav>Work</a>
       <a href="about.html">About</a>
@@ -173,7 +203,7 @@
     <div class="wrap">
       <div class="section-head">
         <h2>Selected work</h2>
-        <p class="section-note">Four projects spanning AI trust, fintech, and partner tooling.</p>
+        <p class="section-note">Six projects spanning AI trust, fintech, and partner tooling.</p>
       </div>
 
       <!-- Project 1 -->
@@ -224,14 +254,14 @@
         <div>
           <div class="project-tag">Partner Tools · Dashboard</div>
           <div class="project-title">An Empowering Dashboard for Partners</div>
-          <p class="project-desc todo">Add 1–2 sentences: what partners couldn't see or do before, and how the dashboard fixed it.</p>
+          <p class="project-desc">An internal tool that replaced manual, phone-and-email onboarding with a centralized platform for role-based user management and high-stakes underwriting decisions.</p>
           <div class="project-meta">
-            <span><b>Role</b> — add role</span>
-            <span><b>Timeline</b> — add dates</span>
-            <span><b>Tools</b> — add tools</span>
+            <span><b>Role</b> — UX Strategy, Research &amp; Design</span>
+            <span><b>Timeline</b> — 3 mo. MVP, ongoing iterations</span>
+            <span><b>Tools</b> — Figma, Zoom, Pulse</span>
           </div>
         </div>
-        <a href="#" class="project-link">View case study →</a>
+        <a href="jaris-dashboard.html" target="_blank" rel="noopener" class="project-link">View case study →</a>
       </div>
 
       <!-- Project 4 -->
@@ -252,6 +282,43 @@
           </div>
         </div>
         <a href="jaris-lending.html" target="_blank" rel="noopener" class="project-link">View case study →</a>
+      </div>
+
+      <!-- Project 5 -->
+      <div class="project">
+        <svg class="project-icon" viewBox="0 0 44 44" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M24 6 L14 24 H22 L18 38 L32 18 H24 Z"/>
+        </svg>
+        <div>
+          <div class="project-tag">Fintech · Payments</div>
+          <div class="project-title">Instant Payouts for Merchants</div>
+          <p class="project-desc">A faster, more transparent way for merchants to move money out — from request to funds landed — replacing a slow, status-blind payout process with real-time visibility and control.</p>
+          <div class="project-meta">
+            <span><b>Role</b> — Lead UX Designer</span>
+            <span><b>Timeline</b> — 2025–Present</span>
+            <span><b>Tools</b> — Figma</span>
+          </div>
+        </div>
+        <a href="jaris-instantpayouts-1.html" target="_blank" rel="noopener" class="project-link is-soon"><span class="soon-dot"></span>Coming soon</a>
+      </div>
+
+      <!-- Project 6 -->
+      <div class="project">
+        <svg class="project-icon" viewBox="0 0 44 44" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M6 34 H38"/>
+          <path d="M10 34 V22 M19 34 V14 M28 34 V26 M34 34 V18"/>
+        </svg>
+        <div>
+          <div class="project-tag">Enterprise Software · Analytics Platform</div>
+          <div class="project-title">S&amp;P Global's New Enterprise Analytics Platform</div>
+          <p class="project-desc">Led UX strategy and design to consolidate 20+ legacy applications into one centralized analytical platform for ratings analysts, cutting task time by 27 minutes at a company-wide showcase.</p>
+          <div class="project-meta">
+            <span><b>Role</b> — UX Strategy &amp; Design Leadership</span>
+            <span><b>Timeline</b> — 2020–ongoing</span>
+            <span><b>Tools</b> — Figma, FigJam, Design Systems</span>
+          </div>
+        </div>
+        <a href="spglobal.html" target="_blank" rel="noopener" class="project-link">View case study →</a>
       </div>
 
     </div>
@@ -320,6 +387,19 @@
   }, { rootMargin: '-45% 0px -50% 0px' });
 
   sections.forEach(sec => observer.observe(sec));
+</script>
+
+<script>
+  // ---- Logo calibration animation: auto-plays once on load, replays on click ----
+  (function(){
+    const mark = document.querySelector('.nav-name');
+    if(!mark) return;
+    function play(){ mark.classList.remove('recalibrating'); void mark.offsetWidth; mark.classList.add('recalibrating'); }
+    mark.addEventListener('click', play);
+    if(!window.matchMedia('(prefers-reduced-motion: reduce)').matches){
+      setTimeout(play, 350);
+    }
+  })();
 </script>
 
 </body>
