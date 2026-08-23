@@ -83,16 +83,31 @@
   }
 
   /* ============ PASSIONS ============ */
-  .passions{ padding-top:40px; padding-bottom:65vh; }
+  .passions{ padding-bottom:65vh; }
+  .passions-sticky{
+    position:sticky;
+    top:110px;
+    height:640px;
+    overflow:hidden;
+    padding-top:40px;
+    display:flex;
+    flex-direction:column;
+  }
   .passions h3{
     font-family:var(--font-display); font-weight:600;
     font-size:clamp(22px,2.2vw,27px); letter-spacing:-0.01em;
     line-height:1.3; margin-bottom:8px;
   }
-  .passions-list{ margin-top:24px; }
+  .passions-list{
+    flex:1;
+    display:flex;
+    flex-direction:column;
+    justify-content:space-between;
+    margin-top:24px;
+  }
   .passion-item{
     display:flex; align-items:center; gap:16px;
-    padding:42px 0; border-top:1px solid var(--line);
+    padding:10px 0; border-top:1px solid var(--line);
     cursor:pointer; opacity:.4;
     transition:opacity .35s ease;
   }
@@ -139,7 +154,12 @@
     .collage-layout{ grid-template-columns:1fr; gap:0; }
     .photo-stack{ position:sticky; top:70px; height:300px; margin-bottom:8px; }
     .stack-photo{ height:240px; }
-    .passions{ padding-top:16px; }
+    .passions{ padding-bottom:0; }
+    .passions-sticky{
+      position:static; height:auto; overflow:visible;
+      padding-top:16px; display:block;
+    }
+    .passions-list{ display:block; margin-top:16px; }
     .passion-item{ padding:14px 0; }
     .field-row{ grid-template-columns:1fr; gap:6px; }
     .resume-grid{ flex-direction:column; align-items:flex-start; }
@@ -214,6 +234,7 @@
       </div>
 
       <aside class="passions">
+       <div class="passions-sticky">
         <div class="eyebrow">OUTSIDE THE 9–5</div>
         <h3>What fills my 5–9.</h3>
         <div class="passions-list" id="passionsList">
@@ -265,6 +286,7 @@
             <span class="passion-label">Traveling</span>
           </div>
         </div>
+       </div>
       </aside>
     </div>
   </section>
@@ -347,26 +369,40 @@
     });
   }
 
-  const passionObserver = new IntersectionObserver((entries) => {
-    entries.forEach(entry => {
-      if (entry.isIntersecting) {
-        setActivePhoto(Number(entry.target.dataset.index));
-      }
-    });
-  }, { rootMargin: '-45% 0px -45% 0px', threshold: 0 });
+  // The passions copy is pinned in place (see .passions-sticky) — the active
+  // item is driven purely by how far the user has scrolled through the
+  // section's runway (the tall .passions spacer), not by any element moving.
+  const layoutEl = document.querySelector('.collage-layout');
+  const photoStackEl = document.querySelector('.photo-stack');
 
-  passionItems.forEach(el => {
-    passionObserver.observe(el);
+  function computeScrollRange(){
+    const topPx = parseFloat(getComputedStyle(photoStackEl).top) || 0;
+    const stickyH = photoStackEl.offsetHeight;
+    const rowHeight = layoutEl.offsetHeight;
+    const absoluteTop = layoutEl.getBoundingClientRect().top + window.scrollY;
+    const pinStart = absoluteTop - topPx;
+    const pinRange = Math.max(rowHeight - stickyH, 1);
+    return { pinStart, pinRange };
+  }
+
+  function updateFromScroll(){
+    const { pinStart, pinRange } = computeScrollRange();
+    const progress = Math.min(1, Math.max(0, (window.scrollY - pinStart) / pinRange));
+    const idx = Math.min(passionItems.length - 1, Math.floor(progress * passionItems.length));
+    setActivePhoto(idx);
+  }
+
+  passionItems.forEach((el, i) => {
     el.addEventListener('click', () => {
-      el.scrollIntoView({ behavior: 'smooth', block: 'center' });
+      const { pinStart, pinRange } = computeScrollRange();
+      const target = pinStart + ((i + 0.5) / passionItems.length) * pinRange;
+      window.scrollTo({ top: target, behavior: 'smooth' });
     });
   });
 
   setActivePhoto(0);
-  window.addEventListener('resize', () => {
-    const activeItem = passionItems.find(el => el.classList.contains('active'));
-    setActivePhoto(activeItem ? Number(activeItem.dataset.index) : 0);
-  });
+  window.addEventListener('scroll', updateFromScroll, { passive: true });
+  window.addEventListener('resize', updateFromScroll);
 </script>
 
 <script>
