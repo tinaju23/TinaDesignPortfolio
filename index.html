@@ -14,89 +14,8 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="styles.css">
 <style>
-  /* ============ TOKENS ============ */
-  :root{
-    --paper: #FAFAF7;
-    --paper-dim: #F2F1EC;
-    --ink: #14171B;
-    --slate: #5B616B;
-    --line: #E3E1DB;
-    --verified: #1F6F5C;   /* primary accent — calibrated / confirmed */
-    --verified-10: rgba(31,111,92,0.08);
-    --flag: #C97A3E;       /* secondary accent — used sparingly */
-    --font-display: 'Space Grotesk', sans-serif;
-    --font-body: 'IBM Plex Sans', sans-serif;
-    --font-mono: 'IBM Plex Mono', monospace;
-    --container: 1120px;
-  }
-
-  *{ box-sizing:border-box; margin:0; padding:0; }
-  html{ scroll-behavior:smooth; }
-  body{
-    background:var(--paper);
-    color:var(--ink);
-    font-family:var(--font-body);
-    font-size:17px;
-    line-height:1.6;
-    -webkit-font-smoothing:antialiased;
-  }
-  img,svg{ display:block; max-width:100%; }
-  a{ color:inherit; text-decoration:none; }
-  ul{ list-style:none; }
-
-  .wrap{ max-width:var(--container); margin:0 auto; padding:0 40px; }
-
-  ::selection{ background:var(--verified); color:var(--paper); }
-
-  a:focus-visible, button:focus-visible{
-    outline:2px solid var(--verified);
-    outline-offset:3px;
-    border-radius:2px;
-  }
-
-  @media (prefers-reduced-motion: reduce){
-    html{ scroll-behavior:auto; }
-    *{ animation-duration:0.01ms !important; animation-iteration-count:1 !important; transition-duration:0.01ms !important; scroll-behavior:auto !important; }
-  }
-
-  /* ============ NAV + CALIBRATION BAR ============ */
-  header{
-    position:fixed; top:0; left:0; right:0; z-index:50;
-    background:rgba(250,250,247,0.88);
-    backdrop-filter:blur(8px);
-    -webkit-backdrop-filter:blur(8px);
-  }
-  nav{
-    display:flex; align-items:center; justify-content:space-between;
-    max-width:var(--container); margin:0 auto; padding:20px 40px;
-  }
-  .nav-name{
-    font-family:var(--font-display); font-weight:600; font-size:16px;
-    letter-spacing:0.02em;
-  }
-  .nav-links{ display:flex; gap:32px; }
-  .nav-links a{
-    font-family:var(--font-mono); font-size:12px; letter-spacing:0.06em;
-    text-transform:uppercase; color:var(--slate);
-    padding-bottom:2px; border-bottom:1px solid transparent;
-    transition:color .15s ease, border-color .15s ease;
-  }
-  .nav-links a:hover, .nav-links a.active{ color:var(--ink); border-color:var(--verified); }
-
-  .cal-track{
-    position:relative; height:2px; background:var(--line);
-  }
-  .cal-fill{
-    position:absolute; top:0; left:0; height:100%;
-    background:var(--verified); width:0%;
-    transition:width .08s linear;
-  }
-  .cal-tick{
-    position:absolute; top:-2px; width:1px; height:6px; background:var(--ink);
-    opacity:.35;
-  }
-
   /* ============ HERO ============ */
   #hero{
     padding:180px 0 120px;
@@ -129,36 +48,6 @@
     line-height:1.65;
   }
   .hero-cta{ display:flex; gap:28px; margin-top:44px; align-items:center; flex-wrap:wrap; }
-  .btn{
-    font-family:var(--font-mono); font-size:13px; letter-spacing:0.04em;
-    text-transform:uppercase; padding:13px 24px;
-    background:var(--ink); color:var(--paper);
-    border:1px solid var(--ink); border-radius:2px;
-    transition:background .15s ease, color .15s ease;
-  }
-  .btn:hover{ background:transparent; color:var(--ink); }
-  .btn-ghost{
-    font-family:var(--font-mono); font-size:13px; letter-spacing:0.04em;
-    text-transform:uppercase; color:var(--slate);
-    border-bottom:1px solid var(--line); padding-bottom:2px;
-    transition:color .15s ease, border-color .15s ease;
-  }
-  .btn-ghost:hover{ color:var(--ink); border-color:var(--verified); }
-
-  /* ============ SECTION SHELL ============ */
-  section{ padding:100px 0; border-bottom:1px solid var(--line); }
-  .section-head{
-    display:flex; justify-content:space-between; align-items:flex-end;
-    margin-bottom:64px; gap:24px; flex-wrap:wrap;
-  }
-  .section-head h2{
-    font-family:var(--font-display); font-weight:600; font-size:clamp(28px,3.4vw,38px);
-    letter-spacing:-0.01em;
-  }
-  .section-note{
-    font-family:var(--font-mono); font-size:12px; color:var(--slate);
-    max-width:34ch; text-align:right;
-  }
 
   /* ============ WORK ============ */
   .project{
@@ -197,22 +86,6 @@
   }
   .project:hover .project-link{ border-color:var(--verified); }
 
-  /* ============ ABOUT ============ */
-  .about-grid{
-    display:grid; grid-template-columns:1.1fr 1fr; gap:64px;
-  }
-  .about-lede{
-    font-family:var(--font-display); font-weight:500; font-size:clamp(22px,2.6vw,30px);
-    line-height:1.35; letter-spacing:-0.01em;
-  }
-  .about-lede .mark{ color:var(--verified); }
-  .fields{ display:flex; flex-direction:column; gap:28px; }
-  .field-label{
-    font-family:var(--font-mono); font-size:11px; letter-spacing:0.1em;
-    color:var(--verified); margin-bottom:8px;
-  }
-  .field-value{ font-size:16px; color:var(--ink); line-height:1.55; }
-
   /* ============ CONTACT ============ */
   #contact{ border-bottom:none; padding-bottom:80px; }
   .contact-grid{
@@ -237,30 +110,16 @@
   }
   .contact-links a:hover{ color:var(--ink); border-color:var(--verified); }
 
-  footer{
-    padding:28px 0; display:flex; justify-content:space-between;
-    font-family:var(--font-mono); font-size:11px; color:var(--slate);
-    flex-wrap:wrap; gap:12px;
-  }
-
-  /* placeholder-content flag (visible in code + on page so it's easy to find) */
-  .todo{ background:var(--verified-10); border-radius:2px; padding:0 4px; }
-
   /* ============ RESPONSIVE ============ */
   @media (max-width: 860px){
-    .wrap, nav{ padding-left:24px; padding-right:24px; }
     #hero{ padding:150px 0 80px; }
     .exp-tag{ margin-left:0; }
     .eyebrow{ flex-wrap:wrap; }
-    section{ padding:72px 0; }
     .project{ grid-template-columns:40px 1fr; }
     .project-link{ grid-column:2; margin-top:12px; }
-    .about-grid{ grid-template-columns:1fr; gap:40px; }
     .contact-grid{ flex-direction:column; align-items:flex-start; }
-    .nav-links{ gap:18px; }
   }
   @media (max-width: 520px){
-    .nav-links a{ font-size:10.5px; }
     .project-meta{ flex-direction:column; gap:6px; }
   }
 </style>
@@ -272,7 +131,7 @@
     <a href="#hero" class="nav-name">TINA JU</a>
     <div class="nav-links">
       <a href="#work" data-nav>Work</a>
-      <a href="#about" data-nav>About</a>
+      <a href="about.html">About</a>
       <a href="#contact" data-nav>Contact</a>
     </div>
   </nav>
@@ -390,31 +249,6 @@
     </div>
   </section>
 
-  <!-- ============ ABOUT ============ -->
-  <section id="about">
-    <div class="wrap about-grid">
-      <p class="about-lede">
-        I turn <span class="mark">ambiguity</span> into shipped outcomes — most recently, by designing
-        <span class="mark">trust and human control</span> into AI-assisted products people rely on in
-        a regulated domain.
-      </p>
-      <div class="fields">
-        <div>
-          <div class="field-label">SCOPE</div>
-          <div class="field-value">7+ years owning ambiguous, high-stakes product problems end-to-end.</div>
-        </div>
-        <div>
-          <div class="field-label">FOCUS</div>
-          <div class="field-value">Designing transparency, trust, and human control over model output in a regulated domain.</div>
-        </div>
-        <div>
-          <div class="field-label">METHOD</div>
-          <div class="field-value">Design systems and clear cross-functional reasoning that turn uncertainty into shipped, measurable outcomes.</div>
-        </div>
-      </div>
-    </div>
-  </section>
-
   <!-- ============ CONTACT ============ -->
   <section id="contact">
     <div class="wrap contact-grid">
@@ -422,8 +256,8 @@
       <div class="contact-right">
         <a href="mailto:tinaju23@gmail.com" class="contact-email">tinaju23@gmail.com</a>
         <div class="contact-links">
+          <a href="Tina-Ju-Resume.pdf" target="_blank" rel="noopener">Resume</a>
           <a href="#" class="todo">LinkedIn</a>
-          <a href="#" class="todo">Resume</a>
           <a href="#" class="todo">Dribbble</a>
         </div>
       </div>
@@ -441,7 +275,7 @@
   // ---- Calibration bar: scroll progress + section ticks ----
   const track = document.getElementById('calTrack');
   const fill = document.getElementById('calFill');
-  const sections = ['work','about','contact'].map(id => document.getElementById(id));
+  const sections = ['work','contact'].map(id => document.getElementById(id));
   const navLinks = document.querySelectorAll('[data-nav]');
 
   function layoutTicks(){

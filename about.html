@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>About — Tina Ju</title>
+<meta name="description" content="About Tina Ju, Senior Product Designer — scope, focus, and method behind 7+ years of turning ambiguity into shipped outcomes.">
+<link rel="canonical" href="https://www.tina-ju.com/about.html">
+<link rel="icon" href="data:,">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="styles.css">
+<style>
+  /* ============ ABOUT INTRO ============ */
+  #intro{
+    padding:180px 0 80px;
+    border-top:none;
+  }
+  .eyebrow{
+    font-family:var(--font-mono); font-size:12px; letter-spacing:0.12em;
+    text-transform:uppercase; color:var(--verified);
+    display:flex; align-items:center; gap:10px; margin-bottom:22px;
+  }
+  .eyebrow::before{
+    content:''; width:16px; height:1px; background:var(--verified);
+  }
+  .about-lede{
+    font-family:var(--font-display); font-weight:500; font-size:clamp(24px,3.2vw,36px);
+    line-height:1.35; letter-spacing:-0.01em; max-width:26ch;
+  }
+  .about-lede .mark{ color:var(--verified); }
+
+  /* ============ COLLAGE ============ */
+  #collage{ padding-top:20px; padding-bottom:20px; }
+  .collage{
+    display:grid;
+    grid-template-columns:repeat(12, 1fr);
+    grid-auto-rows:14px;
+    gap:18px;
+    padding:40px 0 20px;
+  }
+  .collage-item{
+    position:relative;
+    border-radius:2px;
+    overflow:hidden;
+    background:var(--paper-dim);
+    box-shadow:0 1px 2px rgba(20,23,27,0.06), 0 10px 24px rgba(20,23,27,0.10);
+    border:6px solid var(--paper);
+    outline:1px solid var(--line);
+    opacity:0;
+    transform:translateY(28px) rotate(var(--tilt,0deg));
+    animation:riseIn .7s cubic-bezier(.2,.7,.2,1) forwards, float 7s ease-in-out infinite;
+    animation-delay:var(--delay,0s), calc(var(--delay,0s) + .7s);
+    transition:transform .3s ease, box-shadow .3s ease;
+  }
+  .collage-item:hover{
+    transform:translateY(0) rotate(0deg) scale(1.03) !important;
+    box-shadow:0 4px 10px rgba(20,23,27,0.10), 0 18px 34px rgba(20,23,27,0.16);
+    z-index:5;
+    animation-play-state:paused;
+  }
+  .collage-item img{
+    width:100%; height:100%; object-fit:cover; display:block;
+  }
+
+  .collage-item.c1{ grid-column:1 / 6;  grid-row:1 / 20; --tilt:-2deg;  --delay:0s;  }
+  .collage-item.c2{ grid-column:6 / 9;  grid-row:1 / 12; --tilt:1.5deg; --delay:.1s; }
+  .collage-item.c3{ grid-column:9 / 13; grid-row:1 / 15; --tilt:-1deg;  --delay:.2s; }
+  .collage-item.c4{ grid-column:6 / 9;  grid-row:12 / 24; --tilt:2deg;  --delay:.3s; }
+  .collage-item.c5{ grid-column:9 / 13; grid-row:15 / 24; --tilt:1deg;  --delay:.4s; }
+
+  @keyframes riseIn{
+    to{ opacity:1; transform:translateY(0) rotate(var(--tilt,0deg)); }
+  }
+  @keyframes float{
+    0%, 100%{ transform:translateY(0) rotate(var(--tilt,0deg)); }
+    50%{ transform:translateY(-6px) rotate(var(--tilt,0deg)); }
+  }
+
+  /* ============ FIELDS ============ */
+  #fields{ padding-top:60px; }
+  .fields{ display:flex; flex-direction:column; gap:36px; max-width:640px; }
+  .field-row{ display:grid; grid-template-columns:140px 1fr; gap:24px; }
+  .field-label{
+    font-family:var(--font-mono); font-size:11px; letter-spacing:0.1em;
+    color:var(--verified); padding-top:2px;
+  }
+  .field-value{ font-size:17px; color:var(--ink); line-height:1.6; }
+
+  /* ============ RESUME CTA ============ */
+  #resume-cta{ border-bottom:none; padding-bottom:100px; }
+  .resume-grid{
+    display:flex; justify-content:space-between; align-items:flex-end;
+    flex-wrap:wrap; gap:32px;
+  }
+  #resume-cta h2{
+    font-family:var(--font-display); font-weight:600;
+    font-size:clamp(28px,3.6vw,40px); letter-spacing:-0.01em; max-width:14ch;
+  }
+  .resume-cta-actions{ display:flex; gap:28px; align-items:center; flex-wrap:wrap; }
+
+  /* ============ RESPONSIVE ============ */
+  @media (max-width: 860px){
+    #intro{ padding:150px 0 60px; }
+    .collage{ grid-template-columns:repeat(6, 1fr); grid-auto-rows:12px; gap:14px; }
+    .collage-item.c1{ grid-column:1 / 7; grid-row:1 / 16; }
+    .collage-item.c2{ grid-column:1 / 4; grid-row:16 / 26; }
+    .collage-item.c3{ grid-column:4 / 7; grid-row:16 / 26; }
+    .collage-item.c4{ grid-column:1 / 4; grid-row:26 / 38; }
+    .collage-item.c5{ grid-column:4 / 7; grid-row:26 / 38; }
+    .field-row{ grid-template-columns:1fr; gap:6px; }
+    .resume-grid{ flex-direction:column; align-items:flex-start; }
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <nav>
+    <a href="index.html" class="nav-name">TINA JU</a>
+    <div class="nav-links">
+      <a href="index.html#work">Work</a>
+      <a href="about.html" class="active">About</a>
+      <a href="index.html#contact">Contact</a>
+    </div>
+  </nav>
+  <div class="cal-track" id="calTrack">
+    <div class="cal-fill" id="calFill"></div>
+  </div>
+</header>
+
+<main>
+
+  <!-- ============ INTRO ============ -->
+  <section id="intro">
+    <div class="wrap">
+      <div class="eyebrow">ABOUT</div>
+      <p class="about-lede">
+        I turn <span class="mark">ambiguity</span> into shipped outcomes — most recently, by designing
+        <span class="mark">trust and human control</span> into AI-assisted products people rely on in
+        a regulated domain.
+      </p>
+    </div>
+  </section>
+
+  <!-- ============ COLLAGE ============ -->
+  <section id="collage">
+    <div class="wrap">
+      <div class="collage">
+        <div class="collage-item c1"><img src="images/travel-4.jpg" alt="Tina in Chamonix, France" loading="lazy"></div>
+        <div class="collage-item c2"><img src="images/travel-1.jpg" alt="Gilded interior detail from a European chateau" loading="lazy"></div>
+        <div class="collage-item c3"><img src="images/travel-3.jpg" alt="Table of shared Italian pasta dishes" loading="lazy"></div>
+        <div class="collage-item c4"><img src="images/travel-2.jpg" alt="Bougainvillea over a sunlit wall at dusk" loading="lazy"></div>
+        <div class="collage-item c5"><img src="images/travel-5.jpg" alt="Tina watching a sunrise on safari" loading="lazy"></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ FIELDS ============ -->
+  <section id="fields">
+    <div class="wrap">
+      <div class="fields">
+        <div class="field-row">
+          <div class="field-label">SCOPE</div>
+          <div class="field-value">7+ years owning ambiguous, high-stakes product problems end-to-end.</div>
+        </div>
+        <div class="field-row">
+          <div class="field-label">FOCUS</div>
+          <div class="field-value">Designing transparency, trust, and human control over model output in a regulated domain.</div>
+        </div>
+        <div class="field-row">
+          <div class="field-label">METHOD</div>
+          <div class="field-value">Design systems and clear cross-functional reasoning that turn uncertainty into shipped, measurable outcomes.</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ RESUME CTA ============ -->
+  <section id="resume-cta">
+    <div class="wrap resume-grid">
+      <h2>Want the full story?</h2>
+      <div class="resume-cta-actions">
+        <a href="Tina-Ju-Resume.pdf" target="_blank" rel="noopener" class="btn">View résumé</a>
+        <a href="index.html#contact" class="btn-ghost">Get in touch</a>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<footer class="wrap">
+  <span>© 2026 Tina Ju</span>
+  <span>Senior Product Designer</span>
+</footer>
+
+<script>
+  const track = document.getElementById('calTrack');
+  const fill = document.getElementById('calFill');
+
+  function updateFill(){
+    const docHeight = document.documentElement.scrollHeight - window.innerHeight;
+    const pct = docHeight > 0 ? (window.scrollY / docHeight) * 100 : 0;
+    fill.style.width = Math.min(pct, 100) + '%';
+  }
+
+  window.addEventListener('scroll', updateFill, { passive:true });
+  window.addEventListener('resize', updateFill);
+  window.addEventListener('load', updateFill);
+</script>
+
+</body>
+</html>
