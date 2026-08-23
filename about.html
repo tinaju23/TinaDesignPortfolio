@@ -17,6 +17,12 @@
     padding:180px 0 80px;
     border-top:none;
   }
+  .intro-grid{
+    display:grid;
+    grid-template-columns:1.1fr .9fr;
+    gap:64px;
+    align-items:center;
+  }
   .eyebrow{
     font-family:var(--font-mono); font-size:12px; letter-spacing:0.12em;
     text-transform:uppercase; color:var(--verified);
@@ -30,16 +36,20 @@
     line-height:1.35; letter-spacing:-0.01em; max-width:26ch;
   }
   .about-lede .mark{ color:var(--verified); }
+  .intro-photo{
+    width:100%; height:auto; display:block;
+    max-height:520px; object-fit:contain;
+    margin-left:auto;
+  }
 
   /* ============ COLLAGE ============ */
   #collage{ padding-top:20px; padding-bottom:20px; }
   .collage{
     display:grid;
     grid-template-columns:repeat(4, 1fr);
-    grid-template-rows:230px 230px 300px;
+    grid-template-rows:260px 260px;
     grid-template-areas:
-      "p1 p2 ctr ctr"
-      "p3 p4 ctr ctr"
+      "p1 p2 p3 p4"
       "p5 p6 p7 p7";
     gap:14px;
     padding:40px 0 20px;
@@ -75,11 +85,6 @@
   .collage-item.p5 { grid-area:p5;  --tilt:2deg;   --delay:.32s; }
   .collage-item.p6 { grid-area:p6;  --tilt:-1deg;  --delay:.4s; }
   .collage-item.p7 { grid-area:p7;  --tilt:.5deg;  --delay:.48s; }
-  .collage-item.ctr{
-    grid-area:ctr; --tilt:0deg; --delay:.56s;
-    box-shadow:0 2px 4px rgba(20,23,27,0.08), 0 16px 36px rgba(20,23,27,0.16);
-  }
-  .collage-item.ctr:hover{ transform:translateY(0) scale(1.02) !important; }
 
   @keyframes riseIn{
     to{ opacity:1; transform:translateY(0) rotate(var(--tilt,0deg)); }
@@ -114,11 +119,12 @@
   /* ============ RESPONSIVE ============ */
   @media (max-width: 860px){
     #intro{ padding:150px 0 60px; }
+    .intro-grid{ grid-template-columns:1fr; gap:36px; }
+    .intro-photo{ max-height:420px; margin-left:0; }
     .collage{
       grid-template-columns:repeat(2, 1fr);
-      grid-template-rows:280px 190px 190px 190px 150px;
+      grid-template-rows:200px 200px 200px 170px;
       grid-template-areas:
-        "ctr ctr"
         "p1  p2"
         "p3  p4"
         "p5  p6"
@@ -150,13 +156,16 @@
 
   <!-- ============ INTRO ============ -->
   <section id="intro">
-    <div class="wrap">
-      <div class="eyebrow">ABOUT</div>
-      <p class="about-lede">
-        I turn <span class="mark">ambiguity</span> into shipped outcomes — most recently, by designing
-        <span class="mark">trust and human control</span> into AI-assisted products people rely on in
-        a regulated domain.
-      </p>
+    <div class="wrap intro-grid">
+      <div>
+        <div class="eyebrow">ABOUT</div>
+        <p class="about-lede">
+          I turn <span class="mark">ambiguity</span> into shipped outcomes — most recently, by designing
+          <span class="mark">trust and human control</span> into AI-assisted products people rely on in
+          a regulated domain.
+        </p>
+      </div>
+      <img class="intro-photo" src="images/travel-8.jpg" alt="Tina smiling on a bridge in Rome">
     </div>
   </section>
 
@@ -171,7 +180,6 @@
         <div class="collage-item p5"><img src="images/travel-2.jpg" alt="Bougainvillea over a sunlit wall at dusk" loading="lazy"></div>
         <div class="collage-item p6"><img src="images/travel-5.jpg" alt="Tina watching a sunrise on safari" loading="lazy"></div>
         <div class="collage-item p7"><img src="images/travel-7.jpg" alt="Tina celebrating with friends at night" loading="lazy" style="object-position:center 40%;"></div>
-        <div class="collage-item ctr"><img src="images/travel-8.jpg" alt="Tina smiling on a bridge in Rome" loading="lazy" style="object-position:center 32%;"></div>
       </div>
     </div>
   </section>
