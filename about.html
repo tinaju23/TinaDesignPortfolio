@@ -12,6 +12,9 @@
 <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="styles.css">
 <style>
+  /* Snap only within the passions scroll region — see .passion-item below */
+  html{ scroll-snap-type: y proximity; }
+
   /* ============ ABOUT INTRO ============ */
   #intro{
     padding:180px 0 80px;
@@ -32,10 +35,15 @@
     content:''; width:16px; height:1px; background:var(--verified);
   }
   .about-lede{
-    font-family:var(--font-display); font-weight:500; font-size:clamp(24px,3.2vw,36px);
-    line-height:1.35; letter-spacing:-0.01em; max-width:26ch;
+    font-family:var(--font-display); font-weight:500; font-size:clamp(22px,2.6vw,30px);
+    line-height:1.35; letter-spacing:-0.01em; max-width:34ch;
   }
   .about-lede .mark{ color:var(--verified); }
+  .about-subcopy{
+    font-family:var(--font-mono); font-size:13px; color:var(--slate);
+    max-width:48ch; margin-top:18px; line-height:1.6;
+    padding-left:16px; border-left:2px solid var(--verified);
+  }
   .intro-photo{
     width:100%; height:auto; display:block;
     max-height:520px; object-fit:contain;
@@ -90,6 +98,8 @@
     padding:36px 0; border-top:1px solid var(--line);
     cursor:pointer; opacity:.4;
     transition:opacity .35s ease;
+    scroll-snap-align:center;
+    scroll-snap-stop:always;
   }
   .passion-item:last-child{ border-bottom:1px solid var(--line); }
   .passion-item.active{ opacity:1; }
@@ -165,9 +175,13 @@
       <div>
         <div class="eyebrow">ABOUT</div>
         <p class="about-lede">
-          I turn <span class="mark">ambiguity</span> into shipped outcomes — most recently, by designing
-          <span class="mark">trust and human control</span> into AI-assisted products people rely on in
-          a regulated domain.
+          Senior product designer who turns extremely ambiguous, complex, high-stakes financial
+          products into experiences people trust. I take problems from undefined to shipped
+          and measurable.
+        </p>
+        <p class="about-subcopy">
+          At Savvy Wealth, I own the advisor's experience surrounding financial infrastructure —
+          the flagship revenue driver behind our $8B assets under management.
         </p>
       </div>
       <img class="intro-photo" src="images/travel-8.jpg" alt="Tina smiling on a bridge in Rome">
