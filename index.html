@@ -1,0 +1,484 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Tina Ju — Senior Product Designer</title>
+<meta name="description" content="Tina Ju, Senior Product Designer. Designing transparency, trust, and human control into AI-assisted experiences, plus the design systems that turn ambiguity into shipped outcomes.">
+<link rel="canonical" href="https://www.tina-ju.com/">
+<meta property="og:title" content="Tina Ju — Senior Product Designer">
+<meta property="og:description" content="Designing transparency, trust, and human control into AI-assisted experiences, plus the design systems that turn ambiguity into shipped outcomes.">
+<meta property="og:url" content="https://www.tina-ju.com/">
+<meta property="og:type" content="website">
+<link rel="icon" href="data:,">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  /* ============ TOKENS ============ */
+  :root{
+    --paper: #FAFAF7;
+    --paper-dim: #F2F1EC;
+    --ink: #14171B;
+    --slate: #5B616B;
+    --line: #E3E1DB;
+    --verified: #1F6F5C;   /* primary accent — calibrated / confirmed */
+    --verified-10: rgba(31,111,92,0.08);
+    --flag: #C97A3E;       /* secondary accent — used sparingly */
+    --font-display: 'Space Grotesk', sans-serif;
+    --font-body: 'IBM Plex Sans', sans-serif;
+    --font-mono: 'IBM Plex Mono', monospace;
+    --container: 1120px;
+  }
+
+  *{ box-sizing:border-box; margin:0; padding:0; }
+  html{ scroll-behavior:smooth; }
+  body{
+    background:var(--paper);
+    color:var(--ink);
+    font-family:var(--font-body);
+    font-size:17px;
+    line-height:1.6;
+    -webkit-font-smoothing:antialiased;
+  }
+  img,svg{ display:block; max-width:100%; }
+  a{ color:inherit; text-decoration:none; }
+  ul{ list-style:none; }
+
+  .wrap{ max-width:var(--container); margin:0 auto; padding:0 40px; }
+
+  ::selection{ background:var(--verified); color:var(--paper); }
+
+  a:focus-visible, button:focus-visible{
+    outline:2px solid var(--verified);
+    outline-offset:3px;
+    border-radius:2px;
+  }
+
+  @media (prefers-reduced-motion: reduce){
+    html{ scroll-behavior:auto; }
+    *{ animation-duration:0.01ms !important; animation-iteration-count:1 !important; transition-duration:0.01ms !important; scroll-behavior:auto !important; }
+  }
+
+  /* ============ NAV + CALIBRATION BAR ============ */
+  header{
+    position:fixed; top:0; left:0; right:0; z-index:50;
+    background:rgba(250,250,247,0.88);
+    backdrop-filter:blur(8px);
+    -webkit-backdrop-filter:blur(8px);
+  }
+  nav{
+    display:flex; align-items:center; justify-content:space-between;
+    max-width:var(--container); margin:0 auto; padding:20px 40px;
+  }
+  .nav-name{
+    font-family:var(--font-display); font-weight:600; font-size:16px;
+    letter-spacing:0.02em;
+  }
+  .nav-links{ display:flex; gap:32px; }
+  .nav-links a{
+    font-family:var(--font-mono); font-size:12px; letter-spacing:0.06em;
+    text-transform:uppercase; color:var(--slate);
+    padding-bottom:2px; border-bottom:1px solid transparent;
+    transition:color .15s ease, border-color .15s ease;
+  }
+  .nav-links a:hover, .nav-links a.active{ color:var(--ink); border-color:var(--verified); }
+
+  .cal-track{
+    position:relative; height:2px; background:var(--line);
+  }
+  .cal-fill{
+    position:absolute; top:0; left:0; height:100%;
+    background:var(--verified); width:0%;
+    transition:width .08s linear;
+  }
+  .cal-tick{
+    position:absolute; top:-2px; width:1px; height:6px; background:var(--ink);
+    opacity:.35;
+  }
+
+  /* ============ HERO ============ */
+  #hero{
+    padding:180px 0 120px;
+    border-bottom:1px solid var(--line);
+  }
+  .eyebrow{
+    font-family:var(--font-mono); font-size:12px; letter-spacing:0.12em;
+    text-transform:uppercase; color:var(--verified);
+    display:flex; align-items:center; gap:10px; margin-bottom:22px;
+  }
+  .eyebrow::before{
+    content:''; width:16px; height:1px; background:var(--verified);
+  }
+  .exp-tag{
+    font-family:var(--font-mono); font-size:12px; color:var(--slate);
+    border:1px solid var(--line); border-radius:3px; padding:3px 8px;
+    margin-left:auto;
+  }
+  h1{
+    font-family:var(--font-display); font-weight:600;
+    font-size:clamp(42px, 6vw, 76px); line-height:1.02; letter-spacing:-0.02em;
+    max-width:14ch;
+  }
+  .role{
+    font-family:var(--font-display); font-weight:500; font-size:clamp(18px,2vw,22px);
+    color:var(--slate); margin-top:18px;
+  }
+  .hero-sub{
+    font-size:18px; color:var(--slate); max-width:52ch; margin-top:28px;
+    line-height:1.65;
+  }
+  .hero-cta{ display:flex; gap:28px; margin-top:44px; align-items:center; flex-wrap:wrap; }
+  .btn{
+    font-family:var(--font-mono); font-size:13px; letter-spacing:0.04em;
+    text-transform:uppercase; padding:13px 24px;
+    background:var(--ink); color:var(--paper);
+    border:1px solid var(--ink); border-radius:2px;
+    transition:background .15s ease, color .15s ease;
+  }
+  .btn:hover{ background:transparent; color:var(--ink); }
+  .btn-ghost{
+    font-family:var(--font-mono); font-size:13px; letter-spacing:0.04em;
+    text-transform:uppercase; color:var(--slate);
+    border-bottom:1px solid var(--line); padding-bottom:2px;
+    transition:color .15s ease, border-color .15s ease;
+  }
+  .btn-ghost:hover{ color:var(--ink); border-color:var(--verified); }
+
+  /* ============ SECTION SHELL ============ */
+  section{ padding:100px 0; border-bottom:1px solid var(--line); }
+  .section-head{
+    display:flex; justify-content:space-between; align-items:flex-end;
+    margin-bottom:64px; gap:24px; flex-wrap:wrap;
+  }
+  .section-head h2{
+    font-family:var(--font-display); font-weight:600; font-size:clamp(28px,3.4vw,38px);
+    letter-spacing:-0.01em;
+  }
+  .section-note{
+    font-family:var(--font-mono); font-size:12px; color:var(--slate);
+    max-width:34ch; text-align:right;
+  }
+
+  /* ============ WORK ============ */
+  .project{
+    display:grid; grid-template-columns:64px 1fr auto; gap:32px;
+    align-items:start; padding:40px 0; border-top:1px solid var(--line);
+    transition:background .2s ease;
+  }
+  .project:last-child{ border-bottom:none; }
+  .project:hover{ background:var(--paper-dim); }
+  .project-icon{
+    width:44px; height:44px; color:var(--verified);
+    padding-top:4px;
+  }
+  .project-tag{
+    font-family:var(--font-mono); font-size:11px; letter-spacing:0.08em;
+    text-transform:uppercase; color:var(--flag); margin-bottom:10px;
+  }
+  .project-title{
+    font-family:var(--font-display); font-weight:600; font-size:24px;
+    margin-bottom:10px;
+  }
+  .project-desc{
+    font-style:italic; color:var(--slate); font-size:15px; max-width:56ch;
+    margin-bottom:16px;
+  }
+  .project-meta{
+    display:flex; gap:18px; flex-wrap:wrap;
+    font-family:var(--font-mono); font-size:11.5px; color:var(--slate);
+  }
+  .project-meta span b{ color:var(--ink); font-weight:500; }
+  .project-link{
+    font-family:var(--font-mono); font-size:12px; color:var(--ink);
+    white-space:nowrap; align-self:center;
+    border-bottom:1px solid var(--line);
+    transition:border-color .15s ease;
+  }
+  .project:hover .project-link{ border-color:var(--verified); }
+
+  /* ============ ABOUT ============ */
+  .about-grid{
+    display:grid; grid-template-columns:1.1fr 1fr; gap:64px;
+  }
+  .about-lede{
+    font-family:var(--font-display); font-weight:500; font-size:clamp(22px,2.6vw,30px);
+    line-height:1.35; letter-spacing:-0.01em;
+  }
+  .about-lede .mark{ color:var(--verified); }
+  .fields{ display:flex; flex-direction:column; gap:28px; }
+  .field-label{
+    font-family:var(--font-mono); font-size:11px; letter-spacing:0.1em;
+    color:var(--verified); margin-bottom:8px;
+  }
+  .field-value{ font-size:16px; color:var(--ink); line-height:1.55; }
+
+  /* ============ CONTACT ============ */
+  #contact{ border-bottom:none; padding-bottom:80px; }
+  .contact-grid{
+    display:flex; justify-content:space-between; align-items:flex-end;
+    flex-wrap:wrap; gap:40px;
+  }
+  #contact h2{
+    font-family:var(--font-display); font-weight:600;
+    font-size:clamp(32px,4.4vw,52px); letter-spacing:-0.01em; max-width:12ch;
+  }
+  .contact-right{ display:flex; flex-direction:column; gap:16px; align-items:flex-start; }
+  .contact-email{
+    font-family:var(--font-mono); font-size:20px; border-bottom:1px solid var(--ink);
+    padding-bottom:4px; transition:color .15s ease, border-color .15s ease;
+  }
+  .contact-email:hover{ color:var(--verified); border-color:var(--verified); }
+  .contact-links{ display:flex; gap:24px; margin-top:4px; }
+  .contact-links a{
+    font-family:var(--font-mono); font-size:12px; letter-spacing:0.05em;
+    text-transform:uppercase; color:var(--slate);
+    border-bottom:1px solid var(--line); padding-bottom:2px;
+  }
+  .contact-links a:hover{ color:var(--ink); border-color:var(--verified); }
+
+  footer{
+    padding:28px 0; display:flex; justify-content:space-between;
+    font-family:var(--font-mono); font-size:11px; color:var(--slate);
+    flex-wrap:wrap; gap:12px;
+  }
+
+  /* placeholder-content flag (visible in code + on page so it's easy to find) */
+  .todo{ background:var(--verified-10); border-radius:2px; padding:0 4px; }
+
+  /* ============ RESPONSIVE ============ */
+  @media (max-width: 860px){
+    .wrap, nav{ padding-left:24px; padding-right:24px; }
+    #hero{ padding:150px 0 80px; }
+    .exp-tag{ margin-left:0; }
+    .eyebrow{ flex-wrap:wrap; }
+    section{ padding:72px 0; }
+    .project{ grid-template-columns:40px 1fr; }
+    .project-link{ grid-column:2; margin-top:12px; }
+    .about-grid{ grid-template-columns:1fr; gap:40px; }
+    .contact-grid{ flex-direction:column; align-items:flex-start; }
+    .nav-links{ gap:18px; }
+  }
+  @media (max-width: 520px){
+    .nav-links a{ font-size:10.5px; }
+    .project-meta{ flex-direction:column; gap:6px; }
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <nav>
+    <a href="#hero" class="nav-name">TINA JU</a>
+    <div class="nav-links">
+      <a href="#work" data-nav>Work</a>
+      <a href="#about" data-nav>About</a>
+      <a href="#contact" data-nav>Contact</a>
+    </div>
+  </nav>
+  <div class="cal-track" id="calTrack">
+    <div class="cal-fill" id="calFill"></div>
+  </div>
+</header>
+
+<main>
+
+  <!-- ============ HERO ============ -->
+  <section id="hero" style="border-top:none;">
+    <div class="wrap">
+      <div class="eyebrow">SENIOR PRODUCT DESIGNER <span class="exp-tag">EXP — 7+ YRS</span></div>
+      <h1>Tina Ju</h1>
+      <p class="hero-sub">
+        I own ambiguous, high-stakes product problems end-to-end. Lately that means designing
+        transparency, trust, and human control into AI-assisted experiences in a regulated domain —
+        and building the design systems and cross-functional reasoning that turn uncertainty into
+        shipped, measurable outcomes.
+      </p>
+      <div class="hero-cta">
+        <a href="#work" class="btn">View selected work</a>
+        <a href="#contact" class="btn-ghost">Get in touch</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ WORK ============ -->
+  <section id="work">
+    <div class="wrap">
+      <div class="section-head">
+        <h2>Selected work</h2>
+        <p class="section-note">Four projects spanning AI trust, fintech, and partner tooling.</p>
+      </div>
+
+      <!-- Project 1 -->
+      <div class="project">
+        <svg class="project-icon" viewBox="0 0 44 44" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M8 20 L20 8 H34 V22 L22 34 Z"/>
+          <circle cx="27" cy="15" r="2.5"/>
+        </svg>
+        <div>
+          <div class="project-tag">AI Product · Hackathon Winner</div>
+          <div class="project-title">CRM Dynamic Tags</div>
+          <p class="project-desc todo">Add 1–2 sentences: what dynamic tagging solved for reps, and why the project won.</p>
+          <div class="project-meta">
+            <span><b>Role</b> — add role</span>
+            <span><b>Timeline</b> — add dates</span>
+            <span><b>Tools</b> — add tools</span>
+          </div>
+        </div>
+        <a href="#" class="project-link">View case study →</a>
+      </div>
+
+      <!-- Project 2 -->
+      <div class="project">
+        <svg class="project-icon" viewBox="0 0 44 44" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+          <rect x="8" y="14" width="20" height="14" rx="1.5"/>
+          <rect x="14" y="8" width="20" height="14" rx="1.5"/>
+        </svg>
+        <div>
+          <div class="project-tag">Fintech · Portfolio</div>
+          <div class="project-title">Managed Portfolio, Redesigned</div>
+          <p class="project-desc todo">Add 1–2 sentences: what the portfolio experience was before, and what changed for clients.</p>
+          <div class="project-meta">
+            <span><b>Role</b> — add role</span>
+            <span><b>Timeline</b> — add dates</span>
+            <span><b>Tools</b> — add tools</span>
+          </div>
+        </div>
+        <a href="#" class="project-link">View case study →</a>
+      </div>
+
+      <!-- Project 3 -->
+      <div class="project">
+        <svg class="project-icon" viewBox="0 0 44 44" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M6 30 A16 16 0 0 1 38 30"/>
+          <path d="M22 30 L30 18"/>
+          <circle cx="22" cy="30" r="2"/>
+        </svg>
+        <div>
+          <div class="project-tag">Partner Tools · Dashboard</div>
+          <div class="project-title">An Empowering Dashboard for Partners</div>
+          <p class="project-desc todo">Add 1–2 sentences: what partners couldn't see or do before, and how the dashboard fixed it.</p>
+          <div class="project-meta">
+            <span><b>Role</b> — add role</span>
+            <span><b>Timeline</b> — add dates</span>
+            <span><b>Tools</b> — add tools</span>
+          </div>
+        </div>
+        <a href="#" class="project-link">View case study →</a>
+      </div>
+
+      <!-- Project 4 -->
+      <div class="project">
+        <svg class="project-icon" viewBox="0 0 44 44" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M6 22 H16 M20 22 H30 M34 22 H38"/>
+          <circle cx="38" cy="22" r="3"/>
+          <path d="M36.5 22 L38 23.5 L40 20.5" stroke-width="1.3"/>
+        </svg>
+        <div>
+          <div class="project-tag">Fintech · Lending</div>
+          <div class="project-title">A Seamless Digital Lending Experience</div>
+          <p class="project-desc todo">Add 1–2 sentences: where applicants were dropping off, and how this closed the gap.</p>
+          <div class="project-meta">
+            <span><b>Role</b> — add role</span>
+            <span><b>Timeline</b> — add dates</span>
+            <span><b>Tools</b> — add tools</span>
+          </div>
+        </div>
+        <a href="#" class="project-link">View case study →</a>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ============ ABOUT ============ -->
+  <section id="about">
+    <div class="wrap about-grid">
+      <p class="about-lede">
+        I turn <span class="mark">ambiguity</span> into shipped outcomes — most recently, by designing
+        <span class="mark">trust and human control</span> into AI-assisted products people rely on in
+        a regulated domain.
+      </p>
+      <div class="fields">
+        <div>
+          <div class="field-label">SCOPE</div>
+          <div class="field-value">7+ years owning ambiguous, high-stakes product problems end-to-end.</div>
+        </div>
+        <div>
+          <div class="field-label">FOCUS</div>
+          <div class="field-value">Designing transparency, trust, and human control over model output in a regulated domain.</div>
+        </div>
+        <div>
+          <div class="field-label">METHOD</div>
+          <div class="field-value">Design systems and clear cross-functional reasoning that turn uncertainty into shipped, measurable outcomes.</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ CONTACT ============ -->
+  <section id="contact">
+    <div class="wrap contact-grid">
+      <h2>Let's talk.</h2>
+      <div class="contact-right">
+        <a href="mailto:tinaju23@gmail.com" class="contact-email">tinaju23@gmail.com</a>
+        <div class="contact-links">
+          <a href="#" class="todo">LinkedIn</a>
+          <a href="#" class="todo">Resume</a>
+          <a href="#" class="todo">Dribbble</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<footer class="wrap">
+  <span>© 2026 Tina Ju</span>
+  <span>Senior Product Designer</span>
+</footer>
+
+<script>
+  // ---- Calibration bar: scroll progress + section ticks ----
+  const track = document.getElementById('calTrack');
+  const fill = document.getElementById('calFill');
+  const sections = ['work','about','contact'].map(id => document.getElementById(id));
+  const navLinks = document.querySelectorAll('[data-nav]');
+
+  function layoutTicks(){
+    track.querySelectorAll('.cal-tick').forEach(t => t.remove());
+    const docHeight = document.documentElement.scrollHeight - window.innerHeight;
+    sections.forEach(sec => {
+      const pct = (sec.offsetTop / docHeight) * 100;
+      const tick = document.createElement('div');
+      tick.className = 'cal-tick';
+      tick.style.left = pct + '%';
+      track.appendChild(tick);
+    });
+  }
+
+  function updateFill(){
+    const docHeight = document.documentElement.scrollHeight - window.innerHeight;
+    const pct = docHeight > 0 ? (window.scrollY / docHeight) * 100 : 0;
+    fill.style.width = Math.min(pct, 100) + '%';
+  }
+
+  window.addEventListener('scroll', updateFill, { passive:true });
+  window.addEventListener('resize', () => { layoutTicks(); updateFill(); });
+  window.addEventListener('load', () => { layoutTicks(); updateFill(); });
+
+  // ---- Active nav link on scroll ----
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if(entry.isIntersecting){
+        navLinks.forEach(l => l.classList.remove('active'));
+        const match = document.querySelector(`[data-nav][href="#${entry.target.id}"]`);
+        if(match) match.classList.add('active');
+      }
+    });
+  }, { rootMargin: '-45% 0px -50% 0px' });
+
+  sections.forEach(sec => observer.observe(sec));
+</script>
+
+</body>
+</html>
