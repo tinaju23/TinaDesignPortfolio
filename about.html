@@ -42,62 +42,37 @@
     margin-left:auto;
   }
 
-  /* ============ COLLAGE ============ */
-  #collage{ padding-top:20px; padding-bottom:20px; }
+  /* ============ COLLAGE / PHOTO STACK ============ */
+  #collage{ padding-top:20px; padding-bottom:40px; }
   .collage-layout{
     display:grid;
     grid-template-columns:2fr 1fr;
     gap:56px;
     align-items:start;
   }
-  .collage{
-    display:grid;
-    grid-template-columns:repeat(4, 1fr);
-    grid-template-rows:200px 200px;
-    grid-template-areas:
-      "p1 p2 p3 p4"
-      "p5 p6 p7 p7";
-    gap:14px;
-    padding:40px 0 20px;
+  .photo-stack{
+    position:sticky;
+    top:110px;
+    height:480px;
   }
-  .collage-item{
+  .photo-stack-viewport{
     position:relative;
+    width:100%;
+    height:100%;
+  }
+  .stack-photo{
+    position:absolute;
+    left:0; right:0;
+    height:380px;
     border-radius:2px;
     overflow:hidden;
     background:var(--paper-dim);
-    box-shadow:0 1px 2px rgba(20,23,27,0.06), 0 10px 24px rgba(20,23,27,0.10);
-    border:6px solid var(--paper);
-    outline:1px solid var(--line);
-    opacity:0;
-    transform:translateY(28px) rotate(var(--tilt,0deg));
-    animation:riseIn .7s cubic-bezier(.2,.7,.2,1) forwards, float 7s ease-in-out infinite;
-    animation-delay:var(--delay,0s), calc(var(--delay,0s) + .7s);
-    transition:transform .3s ease, box-shadow .3s ease;
+    box-shadow:0 12px 32px rgba(20,23,27,0.16);
+    transition:transform .55s cubic-bezier(.22,.8,.28,1), opacity .5s ease;
+    will-change:transform, opacity;
   }
-  .collage-item:hover{
-    transform:translateY(0) rotate(0deg) scale(1.03) !important;
-    box-shadow:0 4px 10px rgba(20,23,27,0.10), 0 18px 34px rgba(20,23,27,0.16);
-    z-index:5;
-    animation-play-state:paused;
-  }
-  .collage-item img{
+  .stack-photo img{
     width:100%; height:100%; object-fit:cover; display:block;
-  }
-
-  .collage-item.p1 { grid-area:p1;  --tilt:-2deg;  --delay:0s;  }
-  .collage-item.p2 { grid-area:p2;  --tilt:1.5deg; --delay:.08s; }
-  .collage-item.p3 { grid-area:p3;  --tilt:1deg;   --delay:.16s; }
-  .collage-item.p4 { grid-area:p4;  --tilt:-1.5deg;--delay:.24s; }
-  .collage-item.p5 { grid-area:p5;  --tilt:2deg;   --delay:.32s; }
-  .collage-item.p6 { grid-area:p6;  --tilt:-1deg;  --delay:.4s; }
-  .collage-item.p7 { grid-area:p7;  --tilt:.5deg;  --delay:.48s; }
-
-  @keyframes riseIn{
-    to{ opacity:1; transform:translateY(0) rotate(var(--tilt,0deg)); }
-  }
-  @keyframes float{
-    0%, 100%{ transform:translateY(0) rotate(var(--tilt,0deg)); }
-    50%{ transform:translateY(-6px) rotate(var(--tilt,0deg)); }
   }
 
   /* ============ PASSIONS ============ */
@@ -110,13 +85,22 @@
   .passions-list{ margin-top:24px; }
   .passion-item{
     display:flex; align-items:center; gap:16px;
-    padding:16px 0; border-top:1px solid var(--line);
+    padding:36px 0; border-top:1px solid var(--line);
+    cursor:pointer; opacity:.4;
+    transition:opacity .35s ease;
   }
   .passion-item:last-child{ border-bottom:1px solid var(--line); }
+  .passion-item.active{ opacity:1; }
   .passion-icon{
-    width:24px; height:24px; color:var(--verified); flex-shrink:0;
+    width:24px; height:24px; color:var(--line); flex-shrink:0;
+    transition:color .35s ease;
   }
-  .passion-label{ font-size:15.5px; color:var(--ink); line-height:1.4; }
+  .passion-item.active .passion-icon{ color:var(--verified); }
+  .passion-label{
+    font-size:15.5px; color:var(--ink); line-height:1.4;
+    transition:font-weight .2s ease;
+  }
+  .passion-item.active .passion-label{ font-weight:600; }
 
   /* ============ FIELDS ============ */
   #fields{ padding-top:60px; }
@@ -146,17 +130,10 @@
     .intro-grid{ grid-template-columns:1fr; gap:36px; }
     .intro-photo{ max-height:420px; margin-left:0; }
     .collage-layout{ grid-template-columns:1fr; gap:0; }
-    .passions{ padding-top:48px; }
-    .collage{
-      grid-template-columns:repeat(2, 1fr);
-      grid-template-rows:200px 200px 200px 170px;
-      grid-template-areas:
-        "p1  p2"
-        "p3  p4"
-        "p5  p6"
-        "p7  p7";
-      gap:10px;
-    }
+    .photo-stack{ position:sticky; top:70px; height:300px; margin-bottom:8px; }
+    .stack-photo{ height:240px; }
+    .passions{ padding-top:16px; }
+    .passion-item{ padding:24px 0; }
     .field-row{ grid-template-columns:1fr; gap:6px; }
     .resume-grid{ flex-direction:column; align-items:flex-start; }
   }
@@ -195,37 +172,38 @@
     </div>
   </section>
 
-  <!-- ============ COLLAGE ============ -->
+  <!-- ============ COLLAGE / PHOTO STACK ============ -->
   <section id="collage">
     <div class="wrap collage-layout">
-      <div class="collage">
-        <div class="collage-item p1"><img src="images/travel-1.jpg" alt="Gilded interior detail from a European chateau" loading="lazy"></div>
-        <div class="collage-item p2"><img src="images/travel-6.jpg" alt="Tina laughing on a safari game drive" loading="lazy"></div>
-        <div class="collage-item p3"><img src="images/travel-4.jpg" alt="Tina in Chamonix, France" loading="lazy"></div>
-        <div class="collage-item p4"><img src="images/travel-3.jpg" alt="Table of shared Italian pasta dishes" loading="lazy"></div>
-        <div class="collage-item p5"><img src="images/travel-2.jpg" alt="Bougainvillea over a sunlit wall at dusk" loading="lazy"></div>
-        <div class="collage-item p6"><img src="images/travel-5.jpg" alt="Tina watching a sunrise on safari" loading="lazy"></div>
-        <div class="collage-item p7"><img src="images/travel-7.jpg" alt="Tina celebrating with friends at night" loading="lazy" style="object-position:center 40%;"></div>
+      <div class="photo-stack">
+        <div class="photo-stack-viewport" id="photoStack">
+          <div class="stack-photo" data-index="0"><img src="images/travel-7.jpg" alt="Tina celebrating with friends at night" style="object-position:center 40%;"></div>
+          <div class="stack-photo" data-index="1"><img src="images/travel-5.jpg" alt="Tina watching a sunrise on safari"></div>
+          <div class="stack-photo" data-index="2"><img src="images/travel-1.jpg" alt="Gilded interior detail from a European chateau"></div>
+          <div class="stack-photo" data-index="3"><img src="images/travel-3.jpg" alt="Table of shared Italian pasta dishes"></div>
+          <div class="stack-photo" data-index="4"><img src="images/travel-9.jpg" alt="Wildflowers and alpine mountains in soft focus"></div>
+          <div class="stack-photo" data-index="5"><img src="images/travel-4.jpg" alt="Tina in Chamonix, France"></div>
+        </div>
       </div>
 
       <aside class="passions">
         <div class="eyebrow">OUTSIDE THE 9–5</div>
         <h3>What fills my 5–9.</h3>
-        <div class="passions-list">
-          <div class="passion-item">
+        <div class="passions-list" id="passionsList">
+          <div class="passion-item" data-index="0">
             <svg class="passion-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
               <path d="M12 20.5C12 20.5 3.5 15.5 3.5 9.5C3.5 6.5 5.8 4.5 8.5 4.5C10 4.5 11.3 5.3 12 6.5C12.7 5.3 14 4.5 15.5 4.5C18.2 4.5 20.5 6.5 20.5 9.5C20.5 15.5 12 20.5 12 20.5Z"/>
             </svg>
             <span class="passion-label">Family &amp; friends</span>
           </div>
-          <div class="passion-item">
+          <div class="passion-item" data-index="1">
             <svg class="passion-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
               <circle cx="17" cy="6" r="2"/>
               <path d="M2 19L8 11L12 15.5L15 12L22 19H2Z"/>
             </svg>
             <span class="passion-label">Taking in a beautiful scene</span>
           </div>
-          <div class="passion-item">
+          <div class="passion-item" data-index="2">
             <svg class="passion-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
               <path d="M3 9L12 4L21 9"/>
               <path d="M5 20V9"/>
@@ -236,7 +214,7 @@
             </svg>
             <span class="passion-label">Appreciating architecture</span>
           </div>
-          <div class="passion-item">
+          <div class="passion-item" data-index="3">
             <svg class="passion-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
               <path d="M4 11H20C20 15 16.5 18 12 18C7.5 18 4 15 4 11Z"/>
               <path d="M9 8C9 6.5 8 6 8 4.5"/>
@@ -245,14 +223,14 @@
             </svg>
             <span class="passion-label">Carbs on carbs</span>
           </div>
-          <div class="passion-item">
+          <div class="passion-item" data-index="4">
             <svg class="passion-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
               <path d="M4 8H8L9.5 5.5H14.5L16 8H20V19H4V8Z"/>
               <circle cx="12" cy="13.5" r="3.5"/>
             </svg>
             <span class="passion-label">Capturing beauty through photography</span>
           </div>
-          <div class="passion-item">
+          <div class="passion-item" data-index="5">
             <svg class="passion-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
               <path d="M21 3L3 10.5L10.5 13.5L13.5 21L21 3Z"/>
               <path d="M10.5 13.5L21 3"/>
@@ -315,6 +293,53 @@
   window.addEventListener('scroll', updateFill, { passive:true });
   window.addEventListener('resize', updateFill);
   window.addEventListener('load', updateFill);
+
+  // ---- Photo stack driven by which passion item is centered ----
+  const stackPhotos = Array.from(document.querySelectorAll('.stack-photo'));
+  const passionItems = Array.from(document.querySelectorAll('.passion-item'));
+
+  function setActivePhoto(idx){
+    const viewport = document.getElementById('photoStack');
+    const H = viewport.clientHeight;
+    const cardH = stackPhotos[0].offsetHeight;
+    const gap = 24;
+    const step = cardH + gap;
+    const centerOffset = (H - cardH) / 2;
+
+    stackPhotos.forEach(el => {
+      const i = Number(el.dataset.index);
+      const rel = i - idx;
+      const y = centerOffset + rel * step;
+      el.style.transform = `translateY(${y}px)`;
+      el.style.opacity = rel === 0 ? '1' : (Math.abs(rel) === 1 ? '0.55' : '0');
+      el.style.zIndex = rel === 0 ? '3' : (Math.abs(rel) === 1 ? '2' : '1');
+      el.style.pointerEvents = rel === 0 ? 'auto' : 'none';
+    });
+    passionItems.forEach(el => {
+      el.classList.toggle('active', Number(el.dataset.index) === idx);
+    });
+  }
+
+  const passionObserver = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        setActivePhoto(Number(entry.target.dataset.index));
+      }
+    });
+  }, { rootMargin: '-45% 0px -45% 0px', threshold: 0 });
+
+  passionItems.forEach(el => {
+    passionObserver.observe(el);
+    el.addEventListener('click', () => {
+      el.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    });
+  });
+
+  setActivePhoto(0);
+  window.addEventListener('resize', () => {
+    const activeItem = passionItems.find(el => el.classList.contains('active'));
+    setActivePhoto(activeItem ? Number(activeItem.dataset.index) : 0);
+  });
 </script>
 
 </body>
