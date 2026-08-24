@@ -53,11 +53,20 @@
     display:grid;
     grid-template-columns:2fr 1fr;
     gap:56px;
-    align-items:start;
   }
+  /* .photo-stack-wrap / aside.passions are the tall grid cells (stretched to
+     the row height by default grid alignment). The actual visual boxes
+     (.photo-stack / .passions-sticky) are positioned entirely by JS —
+     see the pinScroll script — cycling between absolute (resting at the
+     top of the wrap), fixed (pinned to the viewport while scrolling
+     through the section), and absolute again (resting at the wrap's
+     bottom) once the user scrolls past. This avoids relying on
+     position:sticky, which behaves inconsistently across browsers when
+     combined with flex/overflow like this. */
+  .photo-stack-wrap{ position:relative; }
   .photo-stack{
-    position:sticky;
-    top:110px;
+    position:absolute;
+    top:0; left:0; width:100%;
     height:640px;
     overflow:hidden;
   }
@@ -83,15 +92,19 @@
   }
 
   /* ============ PASSIONS ============ */
-  .passions{ padding-bottom:65vh; }
+  /* .passions-sticky is position:absolute (out of flow), so this element
+     needs an explicit height covering the box itself plus scroll runway —
+     it can't rely on padding pushed down by in-flow content anymore. */
+  .passions{ position:relative; min-height:calc(640px + 65vh); }
   .passions-sticky{
-    position:sticky;
-    top:110px;
+    position:absolute;
+    top:0; left:0; width:100%;
     height:640px;
     overflow:hidden;
     padding-top:40px;
     display:flex;
     flex-direction:column;
+    box-sizing:border-box;
   }
   .passions h3{
     font-family:var(--font-display); font-weight:600;
@@ -152,11 +165,12 @@
     .intro-grid{ grid-template-columns:1fr; gap:36px; }
     .intro-photo{ max-height:420px; margin-left:0; }
     .collage-layout{ grid-template-columns:1fr; gap:0; }
-    .photo-stack{ position:sticky; top:70px; height:300px; margin-bottom:8px; }
+    .photo-stack-wrap{ height:300px; margin-bottom:8px; }
+    .photo-stack{ height:300px; }
     .stack-photo{ height:240px; }
-    .passions{ padding-bottom:0; }
+    .passions{ min-height:0; }
     .passions-sticky{
-      position:static; height:auto; overflow:visible;
+      position:static !important; height:auto; overflow:visible;
       padding-top:16px; display:block;
     }
     .passions-list{ display:block; margin-top:16px; }
@@ -222,7 +236,8 @@
   <!-- ============ COLLAGE / PHOTO STACK ============ -->
   <section id="collage">
     <div class="wrap collage-layout">
-      <div class="photo-stack">
+      <div class="photo-stack-wrap">
+       <div class="photo-stack">
         <div class="photo-stack-viewport" id="photoStack">
           <div class="stack-photo" data-index="0"><img src="images/travel-7.jpg" alt="Tina celebrating with friends at night" style="object-position:center 40%;"></div>
           <div class="stack-photo" data-index="1"><img src="images/travel-5.jpg" alt="Tina watching a sunrise on safari"></div>
@@ -231,6 +246,7 @@
           <div class="stack-photo" data-index="4"><img src="images/travel-9.jpg" alt="Wildflowers and alpine mountains in soft focus"></div>
           <div class="stack-photo" data-index="5"><img src="images/travel-4.jpg" alt="Tina in Chamonix, France"></div>
         </div>
+       </div>
       </div>
 
       <aside class="passions">
@@ -369,23 +385,69 @@
     });
   }
 
-  // The passions copy is pinned in place (see .passions-sticky) — the active
-  // item is driven purely by how far the user has scrolled through the
-  // section's runway (the tall .passions spacer), not by any element moving.
-  const layoutEl = document.querySelector('.collage-layout');
-  const photoStackEl = document.querySelector('.photo-stack');
+  // ---- Pin both the photo box and the passions copy via JS, not CSS
+  // position:sticky (which behaves inconsistently across browsers when
+  // combined with flex/overflow the way these need). Each pinned box cycles
+  // through three phases as the page scrolls: resting at the top of its tall
+  // wrapper, fixed to the viewport while scrolling through the section, and
+  // resting at the bottom of its wrapper once scrolled past.
+  const PIN_TOP = 110;
+  const photoWrap = document.querySelector('.photo-stack-wrap');
+  const photoBox = document.querySelector('.photo-stack');
+  const passionsWrap = document.querySelector('.passions');
+  const passionsBox = document.querySelector('.passions-sticky');
+
+  function isDesktop(){
+    return window.matchMedia('(min-width: 861px)').matches;
+  }
+
+  function pinBox(wrapEl, boxEl){
+    const boxH = boxEl.offsetHeight;
+    const wrapRect = wrapEl.getBoundingClientRect();
+
+    if (wrapRect.top > PIN_TOP) {
+      // Phase A — not reached yet: rest at the top of the wrapper.
+      boxEl.style.position = 'absolute';
+      boxEl.style.top = '0px';
+      boxEl.style.left = '0px';
+      boxEl.style.width = '100%';
+    } else if (wrapRect.bottom - boxH < PIN_TOP) {
+      // Phase C — scrolled past: rest at the bottom of the wrapper.
+      boxEl.style.position = 'absolute';
+      boxEl.style.top = (wrapEl.offsetHeight - boxH) + 'px';
+      boxEl.style.left = '0px';
+      boxEl.style.width = '100%';
+    } else {
+      // Phase B — pinned to the viewport.
+      boxEl.style.position = 'fixed';
+      boxEl.style.top = PIN_TOP + 'px';
+      boxEl.style.left = wrapRect.left + 'px';
+      boxEl.style.width = wrapRect.width + 'px';
+    }
+  }
 
   function computeScrollRange(){
-    const topPx = parseFloat(getComputedStyle(photoStackEl).top) || 0;
-    const stickyH = photoStackEl.offsetHeight;
-    const rowHeight = layoutEl.offsetHeight;
-    const absoluteTop = layoutEl.getBoundingClientRect().top + window.scrollY;
-    const pinStart = absoluteTop - topPx;
-    const pinRange = Math.max(rowHeight - stickyH, 1);
+    const boxH = photoBox.offsetHeight;
+    const wrapRect = photoWrap.getBoundingClientRect();
+    const absoluteTop = wrapRect.top + window.scrollY;
+    const pinStart = absoluteTop - PIN_TOP;
+    const pinRange = Math.max(photoWrap.offsetHeight - boxH, 1);
     return { pinStart, pinRange };
   }
 
   function updateFromScroll(){
+    if (!isDesktop()) {
+      [photoBox, passionsBox].forEach(el => {
+        el.style.position = '';
+        el.style.top = '';
+        el.style.left = '';
+        el.style.width = '';
+      });
+      return;
+    }
+    pinBox(photoWrap, photoBox);
+    pinBox(passionsWrap, passionsBox);
+
     const { pinStart, pinRange } = computeScrollRange();
     const progress = Math.min(1, Math.max(0, (window.scrollY - pinStart) / pinRange));
     const idx = Math.min(passionItems.length - 1, Math.floor(progress * passionItems.length));
@@ -401,6 +463,7 @@
   });
 
   setActivePhoto(0);
+  updateFromScroll();
   window.addEventListener('scroll', updateFromScroll, { passive: true });
   window.addEventListener('resize', updateFromScroll);
 </script>
