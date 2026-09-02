@@ -1,0 +1,623 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Smart Tags: A Segmentation Engine That Never Goes Stale — Tina Ju</title>
+<meta name="description" content="Case study: turning a financial advisor CRM's static, manually-applied tags into a rule-based segmentation engine — built solo and shipped in a company hackathon.">
+<link rel="canonical" href="https://www.tina-ju.com/crm-tags.html">
+<meta property="og:title" content="Smart Tags: A Segmentation Engine That Never Goes Stale — Tina Ju">
+<meta property="og:description" content="Turning a financial advisor CRM's static, manually-applied tags into a rule-based segmentation engine — built solo and shipped in a company hackathon.">
+<meta property="og:url" content="https://www.tina-ju.com/crm-tags.html">
+<meta property="og:type" content="article">
+<link rel="icon" href="data:,">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="styles.css">
+<style>
+  /* ============ CS HERO ============ */
+  #cs-hero{ padding:150px 0 60px; border-top:none; }
+  .cs-back{
+    font-family:var(--font-mono); font-size:12px; letter-spacing:0.05em;
+    text-transform:uppercase; color:var(--slate); display:inline-flex;
+    align-items:center; gap:8px; margin-bottom:32px;
+    border-bottom:1px solid transparent; transition:color .15s ease, border-color .15s ease;
+  }
+  .cs-back:hover{ color:var(--ink); border-color:var(--verified); }
+  .eyebrow{
+    font-family:var(--font-mono); font-size:12px; letter-spacing:0.12em;
+    text-transform:uppercase; color:var(--verified);
+    display:flex; align-items:center; gap:10px; margin-bottom:22px;
+  }
+  .eyebrow::before{ content:''; width:16px; height:1px; background:var(--verified); }
+  #cs-hero h1{
+    font-family:var(--font-display); font-weight:600;
+    font-size:clamp(34px, 4.6vw, 56px); line-height:1.06; letter-spacing:-0.02em;
+    max-width:22ch;
+  }
+  .cs-intro{
+    font-size:18px; color:var(--slate); max-width:70ch; margin-top:24px; line-height:1.65;
+  }
+
+  /* ============ META GRID ============ */
+  #cs-meta{ padding-top:0; padding-bottom:60px; }
+  .meta-grid{
+    display:grid; grid-template-columns:repeat(2, 1fr); gap:28px 32px;
+    border-top:1px solid var(--line); padding-top:36px;
+  }
+  .meta-item .field-label{
+    font-family:var(--font-mono); font-size:11px; letter-spacing:0.1em;
+    color:var(--verified); margin-bottom:6px;
+  }
+  .meta-item .field-value{ font-size:15.5px; color:var(--ink); line-height:1.55; }
+
+  /* ============ FIGURE / DIAGRAM FRAME ============ */
+  #cs-hero-img{ padding-top:0; padding-bottom:80px; border-bottom:none; }
+  .cs-figure{
+    border-radius:3px; overflow:hidden; border:1px solid var(--line);
+    box-shadow:0 1px 2px rgba(20,23,27,0.06), 0 16px 40px rgba(20,23,27,0.10);
+  }
+  .cs-figure img{ width:100%; height:auto; display:block; }
+  .cs-caption{
+    font-family:var(--font-mono); font-size:12.5px; color:var(--slate);
+    margin-top:16px; line-height:1.55; max-width:70ch;
+  }
+  .diagram-frame{
+    background:var(--paper-dim); padding:40px;
+  }
+
+  /* ============ CS SECTION ============ */
+  .cs-section h2{
+    font-family:var(--font-display); font-weight:600; font-size:clamp(22px,2.6vw,28px);
+    letter-spacing:-0.01em; margin-bottom:24px;
+  }
+  .cs-section h3{
+    font-family:var(--font-display); font-weight:600; font-size:15px;
+    letter-spacing:0.01em; margin-bottom:4px; color:var(--ink);
+  }
+  .cs-section p{ font-size:16.5px; color:var(--ink); line-height:1.7; max-width:72ch; }
+  .cs-section p + p{ margin-top:18px; }
+  .cs-section p.lede{ font-size:17.5px; }
+  .cs-list{ display:flex; flex-direction:column; gap:14px; max-width:72ch; margin-top:20px; }
+  .cs-list li{
+    font-size:16.5px; line-height:1.65; color:var(--ink);
+    padding-left:24px; position:relative;
+  }
+  .cs-list li::before{
+    content:''; position:absolute; left:0; top:10px; width:8px; height:1px;
+    background:var(--verified);
+  }
+  .cs-list.nested{ margin-top:10px; margin-bottom:0; }
+  .cs-block-sub{
+    font-family:var(--font-mono); font-size:11px; letter-spacing:0.1em;
+    text-transform:uppercase; color:var(--flag); margin-bottom:14px;
+  }
+  .cs-metric{
+    font-family:var(--font-mono); font-size:12px; color:var(--slate);
+    border:1px solid var(--line); border-radius:3px; padding:3px 8px; margin-right:8px;
+    display:inline-block; margin-bottom:6px;
+  }
+
+  /* ============ PULL QUOTE ============ */
+  .cs-quote{
+    border-left:2px solid var(--verified); padding-left:24px; margin-top:28px; max-width:64ch;
+  }
+  .cs-quote p{
+    font-family:var(--font-display); font-size:19px; font-style:italic;
+    line-height:1.5; color:var(--ink); max-width:none;
+  }
+  .cs-quote cite{
+    display:block; font-family:var(--font-mono); font-style:normal; font-size:12px;
+    letter-spacing:0.04em; text-transform:uppercase; color:var(--slate); margin-top:10px;
+  }
+
+  /* ============ TAG CHIPS ============ */
+  .tag-chip{
+    display:inline-flex; align-items:center; gap:6px; padding:6px 13px; border-radius:100px;
+    font-family:var(--font-mono); font-size:12.5px; white-space:nowrap;
+  }
+  .tag-chip svg{ width:12px; height:12px; flex-shrink:0; }
+  .tag-chip.static{ background:#fff; color:var(--slate); border:1px solid var(--line); }
+  .tag-chip.smart-blue{ background:rgba(15,111,168,0.08); color:var(--verified-deep); border:1px solid var(--verified); }
+  .tag-chip.smart-orange{ background:rgba(201,122,62,0.10); color:var(--flag); border:1px solid var(--flag); }
+  .tag-chip.smart-purple{ background:rgba(124,92,191,0.10); color:#6B4FA8; border:1px solid #7C5CBF; }
+
+  /* ============ DIAGRAM: HERO COMPARE ============ */
+  .compare-grid{ display:grid; grid-template-columns:1fr auto 1fr; gap:28px; align-items:stretch; }
+  .compare-card{
+    background:#fff; border:1px solid var(--line); border-radius:6px; padding:26px 24px;
+    display:flex; flex-direction:column; gap:16px;
+  }
+  .compare-card .card-label{
+    font-family:var(--font-mono); font-size:11px; letter-spacing:0.08em; text-transform:uppercase;
+  }
+  .compare-card.old .card-label{ color:var(--slate); }
+  .compare-card.new .card-label{ color:var(--verified); }
+  .compare-row{
+    display:flex; align-items:center; justify-content:space-between; gap:12px;
+    padding:12px 14px; background:var(--paper); border:1px solid var(--line); border-radius:4px;
+  }
+  .compare-row .row-name{ font-size:14px; color:var(--ink); }
+  .compare-note{ font-family:var(--font-mono); font-size:12px; color:var(--slate); line-height:1.5; }
+  .compare-note.warn{ color:#B0492E; }
+  .compare-note.live{ color:var(--verified); }
+  .compare-arrow{ display:flex; align-items:center; color:var(--line); }
+  .compare-arrow svg{ width:26px; height:26px; }
+  @media (max-width: 700px){
+    .compare-grid{ grid-template-columns:1fr; }
+    .compare-arrow{ transform:rotate(90deg); justify-content:center; }
+  }
+
+  /* ============ DIAGRAM: ARCHITECTURE ============ */
+  .arch-grid{ display:grid; grid-template-columns:1fr 1fr; gap:0 32px; }
+  .arch-col-label{
+    font-family:var(--font-mono); font-size:11px; letter-spacing:0.08em; text-transform:uppercase;
+    color:var(--slate); margin-bottom:14px; text-align:center;
+  }
+  .arch-box{
+    background:#fff; border:1px solid var(--line); border-radius:5px; padding:13px 16px;
+    margin-bottom:12px; font-family:var(--font-mono); font-size:12.5px; color:var(--ink);
+    line-height:1.5;
+  }
+  .arch-box b{ color:var(--verified-deep); }
+  .arch-rule{
+    grid-column:1 / -1; background:var(--ink); color:var(--paper); border-radius:5px;
+    padding:16px 20px; margin:6px 0 26px; text-align:center; font-family:var(--font-mono);
+    font-size:12.5px; line-height:1.6;
+  }
+  .arch-rule b{ color:var(--verified-light); }
+  .arch-invariant{
+    grid-column:1 / -1; margin-top:14px; border:1px dashed var(--flag); border-radius:5px;
+    padding:16px 20px; font-size:14.5px; color:var(--ink); line-height:1.6; background:rgba(201,122,62,0.05);
+  }
+  .arch-invariant b{ color:var(--flag); }
+  @media (max-width: 700px){
+    .arch-grid{ grid-template-columns:1fr; }
+  }
+
+  /* ============ DIAGRAM: WIZARD STAGES ============ */
+  .stage-grid{ display:grid; grid-template-columns:repeat(3, 1fr); gap:20px; }
+  .stage-card{
+    background:#fff; border:1px solid var(--line); border-radius:6px; padding:22px 20px;
+    position:relative;
+  }
+  .stage-num{
+    font-family:var(--font-mono); font-size:11px; color:var(--verified); letter-spacing:0.08em;
+    margin-bottom:10px;
+  }
+  .stage-card h4{
+    font-family:var(--font-display); font-weight:600; font-size:15.5px; margin-bottom:10px; color:var(--ink);
+  }
+  .stage-card ul{ display:flex; flex-direction:column; gap:8px; }
+  .stage-card li{
+    font-size:13.5px; line-height:1.55; color:var(--slate); padding-left:14px; position:relative;
+  }
+  .stage-card li::before{ content:'–'; position:absolute; left:0; color:var(--line); }
+  .edge-case{
+    margin-top:22px; background:rgba(15,111,168,0.05); border:1px solid var(--verified-10);
+    border-radius:6px; padding:18px 22px;
+  }
+  .edge-case .edge-label{
+    font-family:var(--font-mono); font-size:11px; letter-spacing:0.08em; text-transform:uppercase;
+    color:var(--verified); margin-bottom:8px;
+  }
+  .edge-case p{ font-size:14.5px; line-height:1.6; margin:0; max-width:none; }
+  @media (max-width: 780px){
+    .stage-grid{ grid-template-columns:1fr; }
+  }
+
+  /* ============ BEFORE / AFTER ROW ============ */
+  .ba-grid{ display:grid; grid-template-columns:1fr 1fr; gap:28px; margin-top:32px; }
+  .ba-col .ba-label{
+    font-family:var(--font-mono); font-size:11px; letter-spacing:0.08em; text-transform:uppercase;
+    margin-bottom:14px;
+  }
+  .ba-col.before .ba-label{ color:#B0492E; }
+  .ba-col.after .ba-label{ color:var(--verified); }
+  .ba-row{
+    display:flex; align-items:center; gap:10px; padding:11px 14px; background:#fff;
+    border:1px solid var(--line); border-radius:4px; margin-bottom:10px; font-size:13.5px; color:var(--ink);
+  }
+  @media (max-width: 700px){ .ba-grid{ grid-template-columns:1fr; } }
+
+  /* ============ ITERATION LIST ============ */
+  .iter-list{ display:flex; flex-direction:column; gap:22px; margin-top:28px; max-width:72ch; }
+  .iter-item{ display:flex; gap:16px; }
+  .iter-tag{
+    font-family:var(--font-mono); font-size:11px; color:var(--flag); border:1px solid var(--flag);
+    border-radius:3px; padding:2px 8px; height:fit-content; flex-shrink:0; margin-top:2px;
+  }
+  .iter-item p{ font-size:15.5px; line-height:1.6; margin:0; }
+
+  /* ============ METRICS CALLOUT ============ */
+  .metrics-panel{
+    background:var(--paper-dim); border-radius:12px;
+    padding:48px 44px; margin-top:36px;
+  }
+  .metrics-grid{
+    display:grid; grid-template-columns:repeat(3, 1fr); gap:40px;
+  }
+  .metric-arrow{ width:34px; height:34px; color:#2E5BFF; margin-bottom:22px; }
+  .metrics-grid p.metric-headline{
+    font-family:var(--font-display); font-weight:600; font-size:19px;
+    line-height:1.35; color:#2E5BFF; max-width:none;
+  }
+  .metrics-grid p.metric-note{
+    font-family:var(--font-mono); font-size:12px; color:#2E5BFF; opacity:0.8;
+    margin-top:16px; line-height:1.6; max-width:none;
+  }
+  @media (max-width: 700px){
+    .metrics-grid{ grid-template-columns:1fr; gap:36px; }
+  }
+
+  /* ============ CTA ============ */
+  #cs-cta{ border-bottom:none; padding-bottom:80px; }
+  .cs-cta-grid{
+    display:flex; justify-content:space-between; align-items:flex-end;
+    flex-wrap:wrap; gap:32px;
+  }
+  #cs-cta h2{
+    font-family:var(--font-display); font-weight:600;
+    font-size:clamp(28px,3.6vw,40px); letter-spacing:-0.01em; max-width:14ch;
+  }
+  .cs-cta-actions{ display:flex; gap:28px; align-items:center; flex-wrap:wrap; }
+
+  /* ============ RESPONSIVE ============ */
+  @media (max-width: 860px){
+    #cs-hero{ padding:130px 0 50px; }
+    .meta-grid{ grid-template-columns:repeat(2, 1fr); }
+    .cs-cta-grid{ flex-direction:column; align-items:flex-start; }
+  }
+  @media (max-width: 520px){
+    .meta-grid{ grid-template-columns:1fr; }
+    .diagram-frame{ padding:24px 18px; }
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <nav>
+    <a href="index.html" class="nav-name">TINA JU</a>
+    <div class="nav-links">
+      <a href="index.html#work">Work</a>
+      <a href="about.html">About</a>
+      <a href="index.html#contact">Contact</a>
+    </div>
+  </nav>
+  <div class="cal-track" id="calTrack">
+    <div class="cal-fill" id="calFill"></div>
+  </div>
+</header>
+
+<main>
+
+  <!-- ============ HERO ============ -->
+  <section id="cs-hero">
+    <div class="wrap">
+      <a href="index.html#work" class="cs-back">← Back to work</a>
+      <div class="eyebrow">CASE STUDY · CRM · HACKATHON WINNER</div>
+      <h1>Smart Tags: A Segmentation Engine That Never Goes Stale</h1>
+      <p class="cs-intro">
+        Advisors were tagging households by hand into labels that were true the day they were
+        applied and wrong a few months later. I designed and built Smart Tags — a rule-based
+        tagging engine — solo, end to end, and won Savvy Wealth's company-wide hackathon,
+        Big Bang 2026, with it.
+      </p>
+    </div>
+  </section>
+
+  <!-- ============ META ============ -->
+  <section id="cs-meta">
+    <div class="wrap">
+      <div class="meta-grid">
+        <div class="meta-item">
+          <div class="field-label">PROJECT</div>
+          <div class="field-value">A rule-based tagging and client-segmentation engine for financial advisors' CRM, plus a bulk CSV import wizard to onboard tags from other CRMs in one pass</div>
+        </div>
+        <div class="meta-item">
+          <div class="field-label">ROLE</div>
+          <div class="field-value">Product Design, Interaction Design, Full-Stack Build (Rails, GraphQL, React/TypeScript), Design QA</div>
+        </div>
+        <div class="meta-item">
+          <div class="field-label">TOOLS</div>
+          <div class="field-value">Claude Code, Vercel, Canny</div>
+        </div>
+        <div class="meta-item">
+          <div class="field-label">GOAL</div>
+          <div class="field-value">Turn tags from a static label advisors had to babysit into a rule that keeps itself accurate — and turn re-tagging an entire book of business into one action instead of hundreds</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ HERO DIAGRAM ============ -->
+  <section id="cs-hero-img">
+    <div class="wrap">
+      <figure class="cs-figure diagram-frame">
+        <div class="compare-grid">
+          <div class="compare-card old">
+            <div class="card-label">V1 — Static tag</div>
+            <div class="compare-row">
+              <span class="row-name">Household: Whitfield</span>
+              <span class="tag-chip static">Age 30–40</span>
+            </div>
+            <p class="compare-note warn">Applied once, by hand. Never re-checked — six months later the client is 41 and still wearing a tag that's now a lie.</p>
+          </div>
+          <div class="compare-arrow">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+          </div>
+          <div class="compare-card new">
+            <div class="card-label">V2 — Smart tag</div>
+            <div class="compare-row">
+              <span class="row-name">Household: Whitfield</span>
+              <span class="tag-chip smart-blue">
+                <svg viewBox="0 0 24 24" fill="currentColor"><path d="M13 2 3 14h7l-1 8 11-14h-7l1-6z"/></svg>
+                Age 30–40
+              </span>
+            </div>
+            <p class="compare-note live">Backed by a rule. Re-evaluates on every data change — the day the client turns 41, the tag removes itself.</p>
+          </div>
+        </div>
+      </figure>
+      <p class="cs-caption">Same tag, same household — the difference is what happens after it's applied. Reconstructed from the shipped rule engine, not a literal screenshot.</p>
+    </div>
+  </section>
+
+  <!-- ============ THE PROBLEM ============ -->
+  <section class="cs-section">
+    <div class="wrap">
+      <h2>The problem: tags that lied</h2>
+      <p class="lede">
+        Tags shipped as static labels in December 2025. Advisors could apply a tag to a household,
+        but nothing about it was true for long — client attributes like age, income, and last-contact
+        date change constantly, and a label frozen at the moment it was applied starts rotting
+        immediately.
+      </p>
+
+      <div class="cs-quote">
+        <p>"People aged 30 to 40. Well, your age changes, so eventually that tag is irrelevant. That's a filter, not a tag."</p>
+        <cite>— Ed Wildermuth, Financial Advisor</cite>
+      </div>
+      <div class="cs-quote" style="margin-top:22px;">
+        <p>"You go into each household, tag it, go to the next household, tag it — it's not good."</p>
+        <cite>— Advisor feedback on bulk tagging</cite>
+      </div>
+
+      <p style="margin-top:32px;">
+        Two separate advisors, independently, named the same two failure modes: tags went stale, and
+        applying them one household at a time didn't scale to a real book of business. That gave me a
+        crisp brief — turn the existing Tags surface into a tagging <em>and</em> segmentation
+        primitive, not a bigger pile of manual labels.
+      </p>
+
+      <h3 style="margin-top:40px; font-size:16.5px;">Why this, why now</h3>
+      <ul class="cs-list">
+        <li>Closed every "Done when" item already scoped in the backlog (Linear SV-888)</li>
+        <li>Shipped directly against advisors' top-requested Canny item — "Easier access to client tags" (score 8, ~45 addressable votes)</li>
+        <li>Unblocked two roadmap items already gated behind a segmentation primitive: Multi-Household Tasks and the Service Calendar</li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- ============ HOW IT WORKS: RULE ENGINE ============ -->
+  <section class="cs-section">
+    <div class="wrap">
+      <div class="cs-block-sub">How it works · The rule engine</div>
+      <h2>A rule you can trust, on both ends</h2>
+      <p>
+        A smart tag isn't a label — it's a rule: age, income, AUM, state, employment status, last-contacted
+        date, and stage, combined with AND/OR logic in a visual builder. The tricky part wasn't the builder
+        UI, it was making sure the live preview an advisor sees while building a rule always matches what
+        actually happens to their households afterward. That meant building the evaluator twice — once in
+        TypeScript for instant preview, once in Ruby as the source of truth — and holding both to the exact
+        same contract.
+      </p>
+
+      <figure class="cs-figure diagram-frame" style="margin-top:32px;">
+        <div class="arch-grid">
+          <div class="arch-col-label">Frontend — preview</div>
+          <div class="arch-col-label">Backend — source of truth</div>
+          <div class="arch-box"><b>rule-builder.tsx</b><br>Visual AND/OR condition builder</div>
+          <div class="arch-box"><b>Smart::RuleEvaluator</b><br>Mirrors the TS evaluator exactly</div>
+          <div class="arch-box"><b>rule-evaluator.ts</b><br>Live "who would this apply to" preview</div>
+          <div class="arch-box"><b>Smart::ApplyRulesToHousehold</b><br>Diffs and applies on every household change</div>
+          <div class="arch-rule">RULE (versioned JSON) — <b>the one contract both sides read</b></div>
+          <div class="arch-invariant">
+            <b>Safety invariant:</b> a missing, unparseable, or empty value never matches. If a household
+            is missing the data a rule needs, that rule simply doesn't apply to it — a data-poor household
+            never gets mistagged just because a field is blank.
+          </div>
+        </div>
+      </figure>
+      <p class="cs-caption">The same rule has to mean the same thing twice — once for the advisor previewing it, once for the system enforcing it.</p>
+
+      <p style="margin-top:32px;">
+        On save, a rule backfills immediately across every household in the org rather than waiting on a
+        schedule — a deliberate call to keep the feature demoable and the feedback loop tight. From then
+        on, every household edit re-triggers evaluation automatically, and it's idempotent: re-running it
+        on a household that hasn't changed is always a no-op, never a duplicate tag.
+      </p>
+    </div>
+  </section>
+
+  <!-- ============ BULK CSV IMPORT ============ -->
+  <section class="cs-section">
+    <div class="wrap">
+      <div class="cs-block-sub">How it works · Bulk CSV import</div>
+      <h2>Turning "one household at a time" into one action</h2>
+      <p class="lede">
+        The other half of the bulk-tagging problem was advisors switching from Redtail or Wealthbox with
+        years of tags already applied. Re-creating that by hand was the exact pain the advisor quote above
+        was describing — so import needed to survive messy, inconsistent real-world exports without
+        guessing wrong in either direction.
+      </p>
+
+      <div class="stage-grid" style="margin-top:32px;">
+        <div class="stage-card">
+          <div class="stage-num">STAGE 1</div>
+          <h4>Classify</h4>
+          <ul>
+            <li>Scores every column header <em>and</em> a sample of its cell contents — advisors never rename columns to match our schema</li>
+            <li>Each role (name, email, phone, tag) claims its best-scoring unclaimed column, so nothing double-assigns</li>
+            <li>Parses "Last, First" and "First Last" formats, drops suffixes like Jr./Sr./III</li>
+          </ul>
+        </div>
+        <div class="stage-card">
+          <div class="stage-num">STAGE 2</div>
+          <h4>Preview</h4>
+          <ul>
+            <li>Matches CSV rows to existing households on email, phone, and name, in tiers</li>
+            <li>A conflicting email/phone match is surfaced, not hidden — resolved in favor of email but flagged</li>
+            <li>Falls back to name matching only when no reliable contact info is on the row</li>
+          </ul>
+        </div>
+        <div class="stage-card">
+          <div class="stage-num">STAGE 3</div>
+          <h4>Confirm</h4>
+          <ul>
+            <li>Near-duplicate tag names auto-merge ("Stage is a Lead" ≡ "Stage is Lead")</li>
+            <li>An advisor's explicit rename always overrides the auto-merge</li>
+            <li>Smart tags can never be force-applied by an import — membership stays rule-governed</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="edge-case">
+        <div class="edge-label">The edge case that mattered most</div>
+        <p>
+          A phone number can match the right household but the wrong person in it — a household's line
+          might ring to Sophia, but the CSV row with that number is actually for Helen. If the name on the
+          row doesn't align with the name behind the matched contact info, the row is pushed to a
+          reviewable "ambiguous" queue with that household's other members offered as candidates — instead
+          of silently tagging the wrong person because their sibling's phone number happened to match.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ DESIGN QA ITERATION ============ -->
+  <section class="cs-section">
+    <div class="wrap">
+      <div class="cs-block-sub">Iterating under a deadline</div>
+      <h2>Shipping fast didn't mean skipping the polish pass</h2>
+      <p>
+        Hackathon timelines compress everything except the instinct to check your own work. Running a
+        design-review pass against the finished build surfaced four consistency issues before submission —
+        small on their own, but exactly the kind of thing that makes a feature feel unfinished.
+      </p>
+
+      <div class="ba-grid">
+        <div class="ba-col before">
+          <div class="ba-label">Before</div>
+          <div class="ba-row"><span class="tag-chip smart-orange"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M13 2 3 14h7l-1 8 11-14h-7l1-6z"/></svg>High Net Worth</span></div>
+          <div class="ba-row"><span class="tag-chip smart-purple"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M13 2 3 14h7l-1 8 11-14h-7l1-6z"/></svg>Age 55–65</span></div>
+          <div class="ba-row"><span class="tag-chip smart-blue"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M13 2 3 14h7l-1 8 11-14h-7l1-6z"/></svg>Recently Contacted</span></div>
+        </div>
+        <div class="ba-col after">
+          <div class="ba-label">After</div>
+          <div class="ba-row"><span class="tag-chip smart-blue"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M13 2 3 14h7l-1 8 11-14h-7l1-6z"/></svg>High Net Worth</span></div>
+          <div class="ba-row"><span class="tag-chip smart-blue"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M13 2 3 14h7l-1 8 11-14h-7l1-6z"/></svg>Age 55–65</span></div>
+          <div class="ba-row"><span class="tag-chip smart-blue"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M13 2 3 14h7l-1 8 11-14h-7l1-6z"/></svg>Recently Contacted</span></div>
+        </div>
+      </div>
+      <p class="cs-caption">The Zap icon that marks a smart tag was rendering in three different colors depending on which screen you saw it from. Fixed to always inherit the tag's own category color, so "this is automated" reads as one consistent signal everywhere.</p>
+
+      <div class="iter-list">
+        <div class="iter-item">
+          <span class="iter-tag">FIX</span>
+          <p>Manage Categories didn't show how many tags lived in each category — added a visible count per row.</p>
+        </div>
+        <div class="iter-item">
+          <span class="iter-tag">FIX</span>
+          <p>Selected rows in the "add household to tag" flow didn't read as selected — switched to an outline button so the "Added" state stands out in green instead of blending in.</p>
+        </div>
+        <div class="iter-item">
+          <span class="iter-tag">FIX</span>
+          <p>A failed required field just said "Required" with no context — replaced with the actual, specific validation message.</p>
+        </div>
+        <div class="iter-item">
+          <span class="iter-tag">QA</span>
+          <p>Save was firing update calls even when nothing had changed — gated the edit dialog's Save behind a real dirty check.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ DESIGN PRINCIPLES ============ -->
+  <section class="cs-section" style="border-bottom:none;">
+    <div class="wrap">
+      <div class="cs-block-sub">Principles that held up</div>
+      <h2>Automating trust, not just tagging</h2>
+      <p class="lede">
+        The hard part of this feature was never the rule builder UI — it was earning the right to let a
+        system add and remove tags on its own without an advisor feeling like they need to double-check
+        it. A few decisions did most of that work:
+      </p>
+
+      <ul class="cs-list" style="margin-top:28px;">
+        <li><strong>Smart tags are inviolable.</strong> Never manually removable, never a merge destination, never force-applied by an import — a rule-governed tag stays rule-governed, full stop.</li>
+        <li><strong>Manual tags are never touched by automation.</strong> The system only ever changes what it created; an advisor's own tagging is never silently modified.</li>
+        <li><strong>Ambiguity gets surfaced, not resolved quietly.</strong> A conflicting match is flagged and shown, not hidden behind a best guess.</li>
+        <li><strong>AI refuses rather than hallucinates.</strong> The Claude-generated tag descriptions return empty on an ambiguous or nonsense tag name instead of inventing a plausible-sounding one.</li>
+      </ul>
+
+      <div class="metrics-panel">
+        <div class="metrics-grid">
+          <div>
+            <svg class="metric-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 4v16M6 14l6 6 6-6"/></svg>
+            <p class="metric-headline">Replaced hand-applied labels with tags that re-evaluate themselves on every household change</p>
+            <p class="metric-note">(no scheduled job — immediate backfill on rule save, idempotent re-evaluation after)</p>
+          </div>
+          <div>
+            <svg class="metric-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20V4M6 10l6-6 6 6"/></svg>
+            <p class="metric-headline">Turned a full CRM re-tag into one 5-step import instead of hundreds of manual edits</p>
+            <p class="metric-note">(auto-classifies columns, matches households, merges near-duplicate tag names)</p>
+          </div>
+          <div>
+            <svg class="metric-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 12h16M14 6l6 6-6 6"/></svg>
+            <p class="metric-headline">Won Big Bang 2026, and shipped straight against advisors' top-voted Canny request</p>
+            <p class="metric-note">(closed every "Done when" item on SV-888; unblocked two roadmap items behind it)</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ CTA ============ -->
+  <section id="cs-cta">
+    <div class="wrap cs-cta-grid">
+      <h2>More work</h2>
+      <div class="cs-cta-actions">
+        <a href="index.html#work" class="btn">Back to work</a>
+        <a href="index.html#contact" class="btn-ghost">Get in touch</a>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<footer class="wrap">
+  <span>© 2026 Tina Ju</span>
+  <span>Product Design Lead</span>
+</footer>
+
+<script>
+  const track = document.getElementById('calTrack');
+  const fill = document.getElementById('calFill');
+
+  function updateFill(){
+    const docHeight = document.documentElement.scrollHeight - window.innerHeight;
+    const pct = docHeight > 0 ? (window.scrollY / docHeight) * 100 : 0;
+    fill.style.width = Math.min(pct, 100) + '%';
+  }
+
+  window.addEventListener('scroll', updateFill, { passive:true });
+  window.addEventListener('resize', updateFill);
+  window.addEventListener('load', updateFill);
+</script>
+<script src="case-study.js"></script>
+
+</body>
+</html>
