@@ -53,7 +53,6 @@
   .meta-item .field-value{ font-size:15.5px; color:var(--ink); line-height:1.55; }
 
   /* ============ FIGURE / DIAGRAM FRAME ============ */
-  #cs-hero-img{ padding-top:0; padding-bottom:80px; border-bottom:none; }
   .cs-figure{
     border-radius:3px; overflow:hidden; border:1px solid var(--line);
     box-shadow:0 1px 2px rgba(20,23,27,0.06), 0 16px 40px rgba(20,23,27,0.10);
@@ -322,7 +321,7 @@
         </div>
         <div class="meta-item">
           <div class="field-label">TOOLS</div>
-          <div class="field-value">Claude Code, Vercel, Canny</div>
+          <div class="field-value">Claude Code, Conductor, GitHub, Vercel, Canny</div>
         </div>
         <div class="meta-item">
           <div class="field-label">GOAL</div>
@@ -333,8 +332,12 @@
   </section>
 
   <!-- ============ HERO DIAGRAM ============ -->
-  <section id="cs-hero-img">
+  <!-- ============ THE PROBLEM ============ -->
+  <section class="cs-section">
     <div class="wrap">
+      <h2>The problem: tags that lied</h2>
+
+      <div class="cs-block-sub">Visual context</div>
       <figure class="cs-figure diagram-frame">
         <div class="compare-grid">
           <div class="compare-card old">
@@ -362,14 +365,8 @@
         </div>
       </figure>
       <p class="cs-caption">Same tag, same household — the difference is what happens after it's applied. Reconstructed from the shipped rule engine, not a literal screenshot.</p>
-    </div>
-  </section>
 
-  <!-- ============ THE PROBLEM ============ -->
-  <section class="cs-section">
-    <div class="wrap">
-      <h2>The problem: tags that lied</h2>
-      <p class="lede">
+      <p class="lede" style="margin-top:36px;">
         Tags shipped as static labels in December 2025. Advisors could apply a tag to a household,
         but nothing about it was true for long — client attributes like age, income, and last-contact
         date change constantly, and a label frozen at the moment it was applied starts rotting
@@ -396,7 +393,7 @@
       <ul class="cs-list">
         <li>Closed every "Done when" item already scoped in the backlog (Linear SV-888)</li>
         <li>Shipped directly against advisors' top-requested Canny item — "Easier access to client tags" (score 8, ~45 addressable votes)</li>
-        <li>Unblocked two roadmap items already gated behind a segmentation primitive: Multi-Household Tasks and the Service Calendar</li>
+        <li>Became the segmentation primitive two other roadmap items were waiting on — Multi-Household Tasks and the Service Calendar could now reuse the same rule-based grouping instead of building their own</li>
       </ul>
     </div>
   </section>
@@ -407,12 +404,15 @@
       <div class="cs-block-sub">How it works · The rule engine</div>
       <h2>A rule you can trust, on both ends</h2>
       <p>
-        A smart tag isn't a label — it's a rule: age, income, AUM, state, employment status, last-contacted
-        date, and stage, combined with AND/OR logic in a visual builder. The tricky part wasn't the builder
-        UI, it was making sure the live preview an advisor sees while building a rule always matches what
-        actually happens to their households afterward. That meant building the evaluator twice — once in
-        TypeScript for instant preview, once in Ruby as the source of truth — and holding both to the exact
-        same contract.
+        A smart tag isn't just a label — it can be a rule: age, income, AUM, state, employment status,
+        last-contacted date, and stage, combined with AND/OR logic in a visual builder I designed so
+        advisors could write conditions without ever seeing a query language. The real design problem
+        wasn't the builder's UI, though — it was trust. The live preview an advisor sees while building a
+        rule had to match, exactly, what the system would actually do to their households afterward, or
+        the feature would feel like a lie the first time it didn't. So I wrote the spec for how a rule
+        evaluates once, then paired with Claude Code to implement it twice against that same contract —
+        TypeScript for instant preview, Ruby as the source of truth — and tested both until they never
+        disagreed.
       </p>
 
       <figure class="cs-figure diagram-frame" style="margin-top:32px;">
@@ -434,10 +434,10 @@
       <p class="cs-caption">The same rule has to mean the same thing twice — once for the advisor previewing it, once for the system enforcing it.</p>
 
       <p style="margin-top:32px;">
-        On save, a rule backfills immediately across every household in the org rather than waiting on a
-        schedule — a deliberate call to keep the feature demoable and the feedback loop tight. From then
-        on, every household edit re-triggers evaluation automatically, and it's idempotent: re-running it
-        on a household that hasn't changed is always a no-op, never a duplicate tag.
+        When you save a rule, it applies right away across every household in the org instead of waiting
+        on some overnight job — I wanted the effect to feel immediate, not theoretical. After that, any
+        change to a household automatically re-checks its tags, and checking twice never causes problems:
+        if nothing's changed, nothing happens.
       </p>
     </div>
   </section>
