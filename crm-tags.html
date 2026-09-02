@@ -80,7 +80,7 @@
     width:5px; height:5px; border-radius:50%; background:#050505;
     box-shadow:0 0 0 1px rgba(255,255,255,0.05);
   }
-  .mac-screen img{ width:100%; height:auto; display:block; border-radius:2px; }
+  .mac-screen img, .mac-screen video{ width:100%; height:auto; display:block; border-radius:2px; }
   .mac-base{
     height:16px; margin:0 -14px; background:linear-gradient(180deg, #e4e3de 0%, #c7c6c0 100%);
     border-radius:0 0 8px 8px; position:relative;
@@ -175,32 +175,6 @@
     .compare-arrow{ transform:rotate(90deg); justify-content:center; }
   }
 
-  /* ============ DIAGRAM: ARCHITECTURE ============ */
-  .arch-grid{ display:grid; grid-template-columns:1fr 1fr; gap:0 32px; }
-  .arch-col-label{
-    font-family:var(--font-mono); font-size:11px; letter-spacing:0.08em; text-transform:uppercase;
-    color:var(--slate); margin-bottom:14px; text-align:center;
-  }
-  .arch-box{
-    background:#fff; border:1px solid var(--line); border-radius:5px; padding:13px 16px;
-    margin-bottom:12px; font-family:var(--font-mono); font-size:12.5px; color:var(--ink);
-    line-height:1.5;
-  }
-  .arch-box b{ color:var(--verified-deep); }
-  .arch-rule{
-    grid-column:1 / -1; background:var(--ink); color:var(--paper); border-radius:5px;
-    padding:16px 20px; margin:6px 0 26px; text-align:center; font-family:var(--font-mono);
-    font-size:12.5px; line-height:1.6;
-  }
-  .arch-rule b{ color:var(--verified-light); }
-  .arch-invariant{
-    grid-column:1 / -1; margin-top:14px; border:1px dashed var(--flag); border-radius:5px;
-    padding:16px 20px; font-size:14.5px; color:var(--ink); line-height:1.6; background:rgba(201,122,62,0.05);
-  }
-  .arch-invariant b{ color:var(--flag); }
-  @media (max-width: 700px){
-    .arch-grid{ grid-template-columns:1fr; }
-  }
 
   /* ============ DIAGRAM: WIZARD STAGES ============ */
   .stage-grid{ display:grid; grid-template-columns:repeat(3, 1fr); gap:20px; }
@@ -245,37 +219,10 @@
     display:flex; align-items:center; gap:10px; padding:11px 14px; background:#fff;
     border:1px solid var(--line); border-radius:4px; margin-bottom:10px; font-size:13.5px; color:var(--ink);
   }
+  .ba-category{
+    margin-left:auto; font-family:var(--font-mono); font-size:11px; color:var(--slate); white-space:nowrap;
+  }
   @media (max-width: 700px){ .ba-grid{ grid-template-columns:1fr; } }
-
-  /* ============ ITERATION LIST ============ */
-  .iter-list{ display:flex; flex-direction:column; gap:22px; margin-top:28px; max-width:72ch; }
-  .iter-item{ display:flex; gap:16px; }
-  .iter-tag{
-    font-family:var(--font-mono); font-size:11px; color:var(--flag); border:1px solid var(--flag);
-    border-radius:3px; padding:2px 8px; height:fit-content; flex-shrink:0; margin-top:2px;
-  }
-  .iter-item p{ font-size:15.5px; line-height:1.6; margin:0; }
-
-  /* ============ METRICS CALLOUT ============ */
-  .metrics-panel{
-    background:var(--paper-dim); border-radius:12px;
-    padding:48px 44px; margin-top:36px;
-  }
-  .metrics-grid{
-    display:grid; grid-template-columns:repeat(3, 1fr); gap:40px;
-  }
-  .metric-arrow{ width:34px; height:34px; color:#2E5BFF; margin-bottom:22px; }
-  .metrics-grid p.metric-headline{
-    font-family:var(--font-display); font-weight:600; font-size:19px;
-    line-height:1.35; color:#2E5BFF; max-width:none;
-  }
-  .metrics-grid p.metric-note{
-    font-family:var(--font-mono); font-size:12px; color:#2E5BFF; opacity:0.8;
-    margin-top:16px; line-height:1.6; max-width:none;
-  }
-  @media (max-width: 700px){
-    .metrics-grid{ grid-template-columns:1fr; gap:36px; }
-  }
 
   /* ============ STAT TABLE ============ */
   .stat-table{
@@ -457,12 +404,12 @@
         <div class="mac-mockup">
           <div class="mac-screen">
             <div class="mac-camera"></div>
-            <img src="images/crm-tags/create-tag-dialog.png" alt="Create Tag dialog in Smart mode, with an Age &ge; 72 rule and an AI-drafted description" loading="lazy">
+            <video src="images/crm-tags/smart-tags-applied.mp4" autoplay muted loop playsinline controls></video>
           </div>
           <div class="mac-base"></div>
         </div>
       </figure>
-      <p class="cs-caption">The shipped Create Tag dialog in Smart mode — the rule builder, and the Claude-drafted description with an editable, dismissible suggestion.</p>
+      <p class="cs-caption">Building a Smart Tag end to end — the rule, the overlap warning against an existing tag, and the tag re-evaluating live the moment a household's data changes.</p>
 
       <p>
         A smart tag isn't just a label — it can be a rule: age, income, AUM, state, employment status,
@@ -475,24 +422,6 @@
         TypeScript for instant preview, Ruby as the source of truth — and tested both until they never
         disagreed.
       </p>
-
-      <figure class="cs-figure diagram-frame" style="margin-top:32px;">
-        <div class="arch-grid">
-          <div class="arch-col-label">Frontend — preview</div>
-          <div class="arch-col-label">Backend — source of truth</div>
-          <div class="arch-box"><b>rule-builder.tsx</b><br>Visual AND/OR condition builder</div>
-          <div class="arch-box"><b>Smart::RuleEvaluator</b><br>Mirrors the TS evaluator exactly</div>
-          <div class="arch-box"><b>rule-evaluator.ts</b><br>Live "who would this apply to" preview</div>
-          <div class="arch-box"><b>Smart::ApplyRulesToHousehold</b><br>Diffs and applies on every household change</div>
-          <div class="arch-rule">RULE (versioned JSON) — <b>the one contract both sides read</b></div>
-          <div class="arch-invariant">
-            <b>Safety invariant:</b> a missing, unparseable, or empty value never matches. If a household
-            is missing the data a rule needs, that rule simply doesn't apply to it — a data-poor household
-            never gets mistagged just because a field is blank.
-          </div>
-        </div>
-      </figure>
-      <p class="cs-caption">The same rule has to mean the same thing twice — once for the advisor previewing it, once for the system enforcing it.</p>
 
       <p style="margin-top:32px;">
         When you save a rule, it applies right away across every household in the org instead of waiting
@@ -557,6 +486,17 @@
         </div>
       </div>
 
+      <figure class="cs-figure mac-mockup-wrap" style="margin-top:32px;">
+        <div class="mac-mockup">
+          <div class="mac-screen">
+            <div class="mac-camera"></div>
+            <video src="images/crm-tags/import-from-file.mp4" autoplay muted loop playsinline controls></video>
+          </div>
+          <div class="mac-base"></div>
+        </div>
+      </figure>
+      <p class="cs-caption">The full wizard, end to end — upload, classify, resolve the one ambiguous row, and land on 23 of 24 clients matched automatically.</p>
+
       <div class="edge-case">
         <div class="edge-label">The edge case that mattered most</div>
         <p>
@@ -577,44 +517,25 @@
       <h2>Shipping fast didn't mean skipping the polish pass</h2>
       <p>
         Hackathon timelines compress everything except the instinct to check your own work. Running a
-        design-review pass against the finished build surfaced four consistency issues before submission —
-        small on their own, but exactly the kind of thing that makes a feature feel unfinished.
+        design-review pass against the finished build caught a consistency issue before submission — small
+        on its own, but exactly the kind of thing that makes a feature feel unfinished.
       </p>
 
       <div class="ba-grid">
         <div class="ba-col before">
           <div class="ba-label">Before</div>
-          <div class="ba-row"><span class="tag-chip smart-orange"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M13 2 3 14h7l-1 8 11-14h-7l1-6z"/></svg>High Net Worth</span></div>
-          <div class="ba-row"><span class="tag-chip smart-purple"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M13 2 3 14h7l-1 8 11-14h-7l1-6z"/></svg>Age 55–65</span></div>
-          <div class="ba-row"><span class="tag-chip smart-blue"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M13 2 3 14h7l-1 8 11-14h-7l1-6z"/></svg>Recently Contacted</span></div>
-        </div>
-        <div class="ba-col after">
-          <div class="ba-label">After</div>
           <div class="ba-row"><span class="tag-chip smart-blue"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M13 2 3 14h7l-1 8 11-14h-7l1-6z"/></svg>High Net Worth</span></div>
           <div class="ba-row"><span class="tag-chip smart-blue"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M13 2 3 14h7l-1 8 11-14h-7l1-6z"/></svg>Age 55–65</span></div>
           <div class="ba-row"><span class="tag-chip smart-blue"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M13 2 3 14h7l-1 8 11-14h-7l1-6z"/></svg>Recently Contacted</span></div>
         </div>
-      </div>
-      <p class="cs-caption">The Zap icon that marks a smart tag was rendering in three different colors depending on which screen you saw it from. Fixed to always inherit the tag's own category color, so "this is automated" reads as one consistent signal everywhere.</p>
-
-      <div class="iter-list">
-        <div class="iter-item">
-          <span class="iter-tag">FIX</span>
-          <p>Manage Categories didn't show how many tags lived in each category — added a visible count per row.</p>
-        </div>
-        <div class="iter-item">
-          <span class="iter-tag">FIX</span>
-          <p>Selected rows in the "add household to tag" flow didn't read as selected — switched to an outline button so the "Added" state stands out in green instead of blending in.</p>
-        </div>
-        <div class="iter-item">
-          <span class="iter-tag">FIX</span>
-          <p>A failed required field just said "Required" with no context — replaced with the actual, specific validation message.</p>
-        </div>
-        <div class="iter-item">
-          <span class="iter-tag">QA</span>
-          <p>Save was firing update calls even when nothing had changed — gated the edit dialog's Save behind a real dirty check.</p>
+        <div class="ba-col after">
+          <div class="ba-label">After</div>
+          <div class="ba-row"><span class="tag-chip smart-orange"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M13 2 3 14h7l-1 8 11-14h-7l1-6z"/></svg>High Net Worth</span><span class="ba-category">Wealth Tier</span></div>
+          <div class="ba-row"><span class="tag-chip smart-purple"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M13 2 3 14h7l-1 8 11-14h-7l1-6z"/></svg>Age 55–65</span><span class="ba-category">Life Stage</span></div>
+          <div class="ba-row"><span class="tag-chip smart-blue"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M13 2 3 14h7l-1 8 11-14h-7l1-6z"/></svg>Recently Contacted</span><span class="ba-category">Engagement</span></div>
         </div>
       </div>
+      <p class="cs-caption">The Zap icon that marks a smart tag was rendering the same way everywhere, regardless of which category the tag actually belonged to. Fixed to always inherit the tag's own category color, so the icon and the category agree everywhere it shows up.</p>
     </div>
   </section>
 
@@ -635,26 +556,6 @@
         <li><strong>Ambiguity gets surfaced, not resolved quietly.</strong> A conflicting match is flagged and shown, not hidden behind a best guess.</li>
         <li><strong>AI refuses rather than hallucinates.</strong> The Claude-generated tag descriptions return empty on an ambiguous or nonsense tag name instead of inventing a plausible-sounding one.</li>
       </ul>
-
-      <div class="metrics-panel">
-        <div class="metrics-grid">
-          <div>
-            <svg class="metric-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 4v16M6 14l6 6 6-6"/></svg>
-            <p class="metric-headline">Replaced hand-applied labels with tags that re-evaluate themselves on every household change</p>
-            <p class="metric-note">(no scheduled job — immediate backfill on rule save, idempotent re-evaluation after)</p>
-          </div>
-          <div>
-            <svg class="metric-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20V4M6 10l6-6 6 6"/></svg>
-            <p class="metric-headline">Turned a full CRM re-tag into one 5-step import instead of hundreds of manual edits</p>
-            <p class="metric-note">(auto-classifies columns, matches households, merges near-duplicate tag names)</p>
-          </div>
-          <div>
-            <svg class="metric-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 12h16M14 6l6 6-6 6"/></svg>
-            <p class="metric-headline">Won Big Bang 2026, and shipped straight against advisors' top-voted Canny request</p>
-            <p class="metric-note">(closed every "Done when" item on SV-888; unblocked two roadmap items behind it)</p>
-          </div>
-        </div>
-      </div>
     </div>
   </section>
 
