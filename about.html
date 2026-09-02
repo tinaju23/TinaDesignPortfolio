@@ -455,11 +455,30 @@
     setActivePhoto(idx);
   }
 
+  // On mobile, the photo box and passions copy aren't pinned side-by-side
+  // (they stack normally), so there's no scroll "range" to compute progress
+  // from. Instead, advance the active photo based on which passion item is
+  // scrolled to the vertical center of the screen.
+  const mobileObserver = new IntersectionObserver((entries) => {
+    if (isDesktop()) return;
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        setActivePhoto(Number(entry.target.dataset.index));
+      }
+    });
+  }, { rootMargin: '-45% 0px -45% 0px', threshold: 0 });
+
+  passionItems.forEach(el => mobileObserver.observe(el));
+
   passionItems.forEach((el, i) => {
     el.addEventListener('click', () => {
-      const { pinStart, pinRange } = computeScrollRange();
-      const target = pinStart + ((i + 0.5) / passionItems.length) * pinRange;
-      window.scrollTo({ top: target, behavior: 'smooth' });
+      if (isDesktop()) {
+        const { pinStart, pinRange } = computeScrollRange();
+        const target = pinStart + ((i + 0.5) / passionItems.length) * pinRange;
+        window.scrollTo({ top: target, behavior: 'smooth' });
+      } else {
+        el.scrollIntoView({ behavior: 'smooth', block: 'center' });
+      }
     });
   });
 
