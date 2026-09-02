@@ -175,6 +175,14 @@
       position:static !important; height:auto; overflow:visible;
       padding-top:16px; display:block;
     }
+    /* The heading pins to the viewport right below the photo (see
+       pinMobileGroup in the script) so photo + heading always stay together;
+       only .passions-list scrolls normally underneath both of them. */
+    .passions-heading-wrap{ position:relative; }
+    .passions-heading{
+      position:absolute; top:0; left:0; width:100%;
+      background:var(--paper); z-index:9;
+    }
     .passions-list{ display:block; margin-top:16px; }
     /* Scroll-snap adds friction here: a fast flick can't skip past several
        bullets at once, it settles on each one in turn. Scoped to mobile only
@@ -263,8 +271,12 @@
 
       <aside class="passions">
        <div class="passions-sticky">
-        <div class="eyebrow">OUTSIDE THE 9–5</div>
-        <h3>What fills my 5–9.</h3>
+        <div class="passions-heading-wrap">
+         <div class="passions-heading">
+          <div class="eyebrow">OUTSIDE THE 9–5</div>
+          <h3>What fills my 5–9.</h3>
+         </div>
+        </div>
         <div class="passions-list" id="passionsList">
           <div class="passion-item" data-index="0">
             <svg class="passion-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
@@ -407,6 +419,8 @@
   const photoBox = document.querySelector('.photo-stack');
   const passionsWrap = document.querySelector('.passions');
   const passionsBox = document.querySelector('.passions-sticky');
+  const headingWrap = document.querySelector('.passions-heading-wrap');
+  const headingBox = document.querySelector('.passions-heading');
 
   function isDesktop(){
     return window.matchMedia('(min-width: 861px)').matches;
@@ -451,39 +465,74 @@
     return { pinStart, pinRange };
   }
 
-  // On mobile the photo pins on its own (not side-by-side with the copy) and
-  // the passions list scrolls normally underneath/behind it — so the photo
-  // stays in view the whole time, and whichever bullet is visible just below
-  // it is the "matching" one. The release point is driven by the list's own
+  // On mobile the photo and the "What fills my 5-9" heading pin together as
+  // one unit (not side-by-side with the copy, like desktop) — so they always
+  // stay in view together, and only the bullet list itself scrolls normally
+  // underneath both of them. The release point is driven by the list's own
   // scroll position (there's no shared tall wrapper like on desktop).
-  function pinPhotoMobile(){
+  function pinMobileGroup(){
     const top = pinTop();
-    const boxH = photoBox.offsetHeight;
+    const photoH = photoBox.offsetHeight;
+    const headingH = headingBox.offsetHeight;
     const wrapRect = photoWrap.getBoundingClientRect();
     const listRect = passionsWrap.getBoundingClientRect();
+
+    // Keep the heading-wrap reserving its natural flow height, since its
+    // child becomes position:absolute/fixed (out of flow) below.
+    headingWrap.style.height = headingH + 'px';
 
     if (wrapRect.top > top) {
       photoBox.style.position = 'absolute';
       photoBox.style.top = '0px';
       photoBox.style.left = '0px';
       photoBox.style.width = '100%';
+      headingBox.style.position = 'absolute';
+      headingBox.style.top = '0px';
+      headingBox.style.left = '0px';
+      headingBox.style.width = '100%';
     } else if (listRect.bottom < top) {
       photoBox.style.position = 'absolute';
-      photoBox.style.top = (photoWrap.offsetHeight - boxH) + 'px';
+      photoBox.style.top = (photoWrap.offsetHeight - photoH) + 'px';
       photoBox.style.left = '0px';
       photoBox.style.width = '100%';
+      headingBox.style.position = 'absolute';
+      headingBox.style.top = (headingWrap.offsetHeight - headingH) + 'px';
+      headingBox.style.left = '0px';
+      headingBox.style.width = '100%';
     } else {
       photoBox.style.position = 'fixed';
       photoBox.style.top = top + 'px';
       photoBox.style.left = wrapRect.left + 'px';
       photoBox.style.width = wrapRect.width + 'px';
+
+      // The gap between the photo and heading in normal flow (accounting for
+      // .passions-sticky's padding-top etc.) is constant regardless of scroll
+      // position, since photoWrap and headingWrap always move together at
+      // the same rate — so this self-corrects for any spacing between them
+      // instead of assuming there's none.
+      const headingWrapRect = headingWrap.getBoundingClientRect();
+      const naturalGap = headingWrapRect.top - wrapRect.bottom;
+      headingBox.style.position = 'fixed';
+      headingBox.style.top = (top + photoH + naturalGap) + 'px';
+      headingBox.style.left = headingWrapRect.left + 'px';
+      headingBox.style.width = headingWrapRect.width + 'px';
     }
   }
 
   function updateFromScroll(){
     if (!isDesktop()) {
-      pinPhotoMobile();
+      pinMobileGroup();
       return;
+    }
+    // Clear any inline positioning pinMobileGroup left on the heading (e.g.
+    // if the window was resized across the breakpoint without a reload) —
+    // desktop lays the heading out normally inside .passions-sticky.
+    if (headingBox.style.position) {
+      headingBox.style.position = '';
+      headingBox.style.top = '';
+      headingBox.style.left = '';
+      headingBox.style.width = '';
+      headingWrap.style.height = '';
     }
     pinBox(photoWrap, photoBox);
     pinBox(passionsWrap, passionsBox);
@@ -504,7 +553,7 @@
         setActivePhoto(Number(entry.target.dataset.index));
       }
     });
-  }, { rootMargin: '-60% 0px -25% 0px', threshold: 0 });
+  }, { rootMargin: '-66% 0px -18% 0px', threshold: 0 });
 
   passionItems.forEach(el => mobileObserver.observe(el));
 
