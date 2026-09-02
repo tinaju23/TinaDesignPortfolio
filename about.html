@@ -166,22 +166,23 @@
     .intro-grid{ grid-template-columns:1fr; gap:36px; }
     .intro-photo{ max-height:420px; margin-left:0; }
     .collage-layout{ grid-template-columns:1fr; gap:0; }
-    .photo-stack-wrap{ height:300px; margin-bottom:8px; }
-    .photo-stack{ height:300px; }
-    .stack-photo{ height:240px; }
+    .photo-stack-wrap{ height:280px; margin-bottom:0; }
+    .photo-stack{ height:280px; z-index:10; }
+    .stack-photo{ height:220px; }
     .passions{ min-height:0; }
     .passions-sticky{
       position:static !important; height:auto; overflow:visible;
       padding-top:16px; display:block;
     }
     .passions-list{ display:block; margin-top:16px; }
-    .passion-item{ padding:14px 0; }
+    .passion-item{ padding:14px 0; background:var(--paper); }
     .field-row{ grid-template-columns:1fr; gap:6px; }
     .resume-grid{ flex-direction:column; align-items:flex-start; }
   }
 </style>
 </head>
 <body>
+<script src="lock.js"></script>
 
 <svg width="0" height="0" style="position:absolute" aria-hidden="true">
   <defs>
@@ -392,7 +393,6 @@
   // through three phases as the page scrolls: resting at the top of its tall
   // wrapper, fixed to the viewport while scrolling through the section, and
   // resting at the bottom of its wrapper once scrolled past.
-  const PIN_TOP = 110;
   const photoWrap = document.querySelector('.photo-stack-wrap');
   const photoBox = document.querySelector('.photo-stack');
   const passionsWrap = document.querySelector('.passions');
@@ -402,17 +402,22 @@
     return window.matchMedia('(min-width: 861px)').matches;
   }
 
+  function pinTop(){
+    return isDesktop() ? 110 : 70;
+  }
+
   function pinBox(wrapEl, boxEl){
+    const top = pinTop();
     const boxH = boxEl.offsetHeight;
     const wrapRect = wrapEl.getBoundingClientRect();
 
-    if (wrapRect.top > PIN_TOP) {
+    if (wrapRect.top > top) {
       // Phase A — not reached yet: rest at the top of the wrapper.
       boxEl.style.position = 'absolute';
       boxEl.style.top = '0px';
       boxEl.style.left = '0px';
       boxEl.style.width = '100%';
-    } else if (wrapRect.bottom - boxH < PIN_TOP) {
+    } else if (wrapRect.bottom - boxH < top) {
       // Phase C — scrolled past: rest at the bottom of the wrapper.
       boxEl.style.position = 'absolute';
       boxEl.style.top = (wrapEl.offsetHeight - boxH) + 'px';
@@ -421,7 +426,7 @@
     } else {
       // Phase B — pinned to the viewport.
       boxEl.style.position = 'fixed';
-      boxEl.style.top = PIN_TOP + 'px';
+      boxEl.style.top = top + 'px';
       boxEl.style.left = wrapRect.left + 'px';
       boxEl.style.width = wrapRect.width + 'px';
     }
@@ -431,19 +436,43 @@
     const boxH = photoBox.offsetHeight;
     const wrapRect = photoWrap.getBoundingClientRect();
     const absoluteTop = wrapRect.top + window.scrollY;
-    const pinStart = absoluteTop - PIN_TOP;
+    const pinStart = absoluteTop - pinTop();
     const pinRange = Math.max(photoWrap.offsetHeight - boxH, 1);
     return { pinStart, pinRange };
   }
 
+  // On mobile the photo pins on its own (not side-by-side with the copy) and
+  // the passions list scrolls normally underneath/behind it — so the photo
+  // stays in view the whole time, and whichever bullet is visible just below
+  // it is the "matching" one. The release point is driven by the list's own
+  // scroll position (there's no shared tall wrapper like on desktop).
+  function pinPhotoMobile(){
+    const top = pinTop();
+    const boxH = photoBox.offsetHeight;
+    const wrapRect = photoWrap.getBoundingClientRect();
+    const listRect = passionsWrap.getBoundingClientRect();
+
+    if (wrapRect.top > top) {
+      photoBox.style.position = 'absolute';
+      photoBox.style.top = '0px';
+      photoBox.style.left = '0px';
+      photoBox.style.width = '100%';
+    } else if (listRect.bottom < top) {
+      photoBox.style.position = 'absolute';
+      photoBox.style.top = (photoWrap.offsetHeight - boxH) + 'px';
+      photoBox.style.left = '0px';
+      photoBox.style.width = '100%';
+    } else {
+      photoBox.style.position = 'fixed';
+      photoBox.style.top = top + 'px';
+      photoBox.style.left = wrapRect.left + 'px';
+      photoBox.style.width = wrapRect.width + 'px';
+    }
+  }
+
   function updateFromScroll(){
     if (!isDesktop()) {
-      [photoBox, passionsBox].forEach(el => {
-        el.style.position = '';
-        el.style.top = '';
-        el.style.left = '';
-        el.style.width = '';
-      });
+      pinPhotoMobile();
       return;
     }
     pinBox(photoWrap, photoBox);
@@ -455,10 +484,9 @@
     setActivePhoto(idx);
   }
 
-  // On mobile, the photo box and passions copy aren't pinned side-by-side
-  // (they stack normally), so there's no scroll "range" to compute progress
-  // from. Instead, advance the active photo based on which passion item is
-  // scrolled to the vertical center of the screen.
+  // On mobile, advance the active photo based on which passion item is
+  // scrolled into the visible strip just below the pinned photo (roughly the
+  // bottom two-thirds of the screen, since the photo occupies the top part).
   const mobileObserver = new IntersectionObserver((entries) => {
     if (isDesktop()) return;
     entries.forEach(entry => {
@@ -466,7 +494,7 @@
         setActivePhoto(Number(entry.target.dataset.index));
       }
     });
-  }, { rootMargin: '-45% 0px -45% 0px', threshold: 0 });
+  }, { rootMargin: '-60% 0px -25% 0px', threshold: 0 });
 
   passionItems.forEach(el => mobileObserver.observe(el));
 
