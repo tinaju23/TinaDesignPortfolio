@@ -220,8 +220,13 @@
     border:1px solid var(--line); border-radius:4px; margin-bottom:10px; font-size:13.5px; color:var(--ink);
   }
   .ba-category{
-    margin-left:auto; font-family:var(--font-mono); font-size:11px; color:var(--slate); white-space:nowrap;
+    margin-left:auto; display:inline-flex; align-items:center; gap:6px;
+    font-family:var(--font-mono); font-size:11px; color:var(--slate); white-space:nowrap;
   }
+  .ba-dot{ width:7px; height:7px; border-radius:50%; flex-shrink:0; }
+  .ba-dot.orange{ background:var(--flag); }
+  .ba-dot.purple{ background:#7C5CBF; }
+  .ba-dot.blue{ background:var(--verified); }
   @media (max-width: 700px){ .ba-grid{ grid-template-columns:1fr; } }
 
   /* ============ STAT TABLE ============ */
@@ -438,17 +443,6 @@
       <div class="cs-block-sub">How it works · Bulk CSV import</div>
       <h2>Turning "one household at a time" into one action</h2>
 
-      <figure class="cs-figure mac-mockup-wrap">
-        <div class="mac-mockup">
-          <div class="mac-screen">
-            <div class="mac-camera"></div>
-            <img src="images/crm-tags/review-client-matches.png" alt="Review client matches step of the import wizard, showing unmatched, ambiguous, and matched counts" loading="lazy">
-          </div>
-          <div class="mac-base"></div>
-        </div>
-      </figure>
-      <p class="cs-caption">The preview step surfacing exactly one ambiguous row out of 24 — this is the "wrong person, right household" guard in the interface.</p>
-
       <p class="lede">
         The other half of the bulk-tagging problem was advisors switching from Redtail or Wealthbox with
         years of tags already applied. Re-creating that by hand was the exact pain the advisor quote above
@@ -530,9 +524,9 @@
         </div>
         <div class="ba-col after">
           <div class="ba-label">After</div>
-          <div class="ba-row"><span class="tag-chip smart-orange"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M13 2 3 14h7l-1 8 11-14h-7l1-6z"/></svg>High Net Worth</span><span class="ba-category">Wealth Tier</span></div>
-          <div class="ba-row"><span class="tag-chip smart-purple"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M13 2 3 14h7l-1 8 11-14h-7l1-6z"/></svg>Age 55–65</span><span class="ba-category">Life Stage</span></div>
-          <div class="ba-row"><span class="tag-chip smart-blue"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M13 2 3 14h7l-1 8 11-14h-7l1-6z"/></svg>Recently Contacted</span><span class="ba-category">Engagement</span></div>
+          <div class="ba-row"><span class="tag-chip smart-orange"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M13 2 3 14h7l-1 8 11-14h-7l1-6z"/></svg>High Net Worth</span><span class="ba-category"><span class="ba-dot orange"></span>Wealth Tier</span></div>
+          <div class="ba-row"><span class="tag-chip smart-purple"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M13 2 3 14h7l-1 8 11-14h-7l1-6z"/></svg>Age 55–65</span><span class="ba-category"><span class="ba-dot purple"></span>Life Stage</span></div>
+          <div class="ba-row"><span class="tag-chip smart-blue"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M13 2 3 14h7l-1 8 11-14h-7l1-6z"/></svg>Recently Contacted</span><span class="ba-category"><span class="ba-dot blue"></span>Engagement</span></div>
         </div>
       </div>
       <p class="cs-caption">The Zap icon that marks a smart tag was rendering the same way everywhere, regardless of which category the tag actually belonged to. Fixed to always inherit the tag's own category color, so the icon and the category agree everywhere it shows up.</p>
@@ -562,8 +556,16 @@
   <!-- ============ ADOPTION ============ -->
   <section class="cs-section" style="border-bottom:none;">
     <div class="wrap">
-      <div class="cs-block-sub">After launch</div>
+      <div class="cs-block-sub">Launch</div>
       <h2>Advisors using tags for client segmentation</h2>
+      <p class="lede">
+        An empty tags list is a hard sell, so launch didn't wait for advisors to build their first rule
+        from scratch. A handful of high-need smart tags were created automatically for every advisor,
+        existing and new, so the feature arrived with a few already working instead of a blank slate.
+        Two mattered most: <strong>RMD Eligible</strong>, because a required minimum distribution deadline
+        is one advisors genuinely can't afford to miss, and <strong>High Net Worth</strong>, because AUM is
+        how advisors decide which households get their attention first.
+      </p>
 
       <div class="stat-table">
         <div class="stat-row">
