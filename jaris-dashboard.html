@@ -96,6 +96,27 @@
     display:inline-block; margin-bottom:6px;
   }
 
+  /* ============ METRICS CALLOUT ============ */
+  .metrics-panel{
+    background:var(--paper-dim); border-radius:12px;
+    padding:48px 44px; margin-top:36px;
+  }
+  .metrics-grid{
+    display:grid; grid-template-columns:repeat(3, 1fr); gap:40px;
+  }
+  .metric-arrow{ width:34px; height:34px; color:#2E5BFF; margin-bottom:22px; }
+  .metrics-grid p.metric-headline{
+    font-family:var(--font-display); font-weight:600; font-size:19px;
+    line-height:1.35; color:#2E5BFF; max-width:none;
+  }
+  .metrics-grid p.metric-note{
+    font-family:var(--font-mono); font-size:12px; color:#2E5BFF; opacity:0.8;
+    margin-top:16px; line-height:1.6; max-width:none;
+  }
+  @media (max-width: 700px){
+    .metrics-grid{ grid-template-columns:1fr; gap:36px; }
+  }
+
   /* ============ CTA ============ */
   #cs-cta{ border-bottom:none; padding-bottom:80px; }
   .cs-cta-grid{
@@ -187,7 +208,7 @@
   <section id="cs-hero-img">
     <div class="wrap">
       <figure class="cs-figure">
-        <img src="images/dashboard/hero-dashboard.png" alt="Partner Dashboard overview" loading="lazy">
+        <img src="images/dashboard/hero-dashboard.png?v=2" alt="Partner Dashboard overview" loading="lazy">
       </figure>
     </div>
   </section>
@@ -208,7 +229,7 @@
       </p>
 
       <figure class="cs-figure" style="margin-top:36px;">
-        <img src="images/dashboard/01-challenge-overview.png" alt="Partner Dashboard tablet mockup" loading="lazy">
+        <img src="images/dashboard/01-challenge-overview.png?v=2" alt="Partner Dashboard tablet mockup" loading="lazy">
       </figure>
 
       <h2 style="margin-top:56px;">Our goals</h2>
@@ -226,6 +247,25 @@
         <li>Created a scalable dashboard framework that could support future product features without full redesign</li>
         <li>Saw an uptick in scheduled demos with partners with the introduction of underwriting decision-making workflows for financial product applications</li>
       </ul>
+
+      <div class="metrics-panel">
+        <div class="metrics-grid">
+          <div>
+            <svg class="metric-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 4v16M6 14l6 6 6-6"/></svg>
+            <p class="metric-headline">Decrease in onboarding new partners by 1 week</p>
+            <p class="metric-note">(based off of 3 new partners since feature launch)</p>
+          </div>
+          <div>
+            <svg class="metric-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20V4M6 10l6-6 6 6"/></svg>
+            <p class="metric-headline">Improved speed in application decisions</p>
+            <p class="metric-note">(driven by information hierarchy that prioritizes high level action items)</p>
+          </div>
+          <div>
+            <svg class="metric-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 12h16M14 6l6 6-6 6"/></svg>
+            <p class="metric-headline">Our internal ops team preferred this UX so much that we are gearing towards replacing our internal jaris workflow with this same UI framework</p>
+          </div>
+        </div>
+      </div>
     </div>
   </section>
 
@@ -259,26 +299,16 @@
       </p>
 
       <figure class="cs-figure" style="margin-top:36px;">
-        <img src="images/dashboard/02-user-journey-figjam.png" alt="Partner onboarding user journey map in FigJam" loading="lazy">
+        <img src="images/dashboard/02-user-journey-figjam.png?v=2" alt="Partner onboarding user journey map in FigJam" loading="lazy">
       </figure>
       <p class="cs-caption">The user journey I created with FigJam to go over all of the different aspects of the partner's onboarding journey.</p>
-    </div>
-  </section>
-
-  <!-- ============ FEATURE DEEP DIVES ============ -->
-  <section class="cs-section">
-    <div class="wrap">
-      <h2>Feature deep dives</h2>
-      <figure class="cs-figure">
-        <img src="images/dashboard/03-feature-deep-dives.png" alt="Feature deep dives overview" loading="lazy">
-      </figure>
     </div>
   </section>
 
   <!-- ============ ROLE-BASED USER MANAGEMENT ============ -->
   <section class="cs-section">
     <div class="wrap">
-      <div class="cs-block-sub">Role-based user management</div>
+      <div class="cs-block-sub">Feature deep dives · Role-based user management</div>
       <h2>One size does not fit all.</h2>
       <p>
         Early in the process, Product proposed that each new partner account should include a
@@ -301,7 +331,7 @@
       </p>
 
       <figure class="cs-figure" style="margin-top:36px;">
-        <img src="images/dashboard/04-role-based-management.png" alt="Role-based user management screens" loading="lazy">
+        <img src="images/dashboard/03-feature-deep-dives.png?v=2" alt="Create and edit role modals showing Reports, Materials, and Dev Tools permission toggles" loading="lazy">
       </figure>
     </div>
   </section>
@@ -334,7 +364,7 @@
       </p>
 
       <figure class="cs-figure" style="margin-top:36px;">
-        <img src="images/dashboard/05-underwriting-gateway.png" alt="Merchant underwriting decision gateway screens" loading="lazy">
+        <img src="images/dashboard/04-role-based-management.png?v=2" alt="Total applications overview dashboard alongside the merchant underwriting detail view" loading="lazy">
       </figure>
     </div>
   </section>
@@ -364,7 +394,7 @@
       </p>
 
       <figure class="cs-figure" style="margin-top:36px;">
-        <img src="images/dashboard/06-challenges-scale.png" alt="Application table with flexible filters and status views" loading="lazy">
+        <img src="images/dashboard/05-underwriting-gateway.png?v=2" alt="Application table defaulted to Submitted and Re-submitted status filters" loading="lazy">
       </figure>
     </div>
   </section>
@@ -399,7 +429,7 @@
       </p>
 
       <figure class="cs-figure" style="margin-top:36px;">
-        <img src="images/dashboard/07-prioritizing-info.png" alt="Underwriting workflow showing application fields, documents, and outcome tags" loading="lazy">
+        <img src="images/dashboard/06-challenges-scale.png?v=2" alt="Underwriting workflow showing business, owners, and bank account information hierarchy" loading="lazy">
       </figure>
     </div>
   </section>
@@ -433,9 +463,8 @@
       </p>
 
       <figure class="cs-figure" style="margin-top:36px;">
-        <img src="images/dashboard/08-error-handling.png" alt="Error handling screens with pre-written and custom error messages" loading="lazy">
+        <img src="images/dashboard/07-prioritizing-info.png?v=2" alt="Error handling and re-submitted fields screens with pre-written and custom error messages" loading="lazy">
       </figure>
-      <p class="cs-caption">A prototype was created to walk the team through the general layout and introduce error handling.</p>
     </div>
   </section>
 
