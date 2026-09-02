@@ -277,6 +277,28 @@
     .metrics-grid{ grid-template-columns:1fr; gap:36px; }
   }
 
+  /* ============ STAT TABLE ============ */
+  .stat-table{
+    display:flex; flex-direction:column; margin-top:32px; max-width:72ch;
+    border-top:1px solid var(--line);
+  }
+  .stat-row{
+    display:flex; justify-content:space-between; align-items:baseline; gap:24px;
+    padding:24px 0; border-bottom:1px solid var(--line);
+  }
+  .stat-label{ font-size:15.5px; color:var(--ink); max-width:40ch; line-height:1.5; }
+  .stat-value{
+    font-family:var(--font-display); font-weight:600; font-size:30px;
+    color:var(--verified-deep); white-space:nowrap; flex-shrink:0;
+  }
+  .stat-of{
+    font-family:var(--font-mono); font-weight:400; font-size:12px; color:var(--slate);
+    margin-left:10px; white-space:normal;
+  }
+  @media (max-width: 600px){
+    .stat-row{ flex-direction:column; align-items:flex-start; gap:8px; }
+  }
+
   /* ============ CTA ============ */
   #cs-cta{ border-bottom:none; padding-bottom:80px; }
   .cs-cta-grid{
@@ -486,6 +508,18 @@
     <div class="wrap">
       <div class="cs-block-sub">How it works · Bulk CSV import</div>
       <h2>Turning "one household at a time" into one action</h2>
+
+      <figure class="cs-figure mac-mockup-wrap">
+        <div class="mac-mockup">
+          <div class="mac-screen">
+            <div class="mac-camera"></div>
+            <img src="images/crm-tags/review-client-matches.png" alt="Review client matches step of the import wizard, showing unmatched, ambiguous, and matched counts" loading="lazy">
+          </div>
+          <div class="mac-base"></div>
+        </div>
+      </figure>
+      <p class="cs-caption">The preview step surfacing exactly one ambiguous row out of 24 — this is the "wrong person, right household" guard in the interface.</p>
+
       <p class="lede">
         The other half of the bulk-tagging problem was advisors switching from Redtail or Wealthbox with
         years of tags already applied. Re-creating that by hand was the exact pain the advisor quote above
@@ -619,6 +653,29 @@
             <p class="metric-headline">Won Big Bang 2026, and shipped straight against advisors' top-voted Canny request</p>
             <p class="metric-note">(closed every "Done when" item on SV-888; unblocked two roadmap items behind it)</p>
           </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ ADOPTION ============ -->
+  <section class="cs-section" style="border-bottom:none;">
+    <div class="wrap">
+      <div class="cs-block-sub">After launch</div>
+      <h2>Advisors using tags for client segmentation</h2>
+
+      <div class="stat-table">
+        <div class="stat-row">
+          <span class="stat-label">Advisors with at least 1 tagged household</span>
+          <span class="stat-value">135<span class="stat-of">of 207 advisors with a book</span></span>
+        </div>
+        <div class="stat-row">
+          <span class="stat-label">Average count of smart tags applied per advisor</span>
+          <span class="stat-value">12</span>
+        </div>
+        <div class="stat-row">
+          <span class="stat-label">Households tagged</span>
+          <span class="stat-value">3,593</span>
         </div>
       </div>
     </div>
