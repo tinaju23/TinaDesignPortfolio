@@ -158,7 +158,7 @@
 
 <header>
   <nav>
-    <a href="#hero" class="nav-name">
+    <a href="/" data-route="/" class="nav-name">
       <span class="word">
         <span class="nav-scan"></span>
         <span class="nl" style="--i:0">T</span><span class="nl" style="--i:1">I</span><span class="nl" style="--i:2">N</span><span class="nl" style="--i:3">A</span>&nbsp;<span class="nl" style="--i:4">J</span><span class="nl" style="--i:5">U</span>
@@ -166,9 +166,9 @@
       <span class="bolt-mark"><svg viewBox="0 0 24 24"><path d="M13 2 3 14h7l-1 8 10-12h-7l1-8z"/></svg></span>
     </a>
     <div class="nav-links">
-      <a href="#work" data-nav>Work</a>
-      <a href="about.html">About</a>
-      <a href="#contact" data-nav>Contact</a>
+      <a href="/work" data-nav data-route="/work">Work</a>
+      <a href="/about">About</a>
+      <a href="/contact" data-nav data-route="/contact">Contact</a>
     </div>
   </nav>
   <div class="cal-track" id="calTrack">
@@ -194,8 +194,8 @@
           the flagship revenue driver behind our $8B assets under management.
         </p>
         <div class="hero-cta">
-          <a href="#work" class="btn">View selected work</a>
-          <a href="#contact" class="btn-ghost">Get in touch</a>
+          <a href="/work" data-route="/work" class="btn">View selected work</a>
+          <a href="/contact" data-route="/contact" class="btn-ghost">Get in touch</a>
         </div>
       </div>
       <img class="hero-photo" src="images/tina-portrait-bw.png" alt="Tina Ju, black and white portrait">
@@ -211,7 +211,7 @@
       </div>
 
       <!-- Project 1 -->
-      <a class="project" href="crm-tags.html" target="_blank" rel="noopener">
+      <a class="project" href="/crm-tags" target="_blank" rel="noopener">
         <svg class="project-icon" viewBox="0 0 44 44" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
           <path d="M8 20 L20 8 H34 V22 L22 34 Z"/>
           <circle cx="27" cy="15" r="2.5"/>
@@ -239,7 +239,7 @@
       </a>
 
       <!-- Project 3 -->
-      <a class="project" href="jaris-dashboard.html" target="_blank" rel="noopener">
+      <a class="project" href="/jaris-dashboard" target="_blank" rel="noopener">
         <svg class="project-icon" viewBox="0 0 44 44" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
           <path d="M6 30 A16 16 0 0 1 38 30"/>
           <path d="M22 30 L30 18"/>
@@ -254,7 +254,7 @@
       </a>
 
       <!-- Project 4 -->
-      <a class="project" href="jaris-lending.html" target="_blank" rel="noopener">
+      <a class="project" href="/jaris-lending" target="_blank" rel="noopener">
         <svg class="project-icon" viewBox="0 0 44 44" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
           <path d="M6 22 H16 M20 22 H30 M34 22 H38"/>
           <circle cx="38" cy="22" r="3"/>
@@ -269,7 +269,7 @@
       </a>
 
       <!-- Project 5 -->
-      <a class="project" href="jaris-instantpayouts-1.html" target="_blank" rel="noopener">
+      <a class="project" href="/jaris-instantpayouts-1" target="_blank" rel="noopener">
         <svg class="project-icon" viewBox="0 0 44 44" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
           <path d="M24 6 L14 24 H22 L18 38 L32 18 H24 Z"/>
         </svg>
@@ -282,7 +282,7 @@
       </a>
 
       <!-- Project 6 -->
-      <a class="project" href="spglobal.html" target="_blank" rel="noopener">
+      <a class="project" href="/spglobal" target="_blank" rel="noopener">
         <svg class="project-icon" viewBox="0 0 44 44" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
           <path d="M6 34 H38"/>
           <path d="M10 34 V22 M19 34 V14 M28 34 V26 M34 34 V18"/>
@@ -326,6 +326,33 @@
   const sections = ['work','contact'].map(id => document.getElementById(id));
   const navLinks = document.querySelectorAll('[data-nav]');
 
+  // ---- Clean-URL routing for the in-page sections (hero/work/contact) ----
+  const SECTION_PATHS = { hero:'/', work:'/work', contact:'/contact' };
+  const routeSections = Object.keys(SECTION_PATHS).map(id => document.getElementById(id));
+
+  function scrollToPath(path, smooth){
+    const id = Object.keys(SECTION_PATHS).find(key => SECTION_PATHS[key] === path);
+    const el = id ? document.getElementById(id) : null;
+    if(el) el.scrollIntoView({ behavior: smooth ? 'smooth' : 'auto', block:'start' });
+  }
+
+  document.querySelectorAll('[data-route]').forEach(link => {
+    link.addEventListener('click', e => {
+      const path = link.getAttribute('data-route');
+      e.preventDefault();
+      if(location.pathname !== path) history.pushState(null, '', path);
+      scrollToPath(path, true);
+    });
+  });
+
+  window.addEventListener('popstate', () => scrollToPath(location.pathname, true));
+
+  const initialPath = location.pathname;
+  if(initialPath !== '/' && Object.values(SECTION_PATHS).includes(initialPath)){
+    scrollToPath(initialPath, false);
+    window.addEventListener('load', () => scrollToPath(initialPath, false));
+  }
+
   function layoutTicks(){
     track.querySelectorAll('.cal-tick').forEach(t => t.remove());
     const docHeight = document.documentElement.scrollHeight - window.innerHeight;
@@ -348,18 +375,20 @@
   window.addEventListener('resize', () => { layoutTicks(); updateFill(); });
   window.addEventListener('load', () => { layoutTicks(); updateFill(); });
 
-  // ---- Active nav link on scroll ----
+  // ---- Active nav link + URL on scroll ----
   const observer = new IntersectionObserver((entries) => {
     entries.forEach(entry => {
       if(entry.isIntersecting){
+        const path = SECTION_PATHS[entry.target.id];
         navLinks.forEach(l => l.classList.remove('active'));
-        const match = document.querySelector(`[data-nav][href="#${entry.target.id}"]`);
+        const match = document.querySelector(`[data-nav][data-route="${path}"]`);
         if(match) match.classList.add('active');
+        if(path && location.pathname !== path) history.replaceState(null, '', path);
       }
     });
   }, { rootMargin: '-45% 0px -50% 0px' });
 
-  sections.forEach(sec => observer.observe(sec));
+  routeSections.forEach(sec => observer.observe(sec));
 </script>
 
 <script>

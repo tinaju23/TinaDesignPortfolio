@@ -1,11 +1,12 @@
 /* Site-wide password gate. Client-side only — a soft gate to keep the
-   site out of casual view, not a security boundary. Unlock persists for
-   the browser tab via sessionStorage. */
+   site out of casual view, not a security boundary. Unlock persists across
+   tabs (case studies open via target="_blank") via localStorage, so it
+   only asks again after site data is cleared. */
 (function () {
   var PASSWORD = 'angellist';
   var STORAGE_KEY = 'site-unlocked';
 
-  if (sessionStorage.getItem(STORAGE_KEY) === '1') return;
+  if (localStorage.getItem(STORAGE_KEY) === '1') return;
 
   document.write(
     '<style>' +
@@ -55,7 +56,7 @@
     form.addEventListener('submit', function (e) {
       e.preventDefault();
       if (input.value === PASSWORD) {
-        sessionStorage.setItem(STORAGE_KEY, '1');
+        localStorage.setItem(STORAGE_KEY, '1');
         document.documentElement.classList.remove('is-locked');
         screen.parentNode.removeChild(screen);
       } else {
