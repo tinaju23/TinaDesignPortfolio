@@ -3,10 +3,10 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Tina Ju — Senior Product Designer</title>
-<meta name="description" content="Tina Ju, Senior Product Designer. Designing transparency, trust, and human control into AI-assisted experiences, plus the design systems that turn ambiguity into shipped outcomes.">
+<title>Tina Ju — Product Design Lead</title>
+<meta name="description" content="Tina Ju, Product Design Lead. Designing transparency, trust, and human control into AI-assisted experiences, plus the design systems that turn ambiguity into shipped outcomes.">
 <link rel="canonical" href="https://www.tina-ju.com/">
-<meta property="og:title" content="Tina Ju — Senior Product Designer">
+<meta property="og:title" content="Tina Ju — Product Design Lead">
 <meta property="og:description" content="Designing transparency, trust, and human control into AI-assisted experiences, plus the design systems that turn ambiguity into shipped outcomes.">
 <meta property="og:url" content="https://www.tina-ju.com/">
 <meta property="og:type" content="website">
@@ -21,6 +21,17 @@
     padding:180px 0 120px;
     border-bottom:1px solid var(--line);
   }
+  .hero-grid{
+    display:grid;
+    grid-template-columns:1.2fr .8fr;
+    gap:64px;
+    align-items:center;
+  }
+  .hero-photo{
+    width:100%; height:auto; display:block;
+    max-height:520px; object-fit:contain;
+    margin-left:auto;
+  }
   .eyebrow{
     font-family:var(--font-mono); font-size:12px; letter-spacing:0.12em;
     text-transform:uppercase; color:var(--verified);
@@ -28,11 +39,6 @@
   }
   .eyebrow::before{
     content:''; width:16px; height:1px; background:var(--verified);
-  }
-  .exp-tag{
-    font-family:var(--font-mono); font-size:12px; color:var(--slate);
-    border:1px solid var(--line); border-radius:3px; padding:3px 8px;
-    margin-left:auto;
   }
   h1{
     font-family:var(--font-display); font-weight:600;
@@ -58,10 +64,11 @@
   .project{
     display:grid; grid-template-columns:64px 1fr auto; gap:32px;
     align-items:start; padding:40px 0; border-top:1px solid var(--line);
-    transition:background .2s ease;
+    transition:background .2s ease, padding-left .2s ease, padding-right .2s ease;
+    cursor:pointer;
   }
   .project:last-child{ border-bottom:none; }
-  .project:hover{ background:var(--paper-dim); }
+  .project:hover{ background:var(--paper-dim); padding-left:20px; padding-right:20px; }
   .project-icon{
     width:44px; height:44px; color:var(--verified);
     padding-top:4px;
@@ -132,7 +139,8 @@
   /* ============ RESPONSIVE ============ */
   @media (max-width: 860px){
     #hero{ padding:150px 0 80px; }
-    .exp-tag{ margin-left:0; }
+    .hero-grid{ grid-template-columns:1fr; gap:36px; }
+    .hero-photo{ max-height:380px; margin-left:0; order:-1; }
     .eyebrow{ flex-wrap:wrap; }
     .project{ grid-template-columns:40px 1fr; }
     .project-link{ grid-column:2; margin-top:12px; }
@@ -179,22 +187,25 @@
 
   <!-- ============ HERO ============ -->
   <section id="hero" style="border-top:none;">
-    <div class="wrap">
-      <div class="eyebrow">SENIOR PRODUCT DESIGNER <span class="exp-tag">EXP — 7+ YRS</span></div>
-      <h1>Tina Ju</h1>
-      <p class="hero-sub">
-        Senior product designer who turns extremely ambiguous, complex, high-stakes financial
-        products into experiences people trust. I take problems from undefined to shipped
-        and measurable.
-      </p>
-      <p class="hero-subcopy">
-        At Savvy Wealth, I own the advisor's experience surrounding financial infrastructure —
-        the flagship revenue driver behind our $8B assets under management.
-      </p>
-      <div class="hero-cta">
-        <a href="#work" class="btn">View selected work</a>
-        <a href="#contact" class="btn-ghost">Get in touch</a>
+    <div class="wrap hero-grid">
+      <div>
+        <div class="eyebrow">PRODUCT DESIGN LEAD</div>
+        <h1>Tina Ju</h1>
+        <p class="hero-sub">
+          Product design lead who turns extremely ambiguous, complex, high-stakes financial
+          products into experiences people trust. I take problems from undefined to shipped
+          and measurable.
+        </p>
+        <p class="hero-subcopy">
+          At Savvy Wealth, I own the advisor's experience surrounding financial infrastructure —
+          the flagship revenue driver behind our $8B assets under management.
+        </p>
+        <div class="hero-cta">
+          <a href="#work" class="btn">View selected work</a>
+          <a href="#contact" class="btn-ghost">Get in touch</a>
+        </div>
       </div>
+      <img class="hero-photo" src="images/tina-portrait-bw.png" alt="Tina Ju, black and white portrait">
     </div>
   </section>
 
@@ -203,11 +214,11 @@
     <div class="wrap">
       <div class="section-head">
         <h2>Selected work</h2>
-        <p class="section-note">Six projects spanning AI trust, fintech, and partner tooling.</p>
+        <p class="section-note">Six B2B2C products across fintech and partner tooling — untangling complex, high-stakes workflows for the businesses and the people behind them.</p>
       </div>
 
       <!-- Project 1 -->
-      <div class="project">
+      <a class="project" href="#">
         <svg class="project-icon" viewBox="0 0 44 44" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
           <path d="M8 20 L20 8 H34 V22 L22 34 Z"/>
           <circle cx="27" cy="15" r="2.5"/>
@@ -222,11 +233,11 @@
             <span><b>Tools</b> — add tools</span>
           </div>
         </div>
-        <a href="#" class="project-link">View case study →</a>
-      </div>
+        <span class="project-link">View case study →</span>
+      </a>
 
       <!-- Project 2 -->
-      <div class="project">
+      <a class="project" href="#">
         <svg class="project-icon" viewBox="0 0 44 44" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
           <rect x="8" y="14" width="20" height="14" rx="1.5"/>
           <rect x="14" y="8" width="20" height="14" rx="1.5"/>
@@ -241,11 +252,11 @@
             <span><b>Tools</b> — add tools</span>
           </div>
         </div>
-        <a href="#" class="project-link">View case study →</a>
-      </div>
+        <span class="project-link">View case study →</span>
+      </a>
 
       <!-- Project 3 -->
-      <div class="project">
+      <a class="project" href="jaris-dashboard.html" target="_blank" rel="noopener">
         <svg class="project-icon" viewBox="0 0 44 44" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
           <path d="M6 30 A16 16 0 0 1 38 30"/>
           <path d="M22 30 L30 18"/>
@@ -261,11 +272,11 @@
             <span><b>Tools</b> — Figma, Zoom, Pulse</span>
           </div>
         </div>
-        <a href="jaris-dashboard.html" target="_blank" rel="noopener" class="project-link">View case study →</a>
-      </div>
+        <span class="project-link">View case study →</span>
+      </a>
 
       <!-- Project 4 -->
-      <div class="project">
+      <a class="project" href="jaris-lending.html" target="_blank" rel="noopener">
         <svg class="project-icon" viewBox="0 0 44 44" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
           <path d="M6 22 H16 M20 22 H30 M34 22 H38"/>
           <circle cx="38" cy="22" r="3"/>
@@ -281,11 +292,11 @@
             <span><b>Tools</b> — Figma, Prove API</span>
           </div>
         </div>
-        <a href="jaris-lending.html" target="_blank" rel="noopener" class="project-link">View case study →</a>
-      </div>
+        <span class="project-link">View case study →</span>
+      </a>
 
       <!-- Project 5 -->
-      <div class="project">
+      <a class="project" href="jaris-instantpayouts-1.html" target="_blank" rel="noopener">
         <svg class="project-icon" viewBox="0 0 44 44" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
           <path d="M24 6 L14 24 H22 L18 38 L32 18 H24 Z"/>
         </svg>
@@ -299,11 +310,11 @@
             <span><b>Tools</b> — Figma</span>
           </div>
         </div>
-        <a href="jaris-instantpayouts-1.html" target="_blank" rel="noopener" class="project-link is-soon"><span class="soon-dot"></span>Coming soon</a>
-      </div>
+        <span class="project-link is-soon"><span class="soon-dot"></span>Coming soon</span>
+      </a>
 
       <!-- Project 6 -->
-      <div class="project">
+      <a class="project" href="spglobal.html" target="_blank" rel="noopener">
         <svg class="project-icon" viewBox="0 0 44 44" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
           <path d="M6 34 H38"/>
           <path d="M10 34 V22 M19 34 V14 M28 34 V26 M34 34 V18"/>
@@ -318,8 +329,8 @@
             <span><b>Tools</b> — Figma, FigJam, Design Systems</span>
           </div>
         </div>
-        <a href="spglobal.html" target="_blank" rel="noopener" class="project-link">View case study →</a>
-      </div>
+        <span class="project-link">View case study →</span>
+      </a>
 
     </div>
   </section>
@@ -332,8 +343,7 @@
         <a href="mailto:tinaju23@gmail.com" class="contact-email">tinaju23@gmail.com</a>
         <div class="contact-links">
           <a href="Tina-Ju-Resume.pdf" target="_blank" rel="noopener">Resume</a>
-          <a href="#" class="todo">LinkedIn</a>
-          <a href="#" class="todo">Dribbble</a>
+          <a href="https://www.linkedin.com/in/tina-ju" target="_blank" rel="noopener">LinkedIn</a>
         </div>
       </div>
     </div>
@@ -343,7 +353,7 @@
 
 <footer class="wrap">
   <span>© 2026 Tina Ju</span>
-  <span>Senior Product Designer</span>
+  <span>Product Design Lead</span>
 </footer>
 
 <script>
