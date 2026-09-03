@@ -1,0 +1,911 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Portfolio and Investment Management Reimagined — Tina Ju</title>
+<meta name="description" content="Case study: rebuilding the advisor's portfolio and investment management experience as Savvy became an introducing broker-dealer clearing through Fidelity NFS — replacing delayed Orion data and custodian logins with one live, action-ready household view.">
+<link rel="canonical" href="https://www.tina-ju.com/portfolio">
+<meta property="og:title" content="Portfolio and Investment Management Reimagined — Tina Ju">
+<meta property="og:description" content="Rebuilding the advisor's portfolio and investment management experience as Savvy became an introducing broker-dealer clearing through Fidelity NFS — replacing delayed Orion data and custodian logins with one live, action-ready household view.">
+<meta property="og:url" content="https://www.tina-ju.com/portfolio">
+<meta property="og:type" content="article">
+<link rel="icon" type="image/svg+xml" href="favicon.svg">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="styles.css">
+<style>
+  /* ============ CS HERO ============ */
+  #cs-hero{ padding:150px 0 60px; border-top:none; }
+  .cs-back{
+    font-family:var(--font-mono); font-size:12px; letter-spacing:0.05em;
+    text-transform:uppercase; color:var(--slate); display:inline-flex;
+    align-items:center; gap:8px; margin-bottom:32px;
+    border-bottom:1px solid transparent; transition:color .15s ease, border-color .15s ease;
+  }
+  .cs-back:hover{ color:var(--ink); border-color:var(--verified); }
+  .eyebrow{
+    font-family:var(--font-mono); font-size:12px; letter-spacing:0.12em;
+    text-transform:uppercase; color:var(--verified);
+    display:flex; align-items:center; gap:10px; margin-bottom:22px;
+  }
+  .eyebrow::before{ content:''; width:16px; height:1px; background:var(--verified); }
+  #cs-hero h1{
+    font-family:var(--font-display); font-weight:600;
+    font-size:clamp(34px, 4.6vw, 56px); line-height:1.06; letter-spacing:-0.02em;
+    max-width:22ch;
+  }
+  .cs-intro{
+    font-size:18px; color:var(--slate); max-width:70ch; margin-top:24px; line-height:1.65;
+  }
+
+  /* ============ META GRID ============ */
+  #cs-meta{ padding-top:0; padding-bottom:60px; }
+  .meta-grid{
+    display:grid; grid-template-columns:repeat(2, 1fr); gap:28px 32px;
+    border-top:1px solid var(--line); padding-top:36px;
+  }
+  .meta-item .field-label{
+    font-family:var(--font-mono); font-size:11px; letter-spacing:0.1em;
+    color:var(--verified); margin-bottom:6px;
+  }
+  .meta-item .field-value{ font-size:15.5px; color:var(--ink); line-height:1.55; }
+
+  /* ============ FIGURE / DIAGRAM FRAME ============ */
+  .cs-figure{
+    border-radius:3px; overflow:hidden; border:1px solid var(--line);
+    box-shadow:0 1px 2px rgba(20,23,27,0.06), 0 16px 40px rgba(20,23,27,0.10);
+  }
+  .cs-figure img{ width:100%; height:auto; display:block; }
+  .cs-caption{
+    font-family:var(--font-mono); font-size:12.5px; color:var(--slate);
+    margin-top:16px; line-height:1.55; max-width:70ch;
+  }
+  .diagram-frame{ background:var(--paper-dim); padding:40px; }
+
+  /* ============ MACBOOK MOCKUP ============ */
+  .mac-mockup-wrap{ background:var(--paper-dim); border-radius:14px; padding:48px 6% 40px; }
+  .mac-mockup{ max-width:820px; margin:0 auto; }
+  .mac-screen{ background:#1c1d1f; border-radius:14px 14px 4px 4px; padding:14px 14px 8px; position:relative; }
+  .mac-camera{
+    position:absolute; top:6px; left:50%; transform:translateX(-50%);
+    width:5px; height:5px; border-radius:50%; background:#050505;
+    box-shadow:0 0 0 1px rgba(255,255,255,0.05);
+  }
+  .mac-screen img, .mac-screen video{ width:100%; height:auto; display:block; border-radius:2px; }
+  .mac-base{
+    height:16px; margin:0 -14px; background:linear-gradient(180deg, #e4e3de 0%, #c7c6c0 100%);
+    border-radius:0 0 8px 8px; position:relative;
+  }
+  .mac-base::before{
+    content:''; position:absolute; top:-1px; left:50%; transform:translateX(-50%);
+    width:90px; height:7px; background:var(--paper-dim); border-radius:0 0 10px 10px;
+  }
+  @media (max-width: 600px){ .mac-mockup-wrap{ padding:32px 4% 28px; } }
+
+  /* ============ CS SECTION ============ */
+  .cs-section h2{
+    font-family:var(--font-display); font-weight:600; font-size:clamp(22px,2.6vw,28px);
+    letter-spacing:-0.01em; margin-bottom:24px;
+  }
+  .cs-section h3{
+    font-family:var(--font-display); font-weight:600; font-size:15px;
+    letter-spacing:0.01em; margin-bottom:4px; color:var(--ink);
+  }
+  .cs-section p{ font-size:16.5px; color:var(--ink); line-height:1.7; max-width:72ch; }
+  .cs-section p + p{ margin-top:18px; }
+  .cs-section p.lede{ font-size:17.5px; }
+  .cs-list{ display:flex; flex-direction:column; gap:14px; max-width:72ch; margin-top:20px; }
+  .cs-list li{ font-size:16.5px; line-height:1.65; color:var(--ink); padding-left:24px; position:relative; }
+  .cs-list li::before{
+    content:''; position:absolute; left:0; top:10px; width:8px; height:1px; background:var(--verified);
+  }
+  .cs-block-sub{
+    font-family:var(--font-mono); font-size:11px; letter-spacing:0.1em;
+    text-transform:uppercase; color:var(--flag); margin-bottom:14px;
+  }
+
+  /* ============ PULL QUOTE ============ */
+  .cs-quote{ border-left:2px solid var(--verified); padding-left:24px; margin-top:28px; max-width:64ch; }
+  .cs-quote p{
+    font-family:var(--font-display); font-size:19px; font-style:italic;
+    line-height:1.5; color:var(--ink); max-width:none;
+  }
+  .cs-quote cite{
+    display:block; font-family:var(--font-mono); font-style:normal; font-size:12px;
+    letter-spacing:0.04em; text-transform:uppercase; color:var(--slate); margin-top:10px;
+  }
+
+  /* ============ DIAGRAM: ARCHITECTURE BEFORE / AFTER ============ */
+  .arch-grid{ display:grid; grid-template-columns:1fr auto 1fr; gap:28px; align-items:stretch; }
+  .arch-card{
+    background:#fff; border:1px solid var(--line); border-radius:6px; padding:26px 24px;
+    display:flex; flex-direction:column; gap:12px;
+  }
+  .arch-card .card-label{
+    font-family:var(--font-mono); font-size:11px; letter-spacing:0.08em; text-transform:uppercase; margin-bottom:4px;
+  }
+  .arch-card.old .card-label{ color:var(--slate); }
+  .arch-card.new .card-label{ color:var(--verified); }
+  .arch-svg{ width:100%; height:auto; display:block; overflow:visible; }
+  .arch-svg .box{ fill:var(--paper); stroke:var(--line); }
+  .arch-svg .box.savvy{ fill:rgba(15,111,168,0.06); stroke:var(--verified); }
+  .arch-svg .box.feed{ fill:rgba(176,73,46,0.04); stroke:#B0492E; stroke-dasharray:4 3; }
+  .arch-svg .box.muted{ stroke-dasharray:4 3; opacity:.65; }
+  .arch-svg .t{ font-family:var(--font-body, 'IBM Plex Sans', sans-serif); font-size:13px; fill:var(--ink); }
+  .arch-svg .r{ font-family:var(--font-mono); font-size:10px; fill:var(--slate); }
+  .arch-svg .r.blue{ fill:var(--verified-deep); }
+  .arch-svg .r.red{ fill:#B0492E; }
+  .arch-svg .lbl{ font-family:var(--font-mono); font-size:9.5px; letter-spacing:0.04em; fill:var(--slate); }
+  .arch-svg .lbl.red{ fill:#B0492E; }
+  .arch-svg .lbl.blue{ fill:var(--verified); }
+  .arch-svg .ln{ stroke:var(--slate); stroke-width:1.2; fill:none; }
+  .arch-svg .ln.red{ stroke:#B0492E; }
+  .arch-svg .ln.blue{ stroke:var(--verified); stroke-width:1.5; }
+  .arch-svg .ln.dash{ stroke-dasharray:3 3; }
+  .arch-svg .ln.off{ stroke:var(--line); stroke-dasharray:2 3; }
+  .arch-svg .x{ stroke:#B0492E; stroke-width:1.4; }
+  .arch-note{ font-family:var(--font-mono); font-size:12px; color:var(--slate); line-height:1.5; margin-top:8px; }
+  .arch-note.warn{ color:#B0492E; }
+  .arch-note.live{ color:var(--verified); }
+  .arch-arrow{ display:flex; align-items:center; color:var(--line); }
+  .arch-arrow svg{ width:26px; height:26px; }
+  @media (max-width: 700px){
+    .arch-grid{ grid-template-columns:1fr; }
+    .arch-arrow{ transform:rotate(90deg); justify-content:center; }
+  }
+
+  /* ============ CAPABILITY GRID ============ */
+  .cap-grid{ display:grid; grid-template-columns:repeat(2, 1fr); gap:20px; margin-top:32px; }
+  .cap-card{ background:#fff; border:1px solid var(--line); border-radius:6px; padding:22px 20px; }
+  .cap-card.focus{ border-color:var(--verified); box-shadow:0 0 0 3px var(--verified-10); }
+  .cap-num{ font-family:var(--font-mono); font-size:11px; color:var(--verified); letter-spacing:0.08em; margin-bottom:10px; }
+  .cap-card h4{ font-family:var(--font-display); font-weight:600; font-size:15.5px; margin-bottom:10px; color:var(--ink); }
+  .cap-card p{ font-size:13.5px; line-height:1.55; color:var(--slate); max-width:none; }
+  .cap-card .cap-pill{
+    display:inline-block; margin-top:12px; font-family:var(--font-mono); font-size:11px;
+    letter-spacing:0.06em; text-transform:uppercase; color:var(--verified-deep);
+    background:var(--verified-10); border-radius:3px; padding:3px 8px;
+  }
+  @media (max-width: 700px){ .cap-grid{ grid-template-columns:1fr; } }
+
+  /* ============ DAY-TO-DAY TABLE ============ */
+  .task-table{ display:flex; flex-direction:column; margin-top:28px; border-top:1px solid var(--line); max-width:72ch; }
+  .task-table{ max-width:none; }
+  .task-row{
+    display:grid; grid-template-columns:0.85fr 1.1fr 1.3fr; gap:28px; padding:16px 0; border-bottom:1px solid var(--line);
+    font-size:14.5px; line-height:1.55;
+  }
+  .task-row .task-name{ color:var(--ink); font-weight:500; }
+  .task-row .task-before{ color:var(--slate); }
+  .task-row .task-after{ color:var(--ink); }
+  .task-row.head{ font-family:var(--font-mono); font-size:11px; letter-spacing:0.08em; text-transform:uppercase; padding:10px 0; }
+  .task-row.head span{ color:var(--slate); font-weight:400; }
+  .task-row.head .task-after{ color:var(--verified); }
+  @media (max-width: 720px){
+    .task-row{ grid-template-columns:1fr; gap:6px; }
+    .task-row.head{ display:none; }
+    .task-row .task-before::before{ content:'Before · '; font-family:var(--font-mono); font-size:11px; letter-spacing:0.06em; text-transform:uppercase; }
+    .task-row .task-after::before{ content:'After · '; font-family:var(--font-mono); font-size:11px; letter-spacing:0.06em; text-transform:uppercase; color:var(--verified); }
+  }
+
+  /* ============ PROBLEM SECTION ============ */
+  .cap-grid.three{ grid-template-columns:repeat(3, 1fr); }
+  @media (max-width: 860px){ .cap-grid.three{ grid-template-columns:1fr; } }
+  .cap-card .cap-num.warn{ color:#B0492E; }
+  .shot-grid{ display:grid; grid-template-columns:1fr 1fr; gap:24px; margin-top:32px; }
+  .shot-grid figure{ margin:0; }
+  .shot-grid .shot-label{
+    font-family:var(--font-mono); font-size:11px; letter-spacing:0.08em; text-transform:uppercase;
+    color:var(--slate); margin-bottom:10px; display:flex; justify-content:space-between; gap:12px;
+  }
+  .shot-grid .shot-label strong{ color:var(--ink); font-weight:500; }
+  @media (max-width: 700px){ .shot-grid{ grid-template-columns:1fr; } }
+
+  /* ============ QUADRANT ============ */
+  .quad-svg{ width:100%; max-width:680px; height:auto; display:block; margin:0 auto; overflow:visible; }
+  .quad-svg .cell{ fill:#fff; stroke:var(--line); }
+  .quad-svg .cell.hot{ fill:rgba(15,111,168,0.06); stroke:var(--verified); stroke-width:1.5; }
+  .quad-svg .cell.dim{ fill:var(--paper); }
+  .quad-svg .ax{ font-family:var(--font-mono); font-size:10.5px; letter-spacing:0.1em; fill:var(--slate); }
+  .quad-svg .yn{ font-family:var(--font-display); font-weight:600; font-size:13px; fill:var(--ink); }
+  .quad-svg .ct{ font-family:var(--font-display); font-weight:600; font-size:15px; fill:var(--ink); }
+  .quad-svg .act{ font-family:var(--font-body); font-weight:600; font-size:12.5px; fill:var(--ink); }
+  .quad-svg .act.blue{ fill:var(--verified-deep); }
+  .quad-svg .sub{ font-family:var(--font-body); font-size:12px; fill:var(--ink); }
+  .quad-svg .sub.blue{ fill:var(--verified-deep); font-weight:600; }
+  .quad-svg .lab{ font-family:var(--font-mono); font-size:9px; letter-spacing:0.1em; fill:var(--slate); }
+  .quad-svg .tag{ font-family:var(--font-mono); font-size:9.5px; letter-spacing:0.1em; fill:var(--verified); }
+  .tier-sub{ font-weight:400; color:var(--slate); font-size:13px; }
+
+  /* ============ FEATURE ROWS ============ */
+  .feat{ display:grid; grid-template-columns:7fr 5fr; gap:40px; align-items:center; margin-top:56px; }
+  .feat.flip{ grid-template-columns:5fr 7fr; }
+  .feat.flip .feat-media{ order:2; }
+  .feat.flip .feat-copy{ order:1; }
+  .feat-copy .feat-kicker{
+    font-family:var(--font-mono); font-size:11px; letter-spacing:0.1em; text-transform:uppercase;
+    color:var(--verified); margin-bottom:10px;
+  }
+  .feat-copy h3{ font-size:20px; line-height:1.3; margin-bottom:12px; }
+  .feat-copy p{ font-size:15.5px; line-height:1.65; max-width:none; }
+  .feat-copy .cs-list{ margin-top:14px; gap:8px; }
+  .feat-copy .cs-list li{ font-size:14.5px; line-height:1.55; padding-left:18px; }
+  .feat-copy .cs-list li::before{ top:9px; width:6px; }
+  .feat-media .cs-figure img{ width:100%; display:block; }
+  .feat-trio{ display:grid; grid-template-columns:1fr 1fr; grid-template-rows:auto auto; gap:16px; align-items:start; }
+  .feat-trio > :first-child{ grid-row:1 / 3; }
+  .feat-stack{ display:grid; gap:16px; }
+  .feat-step{
+    font-family:var(--font-mono); font-size:11px; letter-spacing:0.1em; color:var(--flag);
+    margin-bottom:10px;
+  }
+  .feat-divider{ border:0; border-top:1px solid var(--line); margin:56px 0 0; }
+  @media (max-width: 860px){
+    .feat, .feat.flip{ grid-template-columns:1fr; gap:20px; margin-top:44px; }
+    .feat.flip .feat-media{ order:1; }
+    .feat.flip .feat-copy{ order:2; }
+    .feat-trio{ grid-template-columns:1fr; grid-template-rows:auto; }
+    .feat-trio > :first-child{ grid-row:auto; }
+  }
+
+  /* ============ OUTCOME ============ */
+  .timeline{ display:grid; grid-template-columns:1fr 1fr; gap:20px; margin-top:32px; max-width:72ch; }
+  .tl-item{ border-top:2px solid var(--verified); padding-top:14px; }
+  .tl-date{ font-family:var(--font-mono); font-size:12px; letter-spacing:0.08em; text-transform:uppercase; color:var(--verified); font-weight:500; margin-bottom:6px; }
+  .tl-item h4{ font-family:var(--font-display); font-weight:600; font-size:15.5px; margin-bottom:4px; color:var(--ink); }
+  .tl-item p{ font-size:14.5px; color:var(--slate); line-height:1.55; }
+  .stat-table{ display:flex; flex-direction:column; margin-top:36px; max-width:72ch; border-top:1px solid var(--line); }
+  .stat-row{ display:flex; justify-content:space-between; align-items:baseline; gap:24px; padding:24px 0; border-bottom:1px solid var(--line); }
+  .stat-label{ font-size:15.5px; color:var(--ink); max-width:40ch; line-height:1.5; }
+  .stat-value{ font-family:var(--font-display); font-weight:600; font-size:30px; color:var(--verified-deep); white-space:nowrap; flex-shrink:0; }
+  .stat-of{ font-family:var(--font-mono); font-weight:400; font-size:12px; color:var(--slate); margin-left:10px; white-space:normal; }
+  .stat-row.next .stat-value{ color:var(--slate); }
+  @media (max-width: 600px){
+    .timeline{ grid-template-columns:1fr; }
+    .stat-row{ flex-direction:column; align-items:flex-start; gap:8px; }
+  }
+
+  /* ============ PLACEHOLDER (in-progress sections) ============ */
+  .wip{
+    border:1px dashed var(--line); border-radius:6px; padding:22px 24px; margin-top:24px;
+    font-family:var(--font-mono); font-size:13px; color:var(--slate); line-height:1.6; max-width:72ch;
+  }
+  .wip strong{ color:var(--flag); font-weight:500; }
+
+  /* ============ CTA ============ */
+  #cs-cta{ border-bottom:none; padding-bottom:80px; }
+  .cs-cta-grid{ display:flex; justify-content:space-between; align-items:flex-end; flex-wrap:wrap; gap:32px; }
+  #cs-cta h2{
+    font-family:var(--font-display); font-weight:600;
+    font-size:clamp(28px,3.6vw,40px); letter-spacing:-0.01em; max-width:14ch;
+  }
+  .cs-cta-actions{ display:flex; gap:28px; align-items:center; flex-wrap:wrap; }
+
+  /* ============ RESPONSIVE ============ */
+  @media (max-width: 860px){
+    #cs-hero{ padding:130px 0 50px; }
+    .cs-cta-grid{ flex-direction:column; align-items:flex-start; }
+  }
+  @media (max-width: 520px){
+    .meta-grid{ grid-template-columns:1fr; }
+    .diagram-frame{ padding:24px 18px; }
+  }
+</style>
+</head>
+<body>
+<script src="lock.js"></script>
+
+<header>
+  <nav>
+    <a href="/" class="nav-name">TINA JU</a>
+    <div class="nav-links">
+      <a href="/work">Work</a>
+      <a href="/about">About</a>
+      <a href="/contact">Contact</a>
+    </div>
+  </nav>
+  <div class="cal-track" id="calTrack">
+    <div class="cal-fill" id="calFill"></div>
+  </div>
+</header>
+
+<main>
+
+  <!-- ============ HERO ============ -->
+  <section id="cs-hero">
+    <div class="wrap">
+      <a href="/work" class="cs-back">← Back to work</a>
+      <div class="eyebrow">CASE STUDY · ECI · PORTFOLIO &amp; TRADING</div>
+      <h1>Portfolio and Investment Management Reimagined</h1>
+      <p class="cs-intro">
+        I redesigned the portfolio and investment management experience so an advisor can see and
+        act on a household's holdings, trades, and money movement in one place, on live data,
+        without leaving the platform.
+      </p>
+    </div>
+  </section>
+
+  <!-- ============ META ============ -->
+  <section id="cs-meta">
+    <div class="wrap">
+      <div class="meta-grid">
+        <div class="meta-item">
+          <div class="field-label">PROJECT</div>
+          <div class="field-value">The advisor-facing portfolio and investment management surface for ECI — Savvy's transition from a workflow layer on top of other custodians to a FINRA-registered introducing broker-dealer clearing through Fidelity NFS</div>
+        </div>
+        <div class="meta-item">
+          <div class="field-label">ROLE</div>
+          <div class="field-value">Product Design lead — research synthesis, information architecture, interaction design, production-accurate prototyping in Savvy Kit</div>
+        </div>
+        <div class="meta-item">
+          <div class="field-label">TOOLS</div>
+          <div class="field-value">Claude Code, Savvy Kit (design system), Figma, Linear, Notion</div>
+        </div>
+        <div class="meta-item">
+          <div class="field-label">GOAL</div>
+          <div class="field-value">Tighten up every loose end an advisor used to handle at the custodian, so that nothing they need to do for a client's investments depends on a custodian login</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ CONTEXT: WHY ECI ============ -->
+  <section class="cs-section">
+    <div class="wrap">
+      <div class="cs-block-sub">Context · Why this project existed</div>
+      <h2>Savvy was becoming the brokerage, not just the software around one</h2>
+
+      <p class="lede">
+        For its first few years, Savvy was a workflow layer wrapped around someone else's brokerage.
+        CRM, household management, planning, and an AI workbench all sat on top of Schwab or Fidelity,
+        while custody, order flow, and the client experience lived at the custodian. Advisors treated
+        Savvy as a tab they opened between custodian sessions.
+      </p>
+
+      <p>
+        Advisors on Savvy could see a household's investments, but only as a two-day-old snapshot
+        fed through Orion. The moment they needed to place a trade or move money, they left for
+        Wealthscape or Schwab. As Savvy took on its own brokerage relationship with Fidelity, that
+        habit had to end.
+      </p>
+
+      <p>
+        ECI — Enhanced Custodian Integration — was the company's move to change that. Two initiatives
+        ran together: a regulatory one, becoming a FINRA-registered introducing broker-dealer with
+        Fidelity NFS as the clearing custodian, and a technical one, integrating Fidelity's APIs
+        directly into the Savvy platform so core brokerage functions could run natively. The business
+        case was margin and vertical integration — own the economics and the experience instead of
+        renting both.
+      </p>
+
+      <figure class="cs-figure diagram-frame" style="margin-top:36px;">
+        <div class="arch-grid">
+          <div class="arch-card old">
+            <div class="card-label">Before ECI</div>
+            <svg class="arch-svg" viewBox="0 0 400 276" role="img" aria-label="Before ECI: the advisor logs into Savvy and, separately, into the custodian portal. Orion copies custodian data into Savvy about two days late.">
+              <defs>
+                <marker id="ah-g" viewBox="0 0 8 8" refX="7" refY="4" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0.5 L7.5 4 L0 7.5 Z" fill="#5B616B"/></marker>
+                <marker id="ah-r" viewBox="0 0 8 8" refX="7" refY="4" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0.5 L7.5 4 L0 7.5 Z" fill="#B0492E"/></marker>
+              </defs>
+              <rect class="box" x="0.5" y="0.5" width="399" height="40" rx="4"/>
+              <text class="t" x="14" y="25">Advisor + Client</text>
+
+              <line class="ln" x1="85" y1="41" x2="85" y2="74" marker-end="url(#ah-g)"/>
+              <text class="lbl" x="93" y="61">login 1</text>
+              <line class="ln" x1="315" y1="41" x2="315" y2="74" marker-end="url(#ah-g)"/>
+              <text class="lbl" x="323" y="61">login 2</text>
+
+              <rect class="box savvy" x="0.5" y="78.5" width="170" height="64" rx="4"/>
+              <text class="t" x="14" y="101">Savvy</text>
+              <text class="r blue" x="14" y="119">CRM · planning ·</text>
+              <text class="r blue" x="14" y="132">read-only portfolio</text>
+
+              <rect class="box" x="222.5" y="78.5" width="177" height="64" rx="4"/>
+              <text class="t" x="236" y="99">Wealthscape /</text>
+              <text class="t" x="236" y="115">Schwab Advisor Center</text>
+              <text class="r" x="236" y="133">trades · cashiering · forms</text>
+
+              <line class="ln" x1="315" y1="143" x2="315" y2="204" marker-end="url(#ah-g)"/>
+              <text class="lbl" x="323" y="177">act</text>
+
+              <rect class="box" x="222.5" y="208.5" width="177" height="64" rx="4"/>
+              <text class="t" x="236" y="231">Custodian</text>
+              <text class="r" x="236" y="249">Fidelity IWS / Schwab</text>
+              <text class="r" x="236" y="262">custody · execution</text>
+
+              <rect class="box feed" x="0.5" y="208.5" width="170" height="64" rx="4"/>
+              <text class="t" x="14" y="231">Orion</text>
+              <text class="r red" x="14" y="249">holdings · performance</text>
+              <text class="r red" x="14" y="262">snapshot</text>
+
+              <line class="ln red" x1="222" y1="240" x2="176" y2="240" marker-end="url(#ah-r)"/>
+              <text class="lbl red" x="197" y="230" text-anchor="middle">copy</text>
+
+              <line class="ln red" x1="85" y1="208" x2="85" y2="147" marker-end="url(#ah-r)"/>
+              <text class="lbl red" x="93" y="172">~2 days</text>
+              <text class="lbl red" x="93" y="184">late</text>
+            </svg>
+            <p class="arch-note warn">Two logins, two tabs. Everything that touches money happens on the right. Savvy only ever sees a stale copy of it.</p>
+          </div>
+          <div class="arch-arrow">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+          </div>
+          <div class="arch-card new">
+            <div class="card-label">After ECI</div>
+            <svg class="arch-svg" viewBox="0 0 400 276" role="img" aria-label="After ECI: the advisor and client use only Savvy, which talks to Fidelity NFS over a live API. Wealthscape remains as an ops-only backstop that advisors cannot access.">
+              <defs>
+                <marker id="ah-g2" viewBox="0 0 8 8" refX="7" refY="4" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0.5 L7.5 4 L0 7.5 Z" fill="#5B616B"/></marker>
+                <marker id="ah-b" viewBox="0 0 8 8" refX="7" refY="4" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0.5 L7.5 4 L0 7.5 Z" fill="#0F6FA8"/></marker>
+              </defs>
+              <rect class="box" x="0.5" y="0.5" width="399" height="40" rx="4"/>
+              <text class="t" x="14" y="25">Advisor + Client</text>
+
+              <line class="ln blue" x1="125" y1="41" x2="125" y2="74" marker-end="url(#ah-b)"/>
+              <text class="lbl blue" x="133" y="61">one login</text>
+
+              <line class="ln off" x1="340" y1="41" x2="340" y2="74"/>
+              <line class="x" x1="335" y1="52" x2="345" y2="62"/><line class="x" x1="345" y1="52" x2="335" y2="62"/>
+              <text class="lbl red" x="350" y="61">no access</text>
+
+              <rect class="box savvy" x="0.5" y="78.5" width="250" height="64" rx="4"/>
+              <text class="t" x="14" y="101">Savvy</text>
+              <text class="r blue" x="14" y="119">view · trade · move money ·</text>
+              <text class="r blue" x="14" y="132">service accounts</text>
+
+              <rect class="box muted" x="280.5" y="78.5" width="119" height="64" rx="4"/>
+              <text class="t" x="294" y="101">Wealthscape</text>
+              <text class="r" x="294" y="119">ops backstop</text>
+              <text class="r" x="294" y="132">only</text>
+
+              <line class="ln blue" x1="125" y1="147" x2="125" y2="204" marker-start="url(#ah-b)" marker-end="url(#ah-b)"/>
+              <text class="lbl blue" x="133" y="170">live API</text>
+              <text class="lbl blue" x="133" y="182">data up · actions down</text>
+
+              <line class="ln dash" x1="340" y1="143" x2="340" y2="204" marker-end="url(#ah-g2)"/>
+              <text class="lbl" x="348" y="177">ops only</text>
+
+              <rect class="box" x="0.5" y="208.5" width="399" height="64" rx="4"/>
+              <text class="t" x="14" y="231">Fidelity NFS</text>
+              <text class="r" x="14" y="249">clearing · custody</text>
+              <text class="r" x="14" y="262">Savvy as the FINRA-registered introducing broker-dealer</text>
+            </svg>
+            <p class="arch-note live">One login. Live data flows up, actions flow down. Advisors and clients never see Wealthscape.</p>
+          </div>
+        </div>
+      </figure>
+      <p class="cs-caption">Before ECI, Savvy and the custodian portal sat in two separate tabs of a typical advisor's workflow, with the Savvy dashboard receiving delayed data through its Orion integration. ECI changed the architecture. For any account onboarded onto the new custodian platform, Fidelity NFS, Savvy receives live data directly from Fidelity's APIs — so when an advisor looks at a household's portfolio, they see live data and have custodian-level capabilities to act on it.</p>
+
+      <h3 style="margin-top:44px; font-size:16.5px;">Before and after ECI</h3>
+      <p style="margin-top:10px;">
+        The honest picture was that Savvy didn't own the surfaces where the work happened. All we had
+        on the investment side was delayed holdings and performance data fed through an Orion
+        integration — a snapshot, roughly two days stale. We lacked automation and immediate execution
+        of money movement tasks and clearing trades. For anything that touched the money itself,
+        advisors had a habit of logging directly into the custodian to avoid any delays.
+      </p>
+
+      <div class="task-table">
+        <div class="task-row head"><span class="task-name">Task</span><span class="task-before">Before ECI</span><span class="task-after">After ECI</span></div>
+        <div class="task-row"><span class="task-name">Trading</span><span class="task-before">Advisors traded in Schwab or Wealthscape</span><span class="task-after">Savvy trading UI on Fidelity's Order Entry API. Orion stays as the rebalance engine for now</span></div>
+        <div class="task-row"><span class="task-name">Money movement and cashiering</span><span class="task-before">All at the custodian</span><span class="task-after">Full Money Movement API surface in Savvy. Savvy-as-agent for client-initiated requests, with firm-audience parity required</span></div>
+        <div class="task-row"><span class="task-name">Funding and transfers</span><span class="task-before">All money-in flows lived at the custodian</span><span class="task-after">TOA APIs in Savvy — Determine Transferability, Custodian Lookup, Asset Transfer Processing</span></div>
+        <div class="task-row"><span class="task-name">Account opening</span><span class="task-before">Savvy captured intake, then handed off. The CSA team submitted client-e-signed forms to Fidelity through Wealthscape and waited days on opaque timelines</span><span class="task-after">Principal review in Savvy, API-driven submission, link-based signing. Opening moves from days to seconds</span></div>
+        <div class="task-row"><span class="task-name">Holdings and performance</span><span class="task-before">Surfaced in Savvy from Orion transmission data, not live custodian feeds</span><span class="task-after">Live API pulls for balances and positions. Transmissions become a reconciliation backstop</span></div>
+        <div class="task-row"><span class="task-name">Statements and confirms</span><span class="task-before">Custodian-branded and custodian-delivered</span><span class="task-after">Document Delivery and Image Retrieval APIs render documents inside Savvy</span></div>
+        <div class="task-row"><span class="task-name">Tax documents</span><span class="task-before">Custodian issued the 1099s; Savvy Tax handled filing</span><span class="task-after">Unified delivery plus tax-aware trading workflows</span></div>
+        <div class="task-row"><span class="task-name">Alerts and notifications</span><span class="task-before">Basic in-app only</span><span class="task-after">Alert Manager subscriptions for trade rejects, NIGO, funds available, CIP/KYC failure, large deposits, restriction changes</span></div>
+        <div class="task-row"><span class="task-name">Compliance and supervision</span><span class="task-before">Savvy's CCO covered the RIA</span><span class="task-after">Adds BD supervision under a named principal, trade review queues, KYC/AML</span></div>
+        <div class="task-row"><span class="task-name">Margin and lending</span><span class="task-before">All at the custodian</span><span class="task-after">Handled directly in the platform</span></div>
+      </div>
+
+      <div class="cs-quote" style="margin-top:36px;">
+        <p>"If a routine task sends an advisor or client into Wealthscape, that surface has failed and is on the roadmap."</p>
+        <cite>— ECI north-star test, internal product vision</cite>
+      </div>
+
+      <h3 style="margin-top:44px; font-size:16.5px;">Why the portfolio had to be rebuilt, not polished</h3>
+      <p style="margin-top:10px;">
+        This is the part that turned ECI from a back-end initiative into a design problem. If advisors
+        were going to stop relying on Wealthscape and Schwab logins, every loose end they had been
+        quietly tying off on a custodian site — checking a live balance, placing a trade, moving cash,
+        confirming which accounts were on a managed model — needed a real home in Savvy. A read-only portfolio page fed by a two-day-old Orion
+        snapshot was fine as a tab between custodian sessions. It was not fine as the only place an
+        advisor could look.
+      </p>
+
+      <p>
+        ECI was scoped as twelve brokerage primitives, each with a Day One path (Wealthscape, middle
+        office, or manual) and a Day Two path owned by Savvy and driven by the API. Four of those
+        capabilities gated the launch. The portfolio and investment management surface is where three
+        of them become visible to an advisor.
+      </p>
+
+      <div class="cap-grid">
+        <div class="cap-card">
+          <div class="cap-num">CAPABILITY 1</div>
+          <h4>Account opening &amp; maintenance</h4>
+          <p>From days of form-and-wait to seconds, initiated on-platform. Handled in the separate Fidelity NFS advisor transfer flow.</p>
+        </div>
+        <div class="cap-card focus">
+          <div class="cap-num">CAPABILITY 2</div>
+          <h4>Trading</h4>
+          <p>Managed (SWIM) enrollment or self-directed trading, per NFS account — placed from the portfolio, not from a custodian order ticket.</p>
+          <span class="cap-pill">This case study</span>
+        </div>
+        <div class="cap-card focus">
+          <div class="cap-num">CAPABILITY 3</div>
+          <h4>Money movement</h4>
+          <p>ACH, wire, check, and internal transfers initiated from the account the advisor is already looking at.</p>
+          <span class="cap-pill">This case study</span>
+        </div>
+        <div class="cap-card focus">
+          <div class="cap-num">CAPABILITY 4</div>
+          <h4>Live holdings &amp; document sharing</h4>
+          <p>Real-time positions, performance, statements, and tax docs — the data the portfolio page shows, finally live instead of two days behind.</p>
+          <span class="cap-pill">This case study</span>
+        </div>
+      </div>
+
+      <p style="margin-top:36px;">
+        There was one more reason this mattered beyond the advisor's day. Trade execution, money
+        movement, and account servicing can't be AI-assisted while they sit behind a custodian login.
+        Bringing them into Savvy was described internally as the substrate that lets Savvy Intelligence
+        do real work — which meant the portfolio surface I was designing also had to be legible to an
+        agent, not just a person.
+      </p>
+    </div>
+  </section>
+
+  <!-- ============ THE PROBLEM (TODO) ============ -->
+  <section class="cs-section">
+    <div class="wrap">
+      <div class="cs-block-sub">The problem</div>
+      <h2>Three pages, actions that wait on ops, and the details that matter buried too deep</h2>
+
+      <p class="lede">
+        An advisor's view of a household's investments was spread across three separate pages — Net
+        worth, Managed investments, and Strategy — each with its own layout, and no single place to see
+        everything a household holds. You could find an
+        account, but to learn anything more about it — or about a particular holding or a strategy —
+        you had to keep drilling into another modal or another page.
+      </p>
+
+      <figure class="cs-figure mac-mockup-wrap" style="margin-top:36px;">
+        <div class="mac-mockup">
+          <div class="mac-screen">
+            <div class="mac-camera"></div>
+            <video src="images/portfolio/old-managed-investments.mp4" autoplay muted loop playsinline controls></video>
+          </div>
+          <div class="mac-base"></div>
+        </div>
+      </figure>
+      <p class="cs-caption">The Managed investments page as it stood — a walk through the Allison &amp; Frank Chan household. Note the "Refresh data" button and "Last updated" stamp under the value: the page knows its own data is stale.</p>
+
+      <div class="cap-grid" style="margin-top:40px;">
+        <div class="cap-card">
+          <div class="cap-num warn">COST 1</div>
+          <h4>No single source of truth</h4>
+          <p>Three pages, three layouts. An advisor prepping for a client meeting has to stitch the picture together in their head.</p>
+        </div>
+        <div class="cap-card">
+          <div class="cap-num warn">COST 2</div>
+          <h4>Poor findability</h4>
+          <p>Every answer is one more click away. Account, holding, or strategy — the detail lives in another modal or another page, never in the row you're looking at.</p>
+        </div>
+        <div class="cap-card">
+          <div class="cap-num warn">COST 3</div>
+          <h4>No proactive value</h4>
+          <p>Unmanaged, cash-heavy, or concentrated money just sits there. Nothing surfaces the opportunity to move it onto a Savvy managed model.</p>
+        </div>
+        <div class="cap-card">
+          <div class="cap-num warn">COST 4</div>
+          <h4>Stale data</h4>
+          <p>Every number is an Orion snapshot, roughly two days behind the custodian. The page even carries a "Refresh data" button — a standing admission that what you're looking at may not be true right now.</p>
+        </div>
+      </div>
+
+      <h3 style="margin-top:48px; font-size:16.5px;">Same household, two pages that don't know about each other</h3>
+      <p style="margin-top:10px;">
+        Net worth and Managed investments are separate destinations under the same Portfolio tab.
+        Both totals are useful — everything the household holds, and the slice Savvy manages — but
+        they sit on different pages with different layouts, and nothing connects them. To see how the
+        managed accounts roll up into the household, an advisor has to hold both pages in their head.
+        Neither page has a way to act on any of the accounts it shows.
+      </p>
+      <div class="shot-grid">
+        <figure>
+          <div class="shot-label"><strong>Net worth</strong><span>Portfolio · page 1</span></div>
+          <div class="cs-figure"><img src="images/portfolio/old-net-worth-top.png" alt="The old Net worth page for the Chan household, showing a $12.5M net worth chart and a list of Savvy investments accounts identified by masked account number" loading="lazy"></div>
+        </figure>
+        <figure>
+          <div class="shot-label"><strong>Managed investments</strong><span>Portfolio · page 2</span></div>
+          <div class="cs-figure"><img src="images/portfolio/old-managed-investments-top.png" alt="The old Managed investments page for the same household, showing a $9.5M value, a 'Refresh data' button and a 'Last updated' date" loading="lazy"></div>
+        </figure>
+      </div>
+      <p class="cs-caption">The same household, split across two pages. Net worth lists accounts by a masked number and custodian; Managed investments doesn't list accounts at all until you dig into a sub-tab. The redesign keeps both totals — it puts them on one page.</p>
+
+      <h3 style="margin-top:48px; font-size:16.5px;">Deep on data, empty on action</h3>
+      <p style="margin-top:10px;">
+        Drill in and the detail is real: asset classes, positions, tax lots with cost basis and
+        gain/loss type, a full transaction ledger. But none of it connects to an action. Trades and
+        money movement did exist in Savvy, as tasks — but a task went to the ops team, who executed
+        it by hand at the custodian, so every request carried a delay. Most advisors made the same
+        calculation: skip the task, log into the custodian, and do it themselves. And nothing on the
+        page ever suggested a model recommendation at all.
+      </p>
+      <div class="shot-grid">
+        <figure>
+          <div class="shot-label"><strong>Holdings detail</strong><span>tax lots, no actions</span></div>
+          <div class="cs-figure"><img src="images/portfolio/old-holdings-modal.png" alt="A holdings detail modal for DFA US Core Equity II, showing account weight, quantity, cost basis and two tax lots, with no action buttons" loading="lazy"></div>
+        </figure>
+        <figure>
+          <div class="shot-label"><strong>Transactions</strong><span>accounts named by number</span></div>
+          <div class="cs-figure"><img src="images/portfolio/old-transactions-tab.png" alt="The Transactions sub-tab, where every row identifies its account as 'Allison Chan – Trust – Charles Schwab – 2985'" loading="lazy"></div>
+        </figure>
+      </div>
+      <p class="cs-caption">The holdings modal has everything an advisor would want to know before acting, and no way to act from it. In Transactions, the only handle on an account is a custodian name and the last four digits.</p>
+
+      <div class="cs-quote" style="margin-top:44px;">
+        <p>How might we redesign the household portfolio view for faster review, surface account-level detail for findability beyond strategy and account number, and proactively recommend Savvy managed models that advisors can act on — with a transition analysis, an investment proposal, or both?</p>
+        <cite>— Problem statement</cite>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ CORE INSIGHT (TODO) ============ -->
+  <section class="cs-section">
+    <div class="wrap">
+      <div class="cs-block-sub">Scoping · Two OKRs, one page</div>
+      <h2>Pulling a competing OKR into scope</h2>
+
+      <p class="lede">
+        The brief was an ECI project: get the portfolio ready for accounts held at Savvy through
+        Fidelity NFS. But the company had a second, separate OKR that the same page could move —
+        <strong>SWIM enrollment</strong> — and it was being tracked by a different team with no
+        design attached. I scoped it in.
+      </p>
+      <p>
+        SWIM — Savvy Wealth Investment Management — is Savvy's in-house program where an advisor
+        enrolls a client account into a managed strategy for a fee. Internally it's the primary
+        revenue lever for the investment business. ECI moves assets onto Savvy's custody; SWIM
+        monetizes them once they're there. Both OKRs come down to the same question an advisor asks
+        while looking at a household: <em>what should I do with this account?</em> The portfolio
+        page is the only place both answers can live.
+      </p>
+      <p>
+        The case for pulling SWIM in was sitting in the old product. Its biggest blocker wasn't the
+        strategies — it was that advisors had no reason to enroll from the page where they saw the
+        money. Unmanaged accounts sat in plain sight with nothing pointing at them.
+      </p>
+
+      <div class="shot-grid">
+        <figure>
+          <div class="shot-label"><strong>Accounts tab</strong><span>enrollment as a table cell</span></div>
+          <div class="cs-figure"><img src="images/portfolio/old-swim-accounts-tab.png" alt="The old Accounts tab, where an unmanaged sleeve shows a plain 'Enroll a strategy' button in the Strategy column, visually identical to the strategy-name buttons around it" loading="lazy"></div>
+        </figure>
+        <figure>
+          <div class="shot-label"><strong>Strategy tab</strong><span>one generic CTA</span></div>
+          <div class="cs-figure"><img src="images/portfolio/old-swim-strategy-tab.png" alt="The old Strategy tab: a paragraph describing SWIM, a single 'Enroll in Savvy Wealth Investment Management' button, and two resource links" loading="lazy"></div>
+        </figure>
+      </div>
+      <p class="cs-caption">The old enrollment paths. On the left, "Enroll a strategy" is styled like every other strategy name in the column. On the right, a marketing paragraph and one button — no account, no reason, no recommended model. This is the entry point to Savvy's biggest revenue driver.</p>
+
+      <h3 style="margin-top:48px; font-size:16.5px;">The ECI × SWIM quadrant</h3>
+      <p style="margin-top:10px;">
+        The two OKRs become two questions about every account: <strong>is Savvy the custodian?</strong>
+        (ECI) and <strong>is it on a managed model?</strong> (SWIM). Put them on a grid and each
+        account's position tells you its primary action. The advisor never has to hold the rules in
+        their head — the page does.
+      </p>
+
+      <figure class="cs-figure diagram-frame" style="margin-top:24px;">
+        <svg class="quad-svg" viewBox="0 0 640 400" role="img" aria-label="A two-by-two grid. Rows: held at Savvy through Fidelity NFS, or held elsewhere. Columns: on a SWIM model, or not. Each cell separates what custody grants from what model status grants.">
+          <text class="ax" x="380" y="16" text-anchor="middle">SWIM · ON A MANAGED MODEL?</text>
+          <text class="yn" x="255" y="42" text-anchor="middle">Yes</text>
+          <text class="yn" x="505" y="42" text-anchor="middle">No</text>
+          <text class="ax" transform="translate(16,222) rotate(-90)" text-anchor="middle">ECI · SAVVY IS CUSTODIAN?</text>
+          <text class="yn" transform="translate(44,136) rotate(-90)" text-anchor="middle">Yes</text>
+          <text class="yn" transform="translate(44,310) rotate(-90)" text-anchor="middle">No</text>
+
+          <rect class="cell" x="130.5" y="56.5" width="240" height="160" rx="5"/>
+          <text class="ct" x="150" y="86">Live &amp; managed</text>
+          <text class="lab" x="150" y="114">ECI · CUSTODY</text>
+          <text class="sub" x="150" y="131">Live data · trade and edit directly</text>
+          <text class="lab" x="150" y="158">SWIM · MODEL</text>
+          <text class="sub" x="150" y="175">On a model · monitor, rebalance</text>
+          <rect class="cell hot" x="384.5" y="56.5" width="240" height="160" rx="5"/>
+          <text class="tag" x="404" y="78">WHERE THE VALUE IS</text>
+          <text class="ct" x="404" y="102">Live, unmanaged</text>
+          <text class="lab" x="404" y="130">ECI · CUSTODY</text>
+          <text class="sub" x="404" y="147">Live data · trade and edit directly</text>
+          <text class="lab" x="404" y="174">SWIM · MODEL</text>
+          <text class="sub blue" x="404" y="191">No model · recommend one, in the row</text>
+          <rect class="cell dim" x="130.5" y="230.5" width="240" height="160" rx="5"/>
+          <text class="ct" x="150" y="260">Managed, delayed</text>
+          <text class="lab" x="150" y="288">ECI · CUSTODY</text>
+          <text class="sub" x="150" y="305">Delayed data · trades and edits via task</text>
+          <text class="lab" x="150" y="332">SWIM · MODEL</text>
+          <text class="sub" x="150" y="349">On a model · monitor</text>
+          <rect class="cell dim" x="384.5" y="230.5" width="240" height="160" rx="5"/>
+          <text class="ct" x="404" y="260">Delayed, unmanaged</text>
+          <text class="lab" x="404" y="288">ECI · CUSTODY</text>
+          <text class="sub" x="404" y="305">Delayed data · trades and edits via task</text>
+          <text class="lab" x="404" y="332">SWIM · MODEL</text>
+          <text class="sub" x="404" y="349">No model · recommend one, via task</text>
+        </svg>
+      </figure>
+      <p class="cs-caption">Custody sets the data and how trades happen. Model status sets whether there's anything to recommend. Top right is the cell that makes money: live accounts with no model yet.</p>
+
+      <h3 style="margin-top:48px; font-size:16.5px;">Two things the model had to handle</h3>
+      <div class="cap-grid" style="margin-top:16px;">
+        <div class="cap-card">
+          <h4>Sleeves</h4>
+          <p>One account can hold several strategies at different percentages. The Chan Family Trust splits into a Core sleeve on a 60/40 model and a Self-directed sleeve that's unmanaged — so the account is <em>both</em> managed and a SWIM candidate. Each sleeve gets its own strategy, holdings, and cost basis; the account is the roll-up.</p>
+        </div>
+        <div class="cap-card">
+          <h4>Scope</h4>
+          <p>The whole page can be scoped to any subset of accounts, or to a preset — All, Taxable, Retirement. One account drills in; a subset shows a scoped roll-up. Same rules, applied to whatever the advisor is looking at.</p>
+        </div>
+      </div>
+      <p style="margin-top:28px;">
+        The Chan household fixture deliberately seeds one account in each quadrant, so every path in
+        the design is demonstrable rather than hypothetical.
+      </p>
+    </div>
+  </section>
+
+  <!-- ============ WHAT I DESIGNED (TODO) ============ -->
+  <section class="cs-section">
+    <div class="wrap">
+      <div class="cs-block-sub">What I designed</div>
+      <h2>One page that already knows what each account is and what to do with it</h2>
+      <p class="lede">
+        The three old pages — Net worth, Managed investments, and Strategy — become one Portfolio
+        page with four views: Portfolio, Net worth, Positions, and All Transactions. Each account row
+        knows its own custody and model status, so it shows live or delayed data accordingly and
+        offers the action that applies to it: trade directly, route through Ops, or recommend a model.
+      </p>
+
+      <div class="feat">
+        <div class="feat-media"><div class="cs-figure"><img src="images/portfolio/new-portfolio-landing.png" alt="The redesigned Portfolio landing page for the Chan household: secondary nav, Place trade and Transfer money buttons, a delayed-data ribbon, a concentration-risk alert, total performance chart, and a right rail with documents and allocation" loading="lazy"></div></div>
+        <div class="feat-copy"><div class="feat-kicker">One page · flat navigation</div><h3>Everything a household holds, one level deep</h3><p>The three old pages become one Portfolio with a shallow secondary nav — Portfolio, Net worth, Positions, All Transactions. Place trade and Transfer money live in the header on every view. A delayed-data ribbon flags households with accounts held elsewhere, and a risk-alert deck surfaces concentration and drift before the advisor scrolls.</p></div>
+      </div>
+      <div class="feat flip">
+        <div class="feat-media"><div class="cs-figure"><img src="images/portfolio/new-swim-1-managed-accounts.png" alt="Managed accounts grouped into Held at Savvy (Fidelity NFS, live) and Held elsewhere (Schwab, Fidelity IWS) with strategy chips and an Upgrade custodian prompt" loading="lazy"></div></div>
+        <div class="feat-copy"><div class="feat-kicker">Accounts · grouped by custody</div><h3>A household halfway through the ECI transition</h3><p>This is a split household: some accounts have moved onto ECI, some haven't yet. Held at Savvy is the ECI group — Fidelity NFS, live data, day change on every row. Held elsewhere is the non-ECI group, still at Schwab or Fidelity IWS on delayed data, and each row says "Upgrade custodian for live data" where the day change would be. The page has to work in this in-between state, because most households will live here for a while during the transition.</p></div>
+      </div>
+
+
+      <div class="feat">
+        <div class="feat-media"><div class="cs-figure"><img src="images/portfolio/new-performance-benchmark.png" alt="Total performance chart with an S&P 500 benchmark overlaid, range toggles, and a stat row showing cost basis, unrealized gain, realized gain, available to invest and available to withdraw" loading="lazy"></div></div>
+        <div class="feat-copy"><div class="feat-kicker">Live data · performance</div><h3>Performance you can benchmark, on numbers that are current</h3><p>Total performance streams for accounts held at Savvy, with intraday 1D and 5D ranges that only ECI accounts can offer. Advisors add any benchmark — S&amp;P 500, Nasdaq, MSCI, Agg Bond — or blend several into a weighted composite. The stat row underneath answers the questions that used to need a custodian login: cost basis, unrealized and realized gain, available to invest, available to withdraw.</p></div>
+      </div>
+      <div class="feat flip">
+        <div class="feat-media"><div class="feat-trio"><div class="cs-figure"><img src="images/portfolio/new-widget-allocation.png" alt="Allocation widget with asset categories, values and change" loading="lazy"></div><div class="cs-figure"><img src="images/portfolio/new-widget-top-movers.png" alt="Daily top movers across household widget" loading="lazy"></div><div class="cs-figure"><img src="images/portfolio/new-widget-documents.png" alt="Documents and statements widget with tax documents and statements" loading="lazy"></div></div></div>
+        <div class="feat-copy"><div class="feat-kicker">Right rail · widgets</div><h3>A customizable rail of things worth glancing at</h3><p>Allocation by category, type, or sub-type with a show-target toggle. Daily top movers across the household, which only exists because the data is live. Tax documents and statements delivered inside Savvy through Fidelity's document APIs instead of a custodian portal. Advisors reorder or hide widgets to fit how they review.</p></div>
+      </div>
+      <div class="feat">
+        <div class="feat-media"><div class="feat-stack"><div class="cs-figure"><img src="images/portfolio/new-positions-table.png" alt="Positions table grouped by asset category, with VTI and VOO expanded to show per-account lots and a Trade button on each row" loading="lazy"></div><div class="cs-figure"><img src="images/portfolio/new-position-live-quote.png" alt="VOO position drill-in with live price, Buy and Sell buttons, previous close, open, today's range, 52-week range and a one-month chart" loading="lazy"></div></div></div>
+        <div class="feat-copy"><div class="feat-kicker">Positions · consolidated</div><h3>Every holding, across every account, with the action on the row</h3><p>Positions consolidate across accounts and group by asset category, account, or class. Expand a ticker to see each account's lot with its own acquired date, quantity, cost, and return. A Trade button sits on every row. Click a position and it opens with a live quote, today's and 52-week ranges, and Buy and Sell one tap away.</p></div>
+      </div>
+      <div class="feat flip">
+        <div class="feat-media"><div class="feat-stack"><div class="cs-figure"><img src="images/portfolio/new-net-worth.png" alt="Net worth view with a total balance, net worth trend chart, assets vs liabilities chart, and totals for assets, liabilities, net worth and investable assets" loading="lazy"></div><div class="cs-figure"><img src="images/portfolio/new-net-worth-linked-accounts.png" alt="Investments list under Net worth showing NFS accounts marked Live, Schwab and IWS accounts marked synced today, and a Robinhood account flagged Held away and Disconnected" loading="lazy"></div></div></div>
+        <div class="feat-copy"><div class="feat-kicker">Net worth · linked accounts</div><h3>Assets and liabilities, with the state of every connection</h3><p>Net worth is its own view with its own total. It splits assets from liabilities, charts the trend, and breaks out what's actually investable. Every linked account shows whether it's still connected. The Robinhood account here is flagged Disconnected and dated to its last sync, so nobody reads a three-week-old balance as today's. Properties expand to show what's behind the estimate: purchase price, appreciation, mortgage, equity.</p><ul class="cs-list"><li>Held-away and estimated values carry an "as of last sync" or "est." note</li><li>Real-estate metadata — type, size, purchase, appreciation, equity — is structured so it can feed financial planning later</li></ul></div>
+      </div>
+      <div class="feat">
+        <div class="feat-media"><div class="feat-stack"><div class="cs-figure"><img src="images/portfolio/new-account-beneficiaries.png" alt="Account details tab showing primary and contingent beneficiaries with allocation percentages, an Add beneficiary button and Edit links" loading="lazy"></div><div class="cs-figure"><img src="images/portfolio/new-transfer-money.png" alt="Transfer Money sheet docked on the right: transfer method options for ACH, wire, check and internal, amount, and from-account selection with available cash" loading="lazy"></div></div></div>
+        <div class="feat-copy"><div class="feat-kicker">Account level · direct edits</div><h3>Fees, beneficiaries, and money movement, done from the account</h3><p>Drill into an account held at Savvy and the details are editable in place: fee schedule, beneficiaries with allocation, linked accounts, standing instructions. Transfer money is a three-step sheet — ACH, wire, check, or internal — with an optional trade step before review. For accounts held elsewhere the same fields are read-only and the same button opens an Ops task instead, so the advisor never has to know which rule applies.</p></div>
+      </div>
+      <hr class="feat-divider">
+      <div class="cs-block-sub" style="margin-top:56px;">The SWIM path · from nudge to enrollment</div>
+      <h2 style="font-size:clamp(20px,2.2vw,24px);">Four steps from "unmanaged" to enrolled, without leaving the page</h2>
+      <p>
+        This is the competing OKR, designed into the page. An unmanaged account held at Savvy gets a
+        recommendation, a reason, a proposal, and an enrollment — each one click from the last.
+      </p>
+      <div class="feat">
+        <div class="feat-media"><div class="cs-figure"><img src="images/portfolio/new-swim-1-managed-accounts.png" alt="Managed accounts list where Allison's Brokerage shows a Not enrolled in SWIM chip and a Get SWIM recommendation link" loading="lazy"></div></div>
+        <div class="feat-copy"><div class="feat-step">01</div><div class="feat-kicker">Step 1 · the nudge</div><h3>The row itself says "not enrolled"</h3><p>An unmanaged account carries a "Not enrolled in SWIM" chip and a "Get SWIM recommendation" link in the row, next to the enrolled accounts that show their strategy. The gap is visible at a glance, in the same list the advisor is already reading.</p></div>
+      </div>
+      <div class="feat flip">
+        <div class="feat-media"><div class="cs-figure"><img src="images/portfolio/new-swim-2-account-models.png" alt="Allison's Brokerage account overview with a Models widget recommending Savvy Strategic 60/40, an explanation, allocation comparison bars, management fee, an Enroll in SWIM button and a View Proposal Report link" loading="lazy"></div></div>
+        <div class="feat-copy"><div class="feat-step">02</div><div class="feat-kicker">Step 2 · the recommendation</div><h3>A named model, and the reason for it</h3><p>The account overview carries a Models widget that names a specific model — Savvy Strategic 60/40 — and says why: sitting 63% in cash with a concentrated NVDA position from a prior 401(k). Current versus recommended allocation sits under it, with the fee, Enroll in SWIM, and View Proposal Report.</p></div>
+      </div>
+      <div class="feat">
+        <div class="feat-media"><div class="cs-figure"><img src="images/portfolio/new-swim-3-proposal.png" alt="Investment proposal report modal comparing the client portfolio to the recommended Savvy Strategic 60/40 model, with Download PDF and Enroll in this model buttons" loading="lazy"></div></div>
+        <div class="feat-copy"><div class="feat-step">03</div><div class="feat-kicker">Step 3 · the proposal</div><h3>A client-ready report, generated from the row</h3><p>View Proposal Report opens a branded investment proposal: household, account, recommended model, then client portfolio versus model across asset class, region, and key metrics. It downloads as a PDF for the client meeting, and Enroll in this model is on the same screen.</p></div>
+      </div>
+      <div class="feat flip">
+        <div class="feat-media"><div class="feat-stack"><div class="cs-figure"><img src="images/portfolio/new-swim-4-enroll.png" alt="Enroll in SWIM sheet with the account, Savvy Strategic Models strategy and 60/40 allocation preselected" loading="lazy"></div><div class="cs-figure"><img src="images/portfolio/new-swim-5-managed-strategy.png" alt="Roth IRA overview showing the enrolled managed strategy Savvy Strategic 80/20 with drift, last rebalance, fee structure and configuration" loading="lazy"></div></div></div>
+        <div class="feat-copy"><div class="feat-step">04</div><div class="feat-kicker">Step 4 · enrollment</div><h3>Enroll with the account and model already filled in</h3><p>Enroll in SWIM opens a docked sheet with the account preselected and the strategy and allocation carried over from the recommendation. Two steps, details and review, then it routes to Savvy Investment Services. Once enrolled, the account overview shows the managed strategy, drift versus target, last rebalance, fee, and configuration in one card.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ ITERATION + OUTCOME (TODO) ============ -->
+  <section class="cs-section" style="border-bottom:none;">
+    <div class="wrap">
+      <div class="cs-block-sub">Outcome</div>
+      <h2>Shipped in July, and the advisors followed</h2>
+
+      <figure class="cs-figure mac-mockup-wrap" style="margin-top:32px;">
+        <div class="mac-mockup">
+          <div class="mac-screen">
+            <div class="mac-camera"></div>
+            <video src="images/portfolio/new-experience-walkthrough.mp4" autoplay muted loop playsinline controls></video>
+          </div>
+          <div class="mac-base"></div>
+        </div>
+      </figure>
+      <p class="cs-caption">A walk through the shipped experience — the Chan household from landing page to account detail, on live data.</p>
+
+      <div class="timeline">
+        <div class="tl-item">
+          <div class="tl-date">May 2026</div>
+          <h4>ECI launched</h4>
+          <p>Savvy goes live as an introducing broker-dealer clearing through Fidelity NFS. First accounts open on the new custody.</p>
+        </div>
+        <div class="tl-item">
+          <div class="tl-date">July 2026</div>
+          <h4>Portfolio redesign launched</h4>
+          <p>The single Portfolio page replaces Net worth, Managed investments, and Strategy for every household on the platform.</p>
+        </div>
+      </div>
+
+      <div class="stat-table">
+        <div class="stat-row">
+          <span class="stat-label">Net new advisors who joined Savvy Wealth because of this initiative, within one quarter</span>
+          <span class="stat-value">4</span>
+        </div>
+        <div class="stat-row">
+          <span class="stat-label">Assets transferred into ECI custody in that quarter</span>
+          <span class="stat-value">~$200M<span class="stat-of">AUM</span></span>
+        </div>
+        <div class="stat-row next">
+          <span class="stat-label">Advisor group onboarding next quarter</span>
+          <span class="stat-value">$500M<span class="stat-of">AUM · committed</span></span>
+        </div>
+        <div class="stat-row next">
+          <span class="stat-label">Expected total AUM on ECI by end of year</span>
+          <span class="stat-value">$3B<span class="stat-of">projected</span></span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ CTA ============ -->
+  <section id="cs-cta">
+    <div class="wrap cs-cta-grid">
+      <h2>More work</h2>
+      <div class="cs-cta-actions">
+        <a href="/work" class="btn">Back to work</a>
+        <a href="/contact" class="btn-ghost">Get in touch</a>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<footer class="wrap">
+  <span>© 2026 Tina Ju</span>
+  <span>Product Design Lead</span>
+</footer>
+
+<script>
+  const track = document.getElementById('calTrack');
+  const fill = document.getElementById('calFill');
+  function updateFill(){
+    const docHeight = document.documentElement.scrollHeight - window.innerHeight;
+    const pct = docHeight > 0 ? (window.scrollY / docHeight) * 100 : 0;
+    fill.style.width = Math.min(pct, 100) + '%';
+  }
+  window.addEventListener('scroll', updateFill, { passive:true });
+  window.addEventListener('resize', updateFill);
+  window.addEventListener('load', updateFill);
+</script>
+<script src="case-study.js"></script>
+
+</body>
+</html>

@@ -250,3 +250,21 @@ footer{
 @media (max-width: 520px){
   .nav-links a{ font-size:10.5px; }
 }
+
+/* ---- Mono label weight ----
+   The small uppercase mono kickers (section labels, eyebrows, field labels,
+   card/step numbers, table heads) were too light to read at 11–12px.
+   Applied globally so every case study picks it up. Plex Mono 500 is loaded. */
+.eyebrow, .gate-eyebrow, .cs-block-sub, .feat-kicker, .feat-step,
+.field-label, .shot-label, .card-label, .cap-num, .stage-num,
+.ba-label, .edge-label, .task-row.head{
+  font-weight:500;
+}
+
+/* Mono labels at a fixed 14px (each page sets its own size inline,
+   so this needs !important to win the cascade). */
+.eyebrow, .gate-eyebrow, .cs-block-sub, .feat-kicker, .feat-step,
+.field-label, .shot-label, .card-label, .cap-num, .stage-num,
+.ba-label, .edge-label, .task-row.head{
+  font-size:14px !important;
+}
