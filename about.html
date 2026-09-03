@@ -475,11 +475,20 @@
     const wrapRect = photoWrap.getBoundingClientRect();
     const listRect = passionsWrap.getBoundingClientRect();
 
-    // Keep the heading-wrap reserving its natural flow height, since its
-    // child becomes position:absolute/fixed (out of flow) below.
-    headingWrap.style.height = headingH + 'px';
+    // The gap between the photo and heading in normal flow (accounting for
+    // .passions-sticky's padding-top etc.) is constant regardless of scroll
+    // position, since photoWrap and headingWrap always move together at
+    // the same rate — measuring it doesn't depend on headingWrap's own
+    // height, only on what comes before it (photoWrap), so it's safe to
+    // read before we set that height below.
+    const headingWrapRect = headingWrap.getBoundingClientRect();
+    const naturalGap = headingWrapRect.top - wrapRect.bottom;
 
     if (wrapRect.top > top) {
+      // Phase A — not reached yet: heading-wrap only needs to reserve its
+      // own height, since both photo and heading rest at the top of their
+      // own separate wrappers.
+      headingWrap.style.height = headingH + 'px';
       photoBox.style.position = 'absolute';
       photoBox.style.top = '0px';
       photoBox.style.left = '0px';
@@ -489,6 +498,9 @@
       headingBox.style.left = '0px';
       headingBox.style.width = '100%';
     } else if (listRect.bottom < top) {
+      // Phase C — scrolled past: same as phase A, both rest within their
+      // own wrappers again.
+      headingWrap.style.height = headingH + 'px';
       photoBox.style.position = 'absolute';
       photoBox.style.top = (photoWrap.offsetHeight - photoH) + 'px';
       photoBox.style.left = '0px';
@@ -498,18 +510,25 @@
       headingBox.style.left = '0px';
       headingBox.style.width = '100%';
     } else {
+      // Phase B — pinned to the viewport. headingWrap is a normal (non-
+      // pinned) element, so it keeps scrolling — and drifting upward — at
+      // the page's normal rate even while its content renders fixed. A
+      // static reserved height can't compensate for that drift: it grows
+      // unboundedly the longer we stay pinned, so the passions-list below
+      // (flowing right after headingWrap) would start out fine and then
+      // scroll up underneath the still-pinned heading the further into
+      // this phase we get. Growing the reserved height by exactly how far
+      // we've scrolled since the pin engaged (top - wrapRect.top) cancels
+      // that drift, keeping headingWrap's bottom edge pinned at the same
+      // effective screen position as the fixed heading for the entire
+      // phase, so the list always starts right below it.
+      headingWrap.style.height = (headingH + (top - wrapRect.top)) + 'px';
+
       photoBox.style.position = 'fixed';
       photoBox.style.top = top + 'px';
       photoBox.style.left = wrapRect.left + 'px';
       photoBox.style.width = wrapRect.width + 'px';
 
-      // The gap between the photo and heading in normal flow (accounting for
-      // .passions-sticky's padding-top etc.) is constant regardless of scroll
-      // position, since photoWrap and headingWrap always move together at
-      // the same rate — so this self-corrects for any spacing between them
-      // instead of assuming there's none.
-      const headingWrapRect = headingWrap.getBoundingClientRect();
-      const naturalGap = headingWrapRect.top - wrapRect.bottom;
       headingBox.style.position = 'fixed';
       headingBox.style.top = (top + photoH + naturalGap) + 'px';
       headingBox.style.left = headingWrapRect.left + 'px';
