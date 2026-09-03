@@ -2,8 +2,8 @@
 .DS_Store
 
 # Raw source material for case studies (originals; processed copies live in images/)
-"Old managed investments"/
-"savvy SWIM (old)"/
-"new features screenshots"/
-"MDs on project context"/
+Old managed investments/
+savvy SWIM (old)/
+new features screenshots/
+MDs on project context/
 *.mov
