@@ -268,3 +268,74 @@ footer{
 .ba-label, .edge-label, .task-row.head{
   font-size:14px !important;
 }
+
+/* ============ CASE STUDY VERTICAL RHYTHM ============
+   One spacing scale for every case study, applied to the direct children of
+   a section's .wrap. Baseline: any block that follows another gets 32px.
+   Tighter pairs (a heading and the copy under it, paragraph runs, a figure
+   and its caption) and looser ones (a new heading mid-section, a figure or
+   table after prose) are the only exceptions. Pages must not set margin-top
+   inline on these children — that would override the scale. */
+:root{
+  --cs-gap-tight:20px;   /* paragraph after paragraph */
+  --cs-gap-base:32px;    /* minimum between any two blocks */
+  --cs-gap-block:40px;   /* figures, tables, grids, quotes after prose */
+  --cs-gap-h3:56px;      /* new sub-heading mid-section */
+  --cs-gap-h2:64px;      /* new heading mid-section */
+}
+.cs-section .wrap > * + *{ margin-top:var(--cs-gap-base); }
+
+/* Headings: the copy directly under a heading sits close to it */
+.cs-section .wrap > h2{ margin-bottom:0; }
+.cs-section .wrap > h2 + *{ margin-top:24px; }
+.cs-section .wrap > h3{ font-size:16.5px; margin-bottom:0; }
+.cs-section .wrap > h3 + *{ margin-top:14px; }
+.cs-section .wrap > .cs-block-sub{ margin-bottom:0; }
+.cs-section .wrap > .cs-block-sub + *{ margin-top:16px; }
+
+/* New headings mid-section get the most room */
+.cs-section .wrap > * + h2{ margin-top:var(--cs-gap-h2); }
+.cs-section .wrap > * + h3{ margin-top:var(--cs-gap-h3); }
+.cs-section .wrap > * + .cs-block-sub{ margin-top:var(--cs-gap-h2); }
+
+/* Prose runs */
+.cs-section .wrap > p + p{ margin-top:var(--cs-gap-tight); }
+.cs-section .wrap > p + .cs-list,
+.cs-section .wrap > p + .cs-stage-list{ margin-top:24px; }
+.cs-section .wrap > .cs-quote + .cs-quote{ margin-top:24px; }
+
+/* Visual blocks after prose */
+.cs-section .wrap > * + .cs-figure,
+.cs-section .wrap > * + .task-table,
+.cs-section .wrap > * + .cap-grid,
+.cs-section .wrap > * + .shot-grid,
+.cs-section .wrap > * + .stage-grid,
+.cs-section .wrap > * + .ba-grid,
+.cs-section .wrap > * + .stat-table,
+.cs-section .wrap > * + .metrics-panel,
+.cs-section .wrap > * + .timeline,
+.cs-section .wrap > * + .cs-quote,
+.cs-section .wrap > * + .soon-panel,
+.cs-section .wrap > * + .zoomable-wrap,
+.cs-section .wrap > * + .edge-case{ margin-top:var(--cs-gap-block); }
+
+/* A caption belongs to its figure */
+.cs-section .wrap > .cs-figure + .cs-caption,
+.cs-section .wrap > .shot-grid + .cs-caption,
+.cs-section .wrap > .zoomable-wrap + .cs-caption,
+.cs-section .wrap > .ba-grid + .cs-caption{ margin-top:20px; }
+.cs-section .wrap > .cs-block-sub + .zoomable-wrap,
+.cs-section .wrap > .cs-block-sub + .cs-figure{ margin-top:20px; }
+
+/* A caption ends a figure; whatever follows starts fresh */
+.cs-section .wrap > .cs-caption + p{ margin-top:var(--cs-gap-base); }
+
+/* Feature rows keep their own, larger rhythm */
+.cs-section .wrap > .feat,
+.cs-section .wrap > .feat-divider{ margin-top:56px; }
+
+@media (max-width: 860px){
+  :root{ --cs-gap-h3:44px; --cs-gap-h2:52px; }
+  .cs-section .wrap > .feat,
+  .cs-section .wrap > .feat-divider{ margin-top:44px; }
+}

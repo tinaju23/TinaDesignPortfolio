@@ -367,7 +367,7 @@
       </figure>
       <p class="cs-caption">Same tag, same household — the difference is what happens after it's applied. Reconstructed from the shipped rule engine, not a literal screenshot.</p>
 
-      <p class="lede" style="margin-top:36px;">
+      <p class="lede">
         Tags shipped as static labels in December 2025. Advisors could apply a tag to a household,
         but nothing about it was true for long — client attributes like age, income, and last-contact
         date change constantly, and a label frozen at the moment it was applied starts rotting
@@ -378,19 +378,19 @@
         <p>"People aged 30 to 40. Well, your age changes, so eventually that tag is irrelevant. That's a filter, not a tag."</p>
         <cite>— Ed Wildermuth, Financial Advisor</cite>
       </div>
-      <div class="cs-quote" style="margin-top:22px;">
+      <div class="cs-quote">
         <p>"You go into each household, tag it, go to the next household, tag it — it's not good."</p>
         <cite>— Advisor feedback on bulk tagging</cite>
       </div>
 
-      <p style="margin-top:32px;">
+      <p>
         Two separate advisors, independently, named the same two failure modes: tags went stale, and
         applying them one household at a time didn't scale to a real book of business. That gave me a
         crisp brief — turn the existing Tags surface into a tagging <em>and</em> segmentation
         primitive, not a bigger pile of manual labels.
       </p>
 
-      <h3 style="margin-top:40px; font-size:16.5px;">Why this, why now</h3>
+      <h3>Why this, why now</h3>
       <ul class="cs-list">
         <li>Closed every "Done when" item already scoped in the backlog (Linear SV-888)</li>
         <li>Shipped directly against advisors' top-requested Canny item — "Easier access to client tags" (score 8, ~45 addressable votes)</li>
@@ -428,7 +428,7 @@
         disagreed.
       </p>
 
-      <p style="margin-top:32px;">
+      <p>
         When you save a rule, it applies right away across every household in the org instead of waiting
         on some overnight job — I wanted the effect to feel immediate, not theoretical. After that, any
         change to a household automatically re-checks its tags, and checking twice never causes problems:
@@ -450,7 +450,7 @@
         guessing wrong in either direction.
       </p>
 
-      <div class="stage-grid" style="margin-top:32px;">
+      <div class="stage-grid">
         <div class="stage-card">
           <div class="stage-num">STAGE 1</div>
           <h4>Classify</h4>
@@ -480,7 +480,7 @@
         </div>
       </div>
 
-      <figure class="cs-figure mac-mockup-wrap" style="margin-top:32px;">
+      <figure class="cs-figure mac-mockup-wrap">
         <div class="mac-mockup">
           <div class="mac-screen">
             <div class="mac-camera"></div>
@@ -544,7 +544,7 @@
         it. A few decisions did most of that work:
       </p>
 
-      <ul class="cs-list" style="margin-top:28px;">
+      <ul class="cs-list">
         <li><strong>Smart tags are inviolable.</strong> Never manually removable, never a merge destination, never force-applied by an import — a rule-governed tag stays rule-governed, full stop.</li>
         <li><strong>Manual tags are never touched by automation.</strong> The system only ever changes what it created; an advisor's own tagging is never silently modified.</li>
         <li><strong>Ambiguity gets surfaced, not resolved quietly.</strong> A conflicting match is flagged and shown, not hidden behind a best guess.</li>

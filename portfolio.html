@@ -381,7 +381,7 @@
         renting both.
       </p>
 
-      <figure class="cs-figure diagram-frame" style="margin-top:36px;">
+      <figure class="cs-figure diagram-frame">
         <div class="arch-grid">
           <div class="arch-card old">
             <div class="card-label">Before ECI</div>
@@ -478,8 +478,8 @@
       </figure>
       <p class="cs-caption">Before ECI, Savvy and the custodian portal sat in two separate tabs of a typical advisor's workflow, with the Savvy dashboard receiving delayed data through its Orion integration. ECI changed the architecture. For any account onboarded onto the new custodian platform, Fidelity NFS, Savvy receives live data directly from Fidelity's APIs — so when an advisor looks at a household's portfolio, they see live data and have custodian-level capabilities to act on it.</p>
 
-      <h3 style="margin-top:44px; font-size:16.5px;">Before and after ECI</h3>
-      <p style="margin-top:10px;">
+      <h3>Before and after ECI</h3>
+      <p>
         The honest picture was that Savvy didn't own the surfaces where the work happened. All we had
         on the investment side was delayed holdings and performance data fed through an Orion
         integration — a snapshot, roughly two days stale. We lacked automation and immediate execution
@@ -501,13 +501,13 @@
         <div class="task-row"><span class="task-name">Margin and lending</span><span class="task-before">All at the custodian</span><span class="task-after">Handled directly in the platform</span></div>
       </div>
 
-      <div class="cs-quote" style="margin-top:36px;">
+      <div class="cs-quote">
         <p>"If a routine task sends an advisor or client into Wealthscape, that surface has failed and is on the roadmap."</p>
         <cite>— ECI north-star test, internal product vision</cite>
       </div>
 
-      <h3 style="margin-top:44px; font-size:16.5px;">Why the portfolio had to be rebuilt, not polished</h3>
-      <p style="margin-top:10px;">
+      <h3>Why the portfolio had to be rebuilt, not polished</h3>
+      <p>
         This is the part that turned ECI from a back-end initiative into a design problem. If advisors
         were going to stop relying on Wealthscape and Schwab logins, every loose end they had been
         quietly tying off on a custodian site — checking a live balance, placing a trade, moving cash,
@@ -549,7 +549,7 @@
         </div>
       </div>
 
-      <p style="margin-top:36px;">
+      <p>
         There was one more reason this mattered beyond the advisor's day. Trade execution, money
         movement, and account servicing can't be AI-assisted while they sit behind a custodian login.
         Bringing them into Savvy was described internally as the substrate that lets Savvy Intelligence
@@ -573,7 +573,7 @@
         you had to keep drilling into another modal or another page.
       </p>
 
-      <figure class="cs-figure mac-mockup-wrap" style="margin-top:36px;">
+      <figure class="cs-figure mac-mockup-wrap">
         <div class="mac-mockup">
           <div class="mac-screen">
             <div class="mac-camera"></div>
@@ -584,7 +584,7 @@
       </figure>
       <p class="cs-caption">The Managed investments page as it stood — a walk through the Allison &amp; Frank Chan household. Note the "Refresh data" button and "Last updated" stamp under the value: the page knows its own data is stale.</p>
 
-      <div class="cap-grid" style="margin-top:40px;">
+      <div class="cap-grid">
         <div class="cap-card">
           <div class="cap-num warn">COST 1</div>
           <h4>No single source of truth</h4>
@@ -607,8 +607,8 @@
         </div>
       </div>
 
-      <h3 style="margin-top:48px; font-size:16.5px;">Same household, two pages that don't know about each other</h3>
-      <p style="margin-top:10px;">
+      <h3>Same household, two pages that don't know about each other</h3>
+      <p>
         Net worth and Managed investments are separate destinations under the same Portfolio tab.
         Both totals are useful — everything the household holds, and the slice Savvy manages — but
         they sit on different pages with different layouts, and nothing connects them. To see how the
@@ -627,8 +627,8 @@
       </div>
       <p class="cs-caption">The same household, split across two pages. Net worth lists accounts by a masked number and custodian; Managed investments doesn't list accounts at all until you dig into a sub-tab. The redesign keeps both totals — it puts them on one page.</p>
 
-      <h3 style="margin-top:48px; font-size:16.5px;">Deep on data, empty on action</h3>
-      <p style="margin-top:10px;">
+      <h3>Deep on data, empty on action</h3>
+      <p>
         Drill in and the detail is real: asset classes, positions, tax lots with cost basis and
         gain/loss type, a full transaction ledger. But none of it connects to an action. Trades and
         money movement did exist in Savvy, as tasks — but a task went to the ops team, who executed
@@ -648,7 +648,7 @@
       </div>
       <p class="cs-caption">The holdings modal has everything an advisor would want to know before acting, and no way to act from it. In Transactions, the only handle on an account is a custodian name and the last four digits.</p>
 
-      <div class="cs-quote" style="margin-top:44px;">
+      <div class="cs-quote">
         <p>How might we redesign the household portfolio view for faster review, surface account-level detail for findability beyond strategy and account number, and proactively recommend Savvy managed models that advisors can act on — with a transition analysis, an investment proposal, or both?</p>
         <cite>— Problem statement</cite>
       </div>
@@ -693,15 +693,15 @@
       </div>
       <p class="cs-caption">The old enrollment paths. On the left, "Enroll a strategy" is styled like every other strategy name in the column. On the right, a marketing paragraph and one button — no account, no reason, no recommended model. This is the entry point to Savvy's biggest revenue driver.</p>
 
-      <h3 style="margin-top:48px; font-size:16.5px;">The ECI × SWIM quadrant</h3>
-      <p style="margin-top:10px;">
+      <h3>The ECI × SWIM quadrant</h3>
+      <p>
         The two OKRs become two questions about every account: <strong>is Savvy the custodian?</strong>
         (ECI) and <strong>is it on a managed model?</strong> (SWIM). Put them on a grid and each
         account's position tells you its primary action. The advisor never has to hold the rules in
         their head — the page does.
       </p>
 
-      <figure class="cs-figure diagram-frame" style="margin-top:24px;">
+      <figure class="cs-figure diagram-frame">
         <svg class="quad-svg" viewBox="0 0 640 400" role="img" aria-label="A two-by-two grid. Rows: held at Savvy through Fidelity NFS, or held elsewhere. Columns: on a SWIM model, or not. Each cell separates what custody grants from what model status grants.">
           <text class="ax" x="380" y="16" text-anchor="middle">SWIM · ON A MANAGED MODEL?</text>
           <text class="yn" x="255" y="42" text-anchor="middle">Yes</text>
@@ -739,8 +739,8 @@
       </figure>
       <p class="cs-caption">Custody sets the data and how trades happen. Model status sets whether there's anything to recommend. Top right is the cell that makes money: live accounts with no model yet.</p>
 
-      <h3 style="margin-top:48px; font-size:16.5px;">Two things the model had to handle</h3>
-      <div class="cap-grid" style="margin-top:16px;">
+      <h3>Two things the model had to handle</h3>
+      <div class="cap-grid">
         <div class="cap-card">
           <h4>Sleeves</h4>
           <p>One account can hold several strategies at different percentages. The Chan Family Trust splits into a Core sleeve on a 60/40 model and a Self-directed sleeve that's unmanaged — so the account is <em>both</em> managed and a SWIM candidate. Each sleeve gets its own strategy, holdings, and cost basis; the account is the roll-up.</p>
@@ -750,7 +750,7 @@
           <p>The whole page can be scoped to any subset of accounts, or to a preset — All, Taxable, Retirement. One account drills in; a subset shows a scoped roll-up. Same rules, applied to whatever the advisor is looking at.</p>
         </div>
       </div>
-      <p style="margin-top:28px;">
+      <p>
         The Chan household fixture deliberately seeds one account in each quadrant, so every path in
         the design is demonstrable rather than hypothetical.
       </p>
@@ -800,7 +800,7 @@
         <div class="feat-copy"><div class="feat-kicker">Account level · direct edits</div><h3>Fees, beneficiaries, and money movement, done from the account</h3><p>Drill into an account held at Savvy and the details are editable in place: fee schedule, beneficiaries with allocation, linked accounts, standing instructions. Transfer money is a three-step sheet — ACH, wire, check, or internal — with an optional trade step before review. For accounts held elsewhere the same fields are read-only and the same button opens an Ops task instead, so the advisor never has to know which rule applies.</p></div>
       </div>
       <hr class="feat-divider">
-      <div class="cs-block-sub" style="margin-top:56px;">The SWIM path · from nudge to enrollment</div>
+      <div class="cs-block-sub">The SWIM path · from nudge to enrollment</div>
       <h2 style="font-size:clamp(20px,2.2vw,24px);">Four steps from "unmanaged" to enrolled, without leaving the page</h2>
       <p>
         This is the competing OKR, designed into the page. An unmanaged account held at Savvy gets a
@@ -831,7 +831,7 @@
       <div class="cs-block-sub">Outcome</div>
       <h2>Shipped in July, and the advisors followed</h2>
 
-      <figure class="cs-figure mac-mockup-wrap" style="margin-top:32px;">
+      <figure class="cs-figure mac-mockup-wrap">
         <div class="mac-mockup">
           <div class="mac-screen">
             <div class="mac-camera"></div>
