@@ -167,33 +167,30 @@
     .intro-grid{ grid-template-columns:1fr; gap:36px; }
     .intro-photo{ max-height:420px; margin-left:0; }
     .collage-layout{ grid-template-columns:1fr; gap:0; }
-    .photo-stack-wrap{ height:280px; margin-bottom:0; }
-    .photo-stack{ height:280px; z-index:10; }
-    .stack-photo{ height:220px; }
+    /* Mobile drops the JS-pinned photo/heading interaction entirely — it
+       was unreliable across devices (drifting, overlapping text). Instead
+       the photos simply stack in normal document flow, sized up a bit,
+       with the full "what fills my 5-9" copy in a plain static block
+       underneath. Nothing here is position:fixed/absolute or JS-driven. */
+    .photo-stack-wrap{ height:auto; margin-bottom:32px; }
+    .photo-stack{ position:static; height:auto; }
+    .photo-stack-viewport{
+      position:static; height:auto;
+      display:flex; flex-direction:column; gap:16px;
+    }
+    .stack-photo{
+      position:static; height:300px;
+      transform:none; opacity:1; z-index:auto; pointer-events:auto;
+    }
     .passions{ min-height:0; }
     .passions-sticky{
-      position:static !important; height:auto; overflow:visible;
-      padding-top:16px; display:block;
+      position:static; height:auto; overflow:visible;
+      padding-top:0; display:block;
     }
-    /* The heading pins to the viewport right below the photo (see
-       pinMobileGroup in the script) so photo + heading always stay together;
-       only .passions-list scrolls normally underneath both of them. */
-    .passions-heading-wrap{ position:relative; }
-    .passions-heading{
-      position:absolute; top:0; left:0; width:100%;
-      background:var(--paper); z-index:9;
-    }
+    .passions-heading-wrap{ position:static; height:auto; }
+    .passions-heading{ position:static; width:100%; background:none; }
     .passions-list{ display:block; margin-top:16px; }
-    /* Scroll-snap adds friction here: a fast flick can't skip past several
-       bullets at once, it settles on each one in turn. Scoped to mobile only
-       — desktop's items are JS-transformed for the pin effect, and snap
-       fighting with that caused jumpiness before; mobile's items are plain
-       static content, so this is safe. */
-    html{ scroll-snap-type:y proximity; }
-    .passion-item{
-      padding:14px 0; background:var(--paper);
-      scroll-snap-align:center; scroll-snap-stop:always;
-    }
+    .passion-item{ padding:14px 0; opacity:1; }
     .field-row{ grid-template-columns:1fr; gap:6px; }
     .resume-grid{ flex-direction:column; align-items:flex-start; }
   }
@@ -386,6 +383,7 @@
   const passionItems = Array.from(document.querySelectorAll('.passion-item'));
 
   function setActivePhoto(idx){
+    if (!isDesktop()) return; // mobile shows every photo statically, no cycling
     const viewport = document.getElementById('photoStack');
     const H = viewport.clientHeight;
     const cardH = stackPhotos[0].offsetHeight;
@@ -417,15 +415,13 @@
   const photoBox = document.querySelector('.photo-stack');
   const passionsWrap = document.querySelector('.passions');
   const passionsBox = document.querySelector('.passions-sticky');
-  const headingWrap = document.querySelector('.passions-heading-wrap');
-  const headingBox = document.querySelector('.passions-heading');
 
   function isDesktop(){
     return window.matchMedia('(min-width: 861px)').matches;
   }
 
   function pinTop(){
-    return isDesktop() ? 110 : 70;
+    return 110;
   }
 
   function pinBox(wrapEl, boxEl){
@@ -463,93 +459,34 @@
     return { pinStart, pinRange };
   }
 
-  // On mobile the photo and the "What fills my 5-9" heading pin together as
-  // one unit (not side-by-side with the copy, like desktop) — so they always
-  // stay in view together, and only the bullet list itself scrolls normally
-  // underneath both of them. The release point is driven by the list's own
-  // scroll position (there's no shared tall wrapper like on desktop).
-  function pinMobileGroup(){
-    const top = pinTop();
-    const photoH = photoBox.offsetHeight;
-    const headingH = headingBox.offsetHeight;
-    const wrapRect = photoWrap.getBoundingClientRect();
-    const listRect = passionsWrap.getBoundingClientRect();
-
-    // The gap between the photo and heading in normal flow (accounting for
-    // .passions-sticky's padding-top etc.) is constant regardless of scroll
-    // position, since photoWrap and headingWrap always move together at
-    // the same rate — measuring it doesn't depend on headingWrap's own
-    // height, only on what comes before it (photoWrap), so it's safe to
-    // read before we set that height below.
-    const headingWrapRect = headingWrap.getBoundingClientRect();
-    const naturalGap = headingWrapRect.top - wrapRect.bottom;
-
-    if (wrapRect.top > top) {
-      // Phase A — not reached yet: heading-wrap only needs to reserve its
-      // own height, since both photo and heading rest at the top of their
-      // own separate wrappers.
-      headingWrap.style.height = headingH + 'px';
-      photoBox.style.position = 'absolute';
-      photoBox.style.top = '0px';
-      photoBox.style.left = '0px';
-      photoBox.style.width = '100%';
-      headingBox.style.position = 'absolute';
-      headingBox.style.top = '0px';
-      headingBox.style.left = '0px';
-      headingBox.style.width = '100%';
-    } else if (listRect.bottom < top) {
-      // Phase C — scrolled past: same as phase A, both rest within their
-      // own wrappers again.
-      headingWrap.style.height = headingH + 'px';
-      photoBox.style.position = 'absolute';
-      photoBox.style.top = (photoWrap.offsetHeight - photoH) + 'px';
-      photoBox.style.left = '0px';
-      photoBox.style.width = '100%';
-      headingBox.style.position = 'absolute';
-      headingBox.style.top = (headingWrap.offsetHeight - headingH) + 'px';
-      headingBox.style.left = '0px';
-      headingBox.style.width = '100%';
-    } else {
-      // Phase B — pinned to the viewport. headingWrap is a normal (non-
-      // pinned) element, so it keeps scrolling — and drifting upward — at
-      // the page's normal rate even while its content renders fixed. A
-      // static reserved height can't compensate for that drift: it grows
-      // unboundedly the longer we stay pinned, so the passions-list below
-      // (flowing right after headingWrap) would start out fine and then
-      // scroll up underneath the still-pinned heading the further into
-      // this phase we get. Growing the reserved height by exactly how far
-      // we've scrolled since the pin engaged (top - wrapRect.top) cancels
-      // that drift, keeping headingWrap's bottom edge pinned at the same
-      // effective screen position as the fixed heading for the entire
-      // phase, so the list always starts right below it.
-      headingWrap.style.height = (headingH + (top - wrapRect.top)) + 'px';
-
-      photoBox.style.position = 'fixed';
-      photoBox.style.top = top + 'px';
-      photoBox.style.left = wrapRect.left + 'px';
-      photoBox.style.width = wrapRect.width + 'px';
-
-      headingBox.style.position = 'fixed';
-      headingBox.style.top = (top + photoH + naturalGap) + 'px';
-      headingBox.style.left = headingWrapRect.left + 'px';
-      headingBox.style.width = headingWrapRect.width + 'px';
-    }
-  }
-
+  // Mobile shows the photos and passions copy as a plain static stack (see
+  // the mobile media query) — no JS positioning needed there at all. Clear
+  // any inline styles pinBox left behind from a previous desktop-width
+  // layout (e.g. the window was resized down rather than loaded fresh at
+  // mobile width) — inline styles win over the mobile CSS regardless of
+  // media query, so they'd otherwise keep the old fixed positioning stuck.
   function updateFromScroll(){
     if (!isDesktop()) {
-      pinMobileGroup();
+      if (photoBox.style.position) {
+        photoBox.style.position = '';
+        photoBox.style.top = '';
+        photoBox.style.left = '';
+        photoBox.style.width = '';
+      }
+      if (passionsBox.style.position) {
+        passionsBox.style.position = '';
+        passionsBox.style.top = '';
+        passionsBox.style.left = '';
+        passionsBox.style.width = '';
+      }
+      stackPhotos.forEach(el => {
+        el.style.transform = '';
+        el.style.opacity = '';
+        el.style.zIndex = '';
+        el.style.pointerEvents = '';
+      });
+      passionItems.forEach(el => el.classList.remove('active'));
       return;
-    }
-    // Clear any inline positioning pinMobileGroup left on the heading (e.g.
-    // if the window was resized across the breakpoint without a reload) —
-    // desktop lays the heading out normally inside .passions-sticky.
-    if (headingBox.style.position) {
-      headingBox.style.position = '';
-      headingBox.style.top = '';
-      headingBox.style.left = '';
-      headingBox.style.width = '';
-      headingWrap.style.height = '';
     }
     pinBox(photoWrap, photoBox);
     pinBox(passionsWrap, passionsBox);
@@ -560,29 +497,12 @@
     setActivePhoto(idx);
   }
 
-  // On mobile, advance the active photo based on which passion item is
-  // scrolled into the visible strip just below the pinned photo (roughly the
-  // bottom two-thirds of the screen, since the photo occupies the top part).
-  const mobileObserver = new IntersectionObserver((entries) => {
-    if (isDesktop()) return;
-    entries.forEach(entry => {
-      if (entry.isIntersecting) {
-        setActivePhoto(Number(entry.target.dataset.index));
-      }
-    });
-  }, { rootMargin: '-66% 0px -18% 0px', threshold: 0 });
-
-  passionItems.forEach(el => mobileObserver.observe(el));
-
   passionItems.forEach((el, i) => {
     el.addEventListener('click', () => {
-      if (isDesktop()) {
-        const { pinStart, pinRange } = computeScrollRange();
-        const target = pinStart + ((i + 0.5) / passionItems.length) * pinRange;
-        window.scrollTo({ top: target, behavior: 'smooth' });
-      } else {
-        el.scrollIntoView({ behavior: 'smooth', block: 'center' });
-      }
+      if (!isDesktop()) return; // mobile has no "active" photo to jump to
+      const { pinStart, pinRange } = computeScrollRange();
+      const target = pinStart + ((i + 0.5) / passionItems.length) * pinRange;
+      window.scrollTo({ top: target, behavior: 'smooth' });
     });
   });
 
