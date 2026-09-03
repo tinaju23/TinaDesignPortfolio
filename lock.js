@@ -1,10 +1,11 @@
-/* Site-wide password gate. Client-side only — a soft gate to keep the
-   site out of casual view, not a security boundary. Unlock persists across
-   tabs (case studies open via target="_blank") via localStorage, so it
-   only asks again after site data is cleared. */
+/* Password gate for a single page. Client-side only — a soft gate to keep
+   the page out of casual view, not a security boundary. Unlock persists
+   across tabs via localStorage, so it only asks again after site data is
+   cleared. Scoped to this page (not the old site-wide "site-unlocked" key)
+   so browsers that unlocked the previous sitewide gate don't skip this. */
 (function () {
   var PASSWORD = 'angellist';
-  var STORAGE_KEY = 'site-unlocked';
+  var STORAGE_KEY = 'portfolio-unlocked';
 
   if (localStorage.getItem(STORAGE_KEY) === '1') return;
 
