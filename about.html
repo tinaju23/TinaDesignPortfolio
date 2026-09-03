@@ -378,7 +378,6 @@
     fill.style.width = Math.min(pct, 100) + '%';
   }
 
-  window.addEventListener('scroll', updateFill, { passive:true });
   window.addEventListener('resize', updateFill);
   window.addEventListener('load', updateFill);
 
@@ -568,9 +567,24 @@
     });
   });
 
+  // Batch scroll-driven updates to once per animation frame instead of once
+  // per raw scroll event — mobile fires scroll events at a very high rate,
+  // and reading layout (getBoundingClientRect) then writing it (inline
+  // style) on every single one causes visible jank/glitching there.
+  let scrollTicking = false;
+  function onScroll(){
+    if (scrollTicking) return;
+    scrollTicking = true;
+    requestAnimationFrame(() => {
+      updateFill();
+      updateFromScroll();
+      scrollTicking = false;
+    });
+  }
+
   setActivePhoto(0);
   updateFromScroll();
-  window.addEventListener('scroll', updateFromScroll, { passive: true });
+  window.addEventListener('scroll', onScroll, { passive: true });
   window.addEventListener('resize', updateFromScroll);
 </script>
 
