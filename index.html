@@ -77,6 +77,13 @@
     font-family:var(--font-mono); font-size:11px; letter-spacing:0.08em;
     text-transform:uppercase; color:var(--flag); margin-bottom:10px;
   }
+  .badge-hackathon{
+    display:inline-flex; align-items:center;
+    font-family:var(--font-mono); font-size:10px; font-weight:500;
+    letter-spacing:0.06em; text-transform:uppercase;
+    color:var(--paper); background:var(--flag);
+    padding:3px 7px; margin-left:8px; vertical-align:2px;
+  }
   .project-title{
     font-family:var(--font-display); font-weight:600; font-size:24px;
     margin-bottom:10px;
@@ -144,7 +151,6 @@
 </style>
 </head>
 <body>
-<script src="lock.js"></script>
 
 <svg width="0" height="0" style="position:absolute" aria-hidden="true">
   <defs>
@@ -211,29 +217,29 @@
       </div>
 
       <!-- Project 1 -->
-      <a class="project" href="/crm-tags">
-        <svg class="project-icon" viewBox="0 0 44 44" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
-          <path d="M8 20 L20 8 H34 V22 L22 34 Z"/>
-          <circle cx="27" cy="15" r="2.5"/>
-        </svg>
-        <div>
-          <div class="project-tag">AI Product · Hackathon Winner</div>
-          <div class="project-title">CRM Dynamic Tags</div>
-          <p class="project-desc">Advisors were manually tagging households with labels that went stale the moment client data changed. I designed and built a rule-based tagging engine, solo, that re-evaluates itself automatically — plus a bulk import wizard that replaced hundreds of manual edits with one action.</p>
-        </div>
-        <span class="project-link">View case study →</span>
-      </a>
-
-      <!-- Project 2 -->
       <a class="project" href="/portfolio">
         <svg class="project-icon" viewBox="0 0 44 44" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
           <rect x="8" y="14" width="20" height="14" rx="1.5"/>
           <rect x="14" y="8" width="20" height="14" rx="1.5"/>
         </svg>
         <div>
-          <div class="project-tag">Fintech · Custody &amp; Trading</div>
+          <div class="project-tag">Savvy Wealth</div>
           <div class="project-title">Portfolio and Investment Management Reimagined</div>
           <p class="project-desc">As Savvy became an introducing broker-dealer clearing through Fidelity NFS, the delayed Orion snapshot and the habit of logging into custodian sites for anything that touched money both had to go. I redesigned the portfolio experience into one live, action-ready household view where holdings, trades, and money movement live in Savvy.</p>
+        </div>
+        <span class="project-link">View case study →</span>
+      </a>
+
+      <!-- Project 2 -->
+      <a class="project" href="/crm-tags">
+        <svg class="project-icon" viewBox="0 0 44 44" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M8 20 L20 8 H34 V22 L22 34 Z"/>
+          <circle cx="27" cy="15" r="2.5"/>
+        </svg>
+        <div>
+          <div class="project-tag">AI Product <span class="badge-hackathon">Hackathon Winner</span></div>
+          <div class="project-title">CRM Dynamic Tags</div>
+          <p class="project-desc">Advisors were manually tagging households with labels that went stale the moment client data changed. I designed and built a rule-based tagging engine, solo, that re-evaluates itself automatically — plus a bulk import wizard that replaced hundreds of manual edits with one action.</p>
         </div>
         <span class="project-link">View case study →</span>
       </a>
