@@ -339,3 +339,4 @@ footer{
   .cs-section .wrap > .feat,
   .cs-section .wrap > .feat-divider{ margin-top:44px; }
 }
+.cs-section .wrap > .cs-block-sub + h3{ margin-top:10px; }
