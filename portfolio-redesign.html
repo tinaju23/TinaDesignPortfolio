@@ -351,6 +351,15 @@
   .strip-note{ font-size:13.5px; line-height:1.5; color:var(--slate); margin-top:10px; max-width:none; }
   @media (max-width: 860px){ .strip{ grid-template-columns:1fr 1fr; } }
 
+  /* sub-heading + paragraph blocks: more air above and below */
+  .cs-section .wrap > * + h3{ margin-top:80px; }
+  .cs-section .wrap > h3 + p + .shot-grid, .cs-section .wrap > h3 + p + .cs-figure,
+  .cs-section .wrap > h3 + p + .cs-quote, .cs-section .wrap > h3 + p + .task-table,
+  .cs-section .wrap > h3 + p + .cap-grid, .cs-section .wrap > h3 + p + .rail-trio,
+  .cs-section .wrap > h3 + p + .feat-stack{ margin-top:48px; }
+  .cs-section .wrap > h3 + p + h3{ margin-top:80px; }
+  @media (max-width: 860px){ .cs-section .wrap > * + h3{ margin-top:60px; } }
+
   /* ============ RESPONSIVE ============ */
   @media (max-width: 860px){
     #cs-hero{ padding:130px 0 50px; }
@@ -702,8 +711,8 @@
       <div class="cs-block-sub">Bet 1 · The accounts list</div>
       <h2>One accounts list that serves both OKRs without sacrificing either</h2>
       <p>
-        The first bet was the list itself, and it started with a model. The two OKRs become two
-        questions about every account: is Savvy the custodian, and is it on a managed model? Put them on a grid and each account's position tells you what data it can
+        I made the first bet on the list itself, and I started with a model. I reduced the two OKRs
+        to two questions about every account: is Savvy the custodian, and is it on a managed model? Put them on a grid and each account's position tells you what data it can
         show, how its trades execute, and whether there is anything to recommend.
       </p>
 
@@ -751,15 +760,15 @@
         <div class="bleed-inner">
       <h3>New Accounts list view that supports every quadrant of the matrix</h3>
       <p>
-        This is why the page groups accounts by custody rather than by account type or strategy. A
+        This is why I decided to group accounts by custody rather than by account type or strategy. A
         household mid-transition has some accounts on Fidelity NFS and some still at Schwab, and most
         households will live in that state for a while. Held at Savvy shows live data and day change
         on every row. Held elsewhere shows delayed data and says so. The model also had to handle
         sleeves, where one account splits into a managed core and a self-directed remainder, and
         scope, where the whole page rolls up to any subset of accounts under the same rules.
         Accounts not yet on ECI get a direct pathway to upgrade: every Held elsewhere row says
-        "Upgrade custodian for live data" and the group ends in an Upgrade custodian button. That
-        nudge sits alongside the SWIM one rather than replacing it, so an unmanaged account held
+        "Upgrade custodian for live data" and the group ends in an Upgrade custodian button. I
+        insisted that nudge sit alongside the SWIM one rather than replace it, so an unmanaged account held
         elsewhere still shows "Not enrolled in SWIM" and a request-a-review link. The page can move
         an account up the matrix and across it at the same time.
       </p>
@@ -839,9 +848,9 @@
       <div class="cs-block-sub">Bet 3 · The action</div>
       <h2>Every action lives where an advisor's mental model expects it, next to the account or position it applies to, and forks by custody without the advisor having to know which rule applies</h2>
       <p class="lede">
-        A Trade button sits on every position. Transfer money sits in the header of every view. For
-        an account held at Savvy the same button executes directly through Fidelity's APIs. For an
-        account held elsewhere it opens an Ops task instead. The advisor never has to hold that
+        A Trade button sits on every position. Transfer money sits in the header of every view. I
+        designed one button that forks: for an account held at Savvy it executes directly through
+        Fidelity's APIs, for an account held elsewhere it opens an Ops task instead. The advisor never has to hold that
         rule in their head, because the button already does.
       </p>
 
@@ -859,8 +868,9 @@
       <h3>Live market data, one click from the position</h3>
       <p>
         Click any position and it opens with a live quote: price, day change, previous close, open,
-        today's range, the 52-week range, and a chart, with Buy and Sell one tap away. This closed
-        another reason advisors kept a second tab open.
+        today's range, the 52-week range, and a chart, with Buy and Sell one tap away. I pushed for
+        the live quote to open from the position itself, because it closed another reason advisors
+        kept a second tab open.
       </p>
       <div class="cs-quote">
         <p>I always have Yahoo Finance open so I can see real-time market data on a ticker. There's so much the dashboard doesn't show that I feel more comfortable going directly into the custodian or using a public source for live market info.</p>
@@ -896,8 +906,9 @@
       <div class="cs-block-sub">Also shipped</div>
       <h2>The rest of the page, rebuilt on live data</h2>
       <p class="lede">
-        The three bets carried the argument. The rest of the page had to be rebuilt around them so
-        that nothing an advisor used to look up at the custodian was missing.
+        The three bets carried the argument. I rebuilt the rest of the page around them, working
+        view by view against the list of things advisors used to look up at the custodian, until
+        nothing was missing.
       </p>
       <h3>Customizable right rail</h3>
       <div class="rail-trio"><div class="cs-figure"><img src="images/portfolio/new-widget-allocation.png" alt="Allocation widget with asset categories, values and change, and a Show target toggle" loading="lazy"></div><div class="cs-figure"><img src="images/portfolio/new-widget-top-movers.png" alt="Daily top movers across household widget" loading="lazy"></div><div class="cs-figure"><img src="images/portfolio/new-widget-documents.png" alt="Documents and statements widget with 2025 tax documents and statements" loading="lazy"></div></div>
@@ -955,7 +966,7 @@
         The design went through weekly decision reviews with the founder and leadership team, and
         the biggest debate was about accounts that hadn't moved to ECI yet. The business wanted
         those households repapered quickly, so the review pushed for the page to make the upgrade
-        case as hard as possible. Out of those sessions the upgrade nudge got a real home: an
+        case as hard as possible. Out of those sessions I gave the upgrade nudge a real home: an
         "Upgrade custodian for live data" note on every held-elsewhere row and a button at the end
         of the group.
       </p>
