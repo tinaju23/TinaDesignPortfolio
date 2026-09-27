@@ -5,7 +5,7 @@ and <script> content) from disk/bfcache. Threaded, so one long-lived
 connection (e.g. a streaming <video>) cannot block every other request.
 
 Also mirrors Vercel's cleanUrls + rewrites (vercel.json) so /portfolio
-serves portfolio.html and /work serves index.html locally."""
+serves portfolio-redesign.html and /work serves index.html locally."""
 import os
 import sys
 from http.server import ThreadingHTTPServer, SimpleHTTPRequestHandler

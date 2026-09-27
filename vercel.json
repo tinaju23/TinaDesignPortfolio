@@ -2,7 +2,20 @@
   "cleanUrls": true,
   "trailingSlash": false,
   "rewrites": [
-    { "source": "/work", "destination": "/" },
-    { "source": "/contact", "destination": "/" }
+    {
+      "source": "/work",
+      "destination": "/"
+    },
+    {
+      "source": "/contact",
+      "destination": "/"
+    }
+  ],
+  "redirects": [
+    {
+      "source": "/portfolio",
+      "destination": "/portfolio-redesign",
+      "permanent": true
+    }
   ]
 }
