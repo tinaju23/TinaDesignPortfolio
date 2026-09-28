@@ -417,6 +417,10 @@
           <div class="field-value">Claude Code, Savvy Kit (design system), Figma, Linear, Notion</div>
         </div>
         <div class="tldr-item">
+          <div class="field-label">PARTNERS</div>
+          <div class="field-value">ECI Product Manager, Design Engineer, Compliance (Legal and Principal Investments), AI Product Manager, and internal stakeholders including the Investment Operations Manager and the Internal Client Support Associate team.</div>
+        </div>
+        <div class="tldr-item">
           <div class="field-label">GOAL</div>
           <div class="field-value">Tighten up every loose end an advisor used to handle at the custodian, so that nothing they need to do for a client's investments depends on a custodian login</div>
         </div>
@@ -594,8 +598,12 @@
       <p>
         To ground that picture, I ran five interviews with advisors walking through the current
         portfolio on their own households, looking for the gaps between what the page showed and
-        what they actually needed to do. The four costs below, and the quotes under each, came out
-        of those sessions.
+        what they actually needed to do. I recruited with an internal AI skill that selects interview
+        candidates across a range of qualities, so the sample was deliberately mixed: tenured advisors
+        and new ones, advisors with most of their book in SWIM models and advisors who prefer managing
+        custom models. I also recruited our largest advisor group, the most tech-savvy on the
+        platform, whose team splits the business across their own admin and operations staff. The
+        four costs below, and the quotes under each, came out of those sessions.
       </p>
 
       <figure class="cs-figure mac-mockup-wrap">
@@ -695,7 +703,9 @@
       <p class="lede">
         The brief was an ECI project: get the portfolio ready for accounts held at Savvy through
         Fidelity NFS. The company had a second OKR the same page could move, SWIM enrollment, tracked
-        by a different team with no design attached. I scoped it in.
+        by a different team with no design attached. I scoped it in. That meant getting the ECI
+        Product Manager to agree the page was shared ground with the SWIM team, and aligning on how
+        two OKRs owned by two teams would be measured on one surface.
       </p>
       <p>
         SWIM, Savvy Wealth Investment Management, is the in-house program where an advisor enrolls a
@@ -853,6 +863,13 @@
         Fidelity's APIs, for an account held elsewhere it opens an Ops task instead. The advisor never has to hold that
         rule in their head, because the button already does.
       </p>
+      <p>
+        The fork wasn't a design preference; it was mapped against what could actually execute. I
+        worked with the engineering lead building the Fidelity integration to trace which actions
+        the Order Entry and Money Movement endpoints could complete directly, and with the internal
+        ops team to confirm which ones still needed principal review first. Wherever the API or the
+        review queue said no, the same button routes to an Ops task instead of executing.
+      </p>
 
       <h3>Trade and transfer, right where you need them</h3>
       <p>
@@ -940,6 +957,9 @@
         Building in the real system also exposed its gaps. With direct access to production, I worked
         with our design engineer to agree on the fix and shipped new component variants, like a compact
         StatBlock, straight into our Storybook rather than leaving forks in the prototype.
+        Engineering built from the prototype branch rather than from a spec. I reviewed the PRs
+        against it and gave feedback directly in the PRs, which moved faster than a traditional
+        Figma-to-code handoff.
       </p>
 
       <figure class="cs-figure mac-mockup-wrap">
@@ -963,8 +983,10 @@
 
       <h3>What the exec review changed</h3>
       <p>
-        The design went through weekly decision reviews with the founder and leadership team, and
-        the biggest debate was about accounts that hadn't moved to ECI yet. The business wanted
+        Every Wednesday for a month I brought the running prototype to our founder Ritik, our
+        Director of Product, and our COO, to work through the design vision as it evolved and what
+        it would mean for operational workflows. The biggest debate was about accounts that hadn't
+        moved to ECI yet, and it ran across three of those sessions. The business wanted
         those households repapered quickly, so the review pushed for the page to make the upgrade
         case as hard as possible. Out of those sessions I gave the upgrade nudge a real home: an
         "Upgrade custodian for live data" note on every held-elsewhere row and a button at the end
