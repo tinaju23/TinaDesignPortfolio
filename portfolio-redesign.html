@@ -305,9 +305,11 @@
   .tl-item h4{ font-family:var(--font-display); font-weight:600; font-size:15.5px; margin-bottom:4px; color:var(--ink); }
   .tl-item p{ font-size:14.5px; color:var(--slate); line-height:1.55; }
   .stat-table{ display:flex; flex-direction:column; margin-top:36px; border-top:1px solid var(--line); }
-  .stat-row{ display:flex; justify-content:space-between; align-items:baseline; gap:24px; padding:24px 0; border-bottom:1px solid var(--line); }
-  .stat-label{ font-size:15.5px; color:var(--ink); max-width:56ch; line-height:1.5; }
+  .stat-row{ display:flex; justify-content:space-between; align-items:baseline; gap:24px; padding:24px 20px; border-bottom:1px solid var(--line); }
+  .stat-row:nth-child(odd){ background:var(--paper-dim); }
+  .stat-label{ font-size:17px; font-weight:500; color:var(--ink); max-width:56ch; line-height:1.5; }
   .stat-value{ font-family:var(--font-display); font-weight:600; font-size:30px; color:var(--verified-deep); white-space:nowrap; flex-shrink:0; }
+  .stat-sub{ display:block; font-size:13.5px; font-weight:400; color:var(--slate); margin-top:6px; line-height:1.5; }
   .stat-of{ font-family:var(--font-mono); font-weight:400; font-size:12px; color:var(--slate); margin-left:10px; white-space:normal; }
   .stat-row.next .stat-value{ color:var(--slate); }
   @media (max-width: 600px){
@@ -1054,7 +1056,15 @@
 
       <div class="stat-table">
         <div class="stat-row">
-          <span class="stat-label">Net new advisors who joined Savvy Wealth because of this initiative, within one quarter</span>
+          <span class="stat-label">SWIM enrollment tasks, Q3 over Q2</span>
+          <span class="stat-value">+28%</span>
+        </div>
+        <div class="stat-row">
+          <span class="stat-label">Get a Portfolio Review tasks, Q3 over Q2<span class="stat-sub">This task is for advisors who want a more personalized portfolio review session with a member of the investment operations team.</span></span>
+          <span class="stat-value">+35%</span>
+        </div>
+        <div class="stat-row">
+          <span class="stat-label">Net new advisors who joined Savvy Wealth because of this initiative, within one quarter<span class="stat-sub">Advisors who cited native custody and trading in Savvy as a reason for joining, per onboarding conversations.</span></span>
           <span class="stat-value">4</span>
         </div>
         <div class="stat-row">
@@ -1066,7 +1076,7 @@
           <span class="stat-value">$500M<span class="stat-of">AUM · committed</span></span>
         </div>
         <div class="stat-row next">
-          <span class="stat-label">Expected total AUM on ECI by end of year</span>
+          <span class="stat-label">Expected total AUM on ECI by end of year<span class="stat-sub">Projected from contracts already signed with new advisors.</span></span>
           <span class="stat-value">$3B<span class="stat-of">projected</span></span>
         </div>
       </div>
