@@ -340,3 +340,6 @@ footer{
   .cs-section .wrap > .feat-divider{ margin-top:44px; }
 }
 .cs-section .wrap > .cs-block-sub + h3{ margin-top:10px; }
+
+/* Section kickers (orange): a touch larger, tighter tracking */
+.cs-block-sub{ font-size:15.5px !important; letter-spacing:0.06em; }
