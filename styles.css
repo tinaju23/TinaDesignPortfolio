@@ -10,7 +10,7 @@
   --verified-deep: #0A4E85;
   --verified-grad: linear-gradient(120deg, var(--verified-light), var(--verified) 50%, var(--verified-deep) 100%);
   --verified-10: rgba(15,111,168,0.10);
-  --flag: #C97A3E;       /* secondary accent — used sparingly */
+  --flag: #D8641A;       /* secondary accent — used sparingly */
   --font-display: 'Space Grotesk', sans-serif;
   --font-body: 'IBM Plex Sans', sans-serif;
   --font-mono: 'IBM Plex Mono', monospace;

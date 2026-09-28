@@ -353,6 +353,7 @@
   .strip-note{ font-size:13.5px; line-height:1.5; color:var(--slate); margin-top:10px; max-width:none; }
   @media (max-width: 860px){ .strip{ grid-template-columns:1fr 1fr; } }
 
+  .cs-section .wrap > h3{ font-size:19px; line-height:1.35; }
   /* sub-heading + paragraph blocks: more air above and below */
   .cs-section .wrap > * + h3{ margin-top:80px; }
   .cs-section .wrap > h3 + p + .shot-grid, .cs-section .wrap > h3 + p + .cs-figure,
@@ -360,7 +361,8 @@
   .cs-section .wrap > h3 + p + .cap-grid, .cs-section .wrap > h3 + p + .rail-trio,
   .cs-section .wrap > h3 + p + .feat-stack{ margin-top:48px; }
   .cs-section .wrap > h3 + p + h3{ margin-top:80px; }
-  @media (max-width: 860px){ .cs-section .wrap > * + h3{ margin-top:60px; } }
+  @media (max-width: 860px){ .cs-section .wrap > * + h3, .cs-section .wrap > h3 + p + h3{ margin-top:60px; } }
+  .cs-section .wrap > .stat-table + .cs-block-sub{ margin-top:80px; }
 
   /* ============ RESPONSIVE ============ */
   @media (max-width: 860px){
@@ -772,17 +774,17 @@
         <div class="bleed-inner">
       <h3>New Accounts list view that supports every quadrant of the matrix</h3>
       <p>
-        This is why I decided to group accounts by custody rather than by account type or strategy. A
-        household mid-transition has some accounts on Fidelity NFS and some still at Schwab, and most
-        households will live in that state for a while. Held at Savvy shows live data and day change
-        on every row. Held elsewhere shows delayed data and says so. The model also had to handle
-        sleeves, where one account splits into a managed core and a self-directed remainder, and
-        scope, where the whole page rolls up to any subset of accounts under the same rules.
-        Accounts not yet on ECI get a direct pathway to upgrade: every Held elsewhere row says
-        "Upgrade custodian for live data" and the group ends in an Upgrade custodian button. I
-        insisted that nudge sit alongside the SWIM one rather than replace it, so an unmanaged account held
-        elsewhere still shows "Not enrolled in SWIM" and a request-a-review link. The page can move
-        an account up the matrix and across it at the same time.
+        I decided to group accounts by custody, not by type or strategy, because a household mid-transition
+        has accounts at both Fidelity NFS and Schwab and will for a while. Held at Savvy shows live
+        data and day change on every row; Held elsewhere shows delayed data and says so. The same
+        rules handle sleeves, one account split into a managed core and a self-directed remainder,
+        and scope, the page rolled up to any subset of accounts.
+      </p>
+      <p>
+        Accounts not yet on ECI get a direct path to upgrade: a note on every Held elsewhere row and
+        a button at the end of the group. I insisted it sit alongside the SWIM nudge, not replace it,
+        so an unmanaged account held elsewhere still shows "Not enrolled in SWIM" and a
+        request-a-review link. The page can move an account up the matrix and across it at once.
       </p>
       <div class="shot-grid stacked single">
         <figure>
@@ -951,17 +953,15 @@
       <p class="lede">
         I built the prototype in Savvy Kit, the production design system, so it read as a real cut
         of the product rather than a mockup. A scenario switcher seeded one Chan account in each
-        quadrant, so every path in the model was demonstrable rather than hypothetical. Order
-        execution, aggregation and ops routing were simulated and labelled as such, so no one
-        mistook scaffolding for a requirement.
+        quadrant, so every path in the model was demonstrable. Order execution, aggregation and ops
+        routing were simulated and labelled as such, so no one mistook scaffolding for a requirement.
       </p>
       <p>
-        Building in the real system also exposed its gaps. With direct access to production, I worked
-        with our design engineer to agree on the fix and shipped new component variants, like a compact
-        StatBlock, straight into our Storybook rather than leaving forks in the prototype.
-        Engineering built from the prototype branch rather than from a spec. I reviewed the PRs
-        against it and gave feedback directly in the PRs, which moved faster than a traditional
-        Figma-to-code handoff.
+        Building in the real system also exposed its gaps. I worked with our design engineer to
+        agree on fixes and shipped new component variants, like a compact StatBlock, straight into
+        Storybook rather than leaving forks in the prototype. Engineering then built from the
+        prototype branch instead of a spec, and I reviewed the PRs against it directly, which moved
+        faster than a Figma-to-code handoff.
       </p>
 
       <figure class="cs-figure mac-mockup-wrap">
@@ -986,29 +986,28 @@
       <h3>What the exec review changed</h3>
       <p>
         Every Wednesday for a month I brought the running prototype to our founder Ritik, our
-        Director of Product, and our COO, to work through the design vision as it evolved and what
-        it would mean for operational workflows. The biggest debate was about accounts that hadn't
-        moved to ECI yet, and it ran across three of those sessions. The business wanted
-        those households repapered quickly, so the review pushed for the page to make the upgrade
-        case as hard as possible. Out of those sessions I gave the upgrade nudge a real home: an
-        "Upgrade custodian for live data" note on every held-elsewhere row and a button at the end
-        of the group.
+        Director of Product, and our COO, to work through the design as it evolved and what it meant
+        for operational workflows. The biggest debate, across three of those sessions, was accounts
+        that hadn't moved to ECI yet. The business wanted them repapered quickly and pushed for the
+        page to make the upgrade case as hard as possible. Out of that I gave the upgrade nudge a
+        real home: an "Upgrade custodian for live data" note on every held-elsewhere row and a
+        button at the end of the group.
       </p>
 
       <h3>What I pushed back on</h3>
       <p>
-        The one thing I held my ground on was volume. The ask was for the upgrade prompt to be
-        loud: banners, badges, a promo wherever a held-elsewhere account appeared. I pushed back. Our highest-value advisors and advisor groups hold the most accounts still at
-        other custodians, and they would be the ones seeing that promo on every row of every
-        household, every day. That exhausts the people we most need to keep.
+        The one thing I held my ground on was volume. The ask was a loud upgrade prompt: banners,
+        badges, a promo on every held-elsewhere account. I pushed back. Our highest-value advisors
+        and advisor groups hold the most accounts at other custodians, so they would see that promo
+        on every row of every household, every day. That exhausts the people we most need to keep.
       </p>
       <p>
         Instead I made the difference felt rather than announced. A quiet "Delayed data" banner and
-        subtle warning marks sit exactly where a number may be stale, so the cost of staying put is
-        visible in the data itself. And ECI and non-ECI accounts got genuinely different experiences
-        for the same task, like editing beneficiaries: in place for an account held at Savvy, an Ops
-        task for one held elsewhere. The bet was that advisors would want to upgrade from their own
-        first-hand experience of the gap, not because we shouted at them to.
+        subtle warning marks sit exactly where a number may be stale, so the cost of staying put
+        shows up in the data itself. And ECI and non-ECI accounts got genuinely different
+        experiences for the same task, like editing beneficiaries: in place for an account held at
+        Savvy, an Ops task for one held elsewhere. The bet was that advisors would upgrade from their
+        own experience of the gap, not because we shouted at them.
       </p>
       <figure class="cs-figure mac-mockup-wrap">
         <div class="mac-mockup">
@@ -1080,6 +1079,42 @@
           <span class="stat-value">$3B<span class="stat-of">projected</span></span>
         </div>
       </div>
+
+      <div class="cs-block-sub">What it led to</div>
+      <h2>My influence on product-wide financial infrastructure</h2>
+
+      <h3>Owning financial infrastructure</h3>
+      <p>
+        As I mapped the data required for ECI, I began working further upstream, with the Advisor
+        Experience pods, to define what data we needed to store, how it should be structured, and
+        which sources should be authoritative so that we could reliably surface it across the
+        product. That work expanded my role beyond this initiative, and I became the design lead for
+        Financial Infrastructure: the underlying systems and data models that power household-,
+        client-, and account-level experiences across Savvy.
+      </p>
+      <p>
+        The portfolio page was the first surface built on it. Once the custody-and-model rules were
+        working there, the same rules had to hold everywhere account data appears, and I supported
+        three engineering pods implementing them in parallel across the product: ECI for the back
+        end, Advisor Experience for the front end, and System of Records for tasks.
+      </p>
+
+      <h3>Fixing the data, not just the display</h3>
+      <p>
+        Designing around existing data points exposed where the back end stored account and
+        household data in ways the front end could not surface accurately. I influenced what is
+        stored and how, so that live custody status, model status and account relationships are
+        reliable at the source rather than patched per screen. That work drove the redesign of the
+        general household data page and raised data integrity across the product as a whole.
+      </p>
+
+      <h3>A spec that agents can build from</h3>
+      <p>
+        I wrote the ECI content, logic and rules into a markdown file that lives in our sandbox and
+        in the repo. Every engineer and every coding agent working on financial infrastructure
+        builds from the same source of truth, which is what let three teams move in parallel
+        without diverging.
+      </p>
     </div>
   </section>
 
